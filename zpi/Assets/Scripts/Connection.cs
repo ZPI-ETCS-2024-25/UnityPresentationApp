@@ -9,10 +9,14 @@ using UnityEngine.Networking;
 public class Connection : MonoBehaviour
 {
     public TMP_Text tmp;
+    public bool shutUp;
 
     void Start()
     {
-        StartCoroutine(MakeRequest());
+        if (!shutUp)
+        {
+            StartCoroutine(MakeRequest());
+        }
     }
 
     private IEnumerator MakeRequest()
