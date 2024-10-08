@@ -20,7 +20,7 @@ public class CustomAddPathTool : EditorWindow
     {
         GUILayout.Label("Add path nodes", EditorStyles.boldLabel);
          
-        objectWithPath = EditorGUILayout.ObjectField("Select obecjt with MoveAlongPath component",objectWithPath,typeof(GameObject),false) as GameObject;
+        objectWithPath = EditorGUILayout.ObjectField("Select obecjt with MoveAlongPath component",objectWithPath,typeof(GameObject),true) as GameObject;
         numberOfNodes = EditorGUILayout.IntField("How many nodes to add", numberOfNodes);
         endIndexStart = EditorGUILayout.IntField("Starting number to add at end of node name", endIndexStart);
 
@@ -41,8 +41,43 @@ public class CustomAddPathTool : EditorWindow
         }
 
 
-        int startingLenght = component.waypoints.Length;
-        Array.Resize(ref component.waypoints, startingLenght + numberOfNodes);
+        int startingLenght;
+
+        if (component.waypoints == null)
+        {
+            component.waypoints = new Transform[numberOfNodes];
+            startingLenght = 0;
+        }
+        else
+        {
+            startingLenght = component.waypoints.Length;
+            Array.Resize(ref component.waypoints, startingLenght + numberOfNodes);
+        }
+
+
+        int index = endIndexStart;
+        int shift = 1;
+        for(int i = startingLenght;i < startingLenght + numberOfNodes; i++)
+        {
+            Vector3 startingPosition = new Vector3();
+
+            if(startingLenght == 0)
+            {
+                startingPosition = objectWithPath.transform.position;
+            }
+            else
+            {
+                startingPosition = component.waypoints[startingLenght-1].position;
+            }
+
+            GameObject node = new GameObject("node"+index);
+            node.transform.position = startingPosition + new Vector3(5*shift,0,0);
+            component.waypoints[i] = node.GetComponent<Transform>();
+            index++;
+            shift++;
+        }
+        
+        
 
     }
 }

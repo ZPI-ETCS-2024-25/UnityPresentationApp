@@ -39,7 +39,7 @@ public class MoveAlongPath : MonoBehaviour
     // Optional: Draw the path in the editor
     private void OnDrawGizmos()
     {
-        if (waypoints.Length > 1)
+        if (waypoints != null && waypoints.Length > 1)
         {
             for (int i = 0; i < waypoints.Length - 1; i++)
             {
