@@ -76,8 +76,7 @@ public class CustomAddPathTool : EditorWindow
             index++;
             shift++;
         }
-        
-        
-
     }
+
+    
 }
