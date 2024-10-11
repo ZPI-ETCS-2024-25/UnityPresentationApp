@@ -12,7 +12,6 @@ using UnityEngine.Networking;
 public class Connection : MonoBehaviour
 {
     public TMP_Text tmp;
-    public TMP_Text receivedText;
     public bool shutUp;
 
     private HttpListener listener;
