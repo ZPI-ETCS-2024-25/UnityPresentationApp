@@ -13,7 +13,12 @@ public class Connection : MonoBehaviour
     {
         if (!shutUp)
         {
-            StartCoroutine(GETRequest2("http://127.0.0.1:8000/name/", result =>
+            StartCoroutine(GETRequest("http://127.0.0.1:8000/name/", result =>
+            {
+                Debug.Log(result);
+            }
+            ));
+            StartCoroutine(POSTRequest("http://127.0.0.1:8000/name/", new PostDATA() { name = "test"},result =>
             {
                 Debug.Log(result);
             }
@@ -23,31 +28,31 @@ public class Connection : MonoBehaviour
     }
 
     
-    private IEnumerator GETRequest(string uri)
+    /*private IEnumerator GETRequest(string uri)
     {
         var getRequest = CreateReqest(uri);
         yield return getRequest.SendWebRequest();
         var deserializedGetData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
         //deserializedGetData.message;
-    }
+    }*/
 
 
-    private IEnumerator GETRequest2(string uri, System.Action<string> response)
+    private IEnumerator GETRequest(string uri, System.Action<string> response)
     {
         var getRequest = CreateReqest(uri);
         yield return getRequest.SendWebRequest();
 
         if(getRequest.result == UnityWebRequest.Result.Success)
         {
-            var deserializedGetData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
-            response?.Invoke(deserializedGetData.message);
+            //var deserializedGetData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
+            response?.Invoke(getRequest.downloadHandler.text);
         }
         yield break;
         
         //deserializedGetData.message;
     }
 
-    private async Task<string> GETRequestAsync(string uri)
+    /*private async Task<string> GETRequestAsync(string uri)
     {
         using (UnityWebRequest getRequest = CreateReqest(uri))
         {
@@ -69,19 +74,28 @@ public class Connection : MonoBehaviour
                 return null;
             }   
         }
-    }
+    }*/
 
 
-    private IEnumerator POSTRequest(string uri,object postData)
+    private IEnumerator POSTRequest(string uri,object postData, System.Action<string> response)
     {
-        var getRequest = CreateReqest(uri);
-        yield return getRequest.SendWebRequest();
-        var deserializedGetData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
+        var postRequest = CreateReqest(uri,RequestType.POST,postData);
+        yield return postRequest.SendWebRequest();
+
+        if (postRequest.result == UnityWebRequest.Result.Success)
+        {
+            //var deserializedPostData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
+            response?.Invoke(postRequest.downloadHandler.text);
+        }
+        yield break;
+        //var getRequest = CreateReqest(uri);
+        //yield return getRequest.SendWebRequest();
+        //var deserializedGetData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
         //changeText(deserializedGetData.message);
     }
 
 
-    private IEnumerator MakeRequest()
+    /*private IEnumerator MakeRequest()
     {  
         //POST DO SERVERAETCS
         var dataToPost = new PostDATA() { name = "POST from Unity to ETCS Server" };
@@ -99,7 +113,7 @@ public class Connection : MonoBehaviour
         //changeText(s);
 
     }
-
+    */
 
     private UnityWebRequest CreateReqest(string path, RequestType type = RequestType.GET,object data = null)
     {
