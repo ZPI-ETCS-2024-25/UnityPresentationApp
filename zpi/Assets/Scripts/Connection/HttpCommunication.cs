@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Connection : MonoBehaviour
+public class HttpCommunication : MonoBehaviour
 {
     public bool shutUp;
 
@@ -37,7 +37,7 @@ public class Connection : MonoBehaviour
     }*/
 
 
-    private IEnumerator GETRequest(string uri, System.Action<string> response)
+    public IEnumerator GETRequest(string uri, System.Action<string> response)
     {
         var getRequest = CreateReqest(uri);
         yield return getRequest.SendWebRequest();
@@ -77,7 +77,7 @@ public class Connection : MonoBehaviour
     }*/
 
 
-    private IEnumerator POSTRequest(string uri,object postData, System.Action<string> response)
+    public IEnumerator POSTRequest(string uri,object postData, System.Action<string> response)
     {
         var postRequest = CreateReqest(uri,RequestType.POST,postData);
         yield return postRequest.SendWebRequest();
