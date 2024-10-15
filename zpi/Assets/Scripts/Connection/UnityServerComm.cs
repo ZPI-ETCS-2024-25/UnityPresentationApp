@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UnityServerComm : MonoBehaviour
 {
-    private HttpCommunication communication = new HttpCommunication();
+    public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8002/";
 
     void Start()

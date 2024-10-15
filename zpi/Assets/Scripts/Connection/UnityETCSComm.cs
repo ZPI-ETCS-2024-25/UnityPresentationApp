@@ -1,20 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class UnityETCSComm : MonoBehaviour
 {
-    private HttpCommunication communication = new HttpCommunication();
-    public string serverUri = "http://127.0.0.1:8000/";
+    public HttpCommunication communication;
+    public string serverUri = "http://127.0.0.1:8000/name";
 
     void Start()
     {
-        SendBaliseInfo(50,2,50,10,2);
+        //Debug.Log("sending starting data");
+        //SendBaliseInfo(50,2,50,10,2);
     }
 
-    private void SendBaliseInfo(int kilometer,int number,int groupSize,int track,int line)
+    public void SendBaliseInfo(int kilometer,int number,int groupSize,int track,int line)
     {
-        communication
+        StartCoroutine(communication
             .POSTRequest(serverUri, new BaliseInfo()
             {
                 kilometer = kilometer,
@@ -23,7 +25,16 @@ public class UnityETCSComm : MonoBehaviour
                 track = track,
                 line = line
             }
-            , response => { Debug.Log(response); });
+            , response => { Debug.Log(response); })
+        );
+    }
+
+    public void SendBaliseInfo(BaliseInfo info)
+    {
+        StartCoroutine(communication
+            .POSTRequest(serverUri, info
+            , response => { Debug.Log(response); })
+        );
     }
 }
 

@@ -6,4 +6,5 @@ using UnityEngine;
 public class Balises : ScriptableObject
 {
     public int[] kilometers;
+    public int lenght;
 }
