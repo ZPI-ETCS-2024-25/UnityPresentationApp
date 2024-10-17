@@ -98,7 +98,7 @@ public class RailDecorator : MonoBehaviour
             UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction); // You can adjust this if you need specific orientation
 
             // Instantiate prefab and add it to the list
-            GameObject instantiatedObject = Instantiate(prefab, position, rotation);
+            GameObject instantiatedObject = Instantiate(prefab,position, rotation,splineContainer.transform);
             instantiatedObjects.Add(instantiatedObject);
 
             // Mark instantiated object for undo, so it can be undone in the Editor
@@ -162,7 +162,7 @@ public class RailDecorator : MonoBehaviour
         {
             for(int i = 0; i < numberOfObjects; i++)
             {
-                GameObject instantiatedObject = Instantiate(prefab);
+                GameObject instantiatedObject = Instantiate(prefab,splineContainer.transform);
                 instantiatedObjects.Add(instantiatedObject);
             }
         }

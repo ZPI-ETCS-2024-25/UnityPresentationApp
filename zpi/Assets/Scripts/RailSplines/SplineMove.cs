@@ -83,8 +83,6 @@ public class SplineMove : MonoBehaviour
         }
         
 
-        
-
         Vector3 nextPosition = spline.EvaluatePosition(distancePercentage + 0.05f);
         Vector3 direction = nextPosition - currentPosition;
         transform.rotation = Quaternion.LookRotation(direction, transform.up);

@@ -15,7 +15,7 @@ public class BaliseController : MonoBehaviour
 
     public BaliseInfo checkForBalises(int lastBalise,float currentDistanceProc,bool speedPlus)
     {
-        if (speedPlus)
+        if (speedPlus && lastBalise != balises.kilometers.Length)
         {
             if ((float)balises.kilometers[lastBalise]/(float)balises.lenght < currentDistanceProc)
             {
@@ -33,7 +33,7 @@ public class BaliseController : MonoBehaviour
                 return null;
             }
         }
-        else
+        else if(lastBalise != 0)
         {
             if (balises.kilometers[lastBalise-1] / balises.lenght > currentDistanceProc)
             {
@@ -51,5 +51,6 @@ public class BaliseController : MonoBehaviour
                 return null;
             }
         }
+        return null;
     }
 }
