@@ -13,59 +13,46 @@ using static UnityEngine.GraphicsBuffer;
 [ExecuteAlways]
 public class RailDecorator : MonoBehaviour
 {
-    // Spline to instantiate along
+    
     public SplineContainer splineContainer;
-
-    // The prefab to instantiate along the spline
     public GameObject prefab;
 
     
     public float spacing = 2f;
     public float spacingDirectionOffset = 0.01f;
 
-    // List to store instantiated objects so you can access them later
+    
     public List<GameObject> instantiatedObjects = new List<GameObject>();
-
-    // Option to reset and instantiate again
     public bool resetBeforeInstantiate = true;
 
-    // Method to instantiate prefabs along the spline
+    
 
     private void OnEnable()
     {
         if (splineContainer != null && splineContainer.Spline != null)
         {
-            //Debug.Log("enabled");
-            // Subscribe to spline changes
             Spline.Changed += OnSplineChanged;
         }
     }
 
-    // Unsubscribe from spline changes
     private void OnDisable()
     {
         if (splineContainer != null && splineContainer.Spline != null)
         {
-            //Debug.Log("disabled");
-            // Unsubscribe from spline changes
             Spline.Changed -= OnSplineChanged;
         }
     }
 
     private void OnValidate()
     {
-        // Automatically reposition objects if spline is valid
         if (splineContainer != null && splineContainer.Spline != null)
         {
             UpdatePrefabsPosition();
         }
     }
 
-    // React to spline changes
     private void OnSplineChanged(Spline spline, int knotIndex,SplineModification modification)
     {
-        //Debug.Log("changed");
-        // When the spline is changed, re-instantiate the objects
         UpdatePrefabsPosition();
     }
 
@@ -74,7 +61,6 @@ public class RailDecorator : MonoBehaviour
     {
         if (resetBeforeInstantiate)
         {
-            // Clear previous instantiated objects
             ClearInstantiatedObjects();
         }
 
@@ -109,19 +95,18 @@ public class RailDecorator : MonoBehaviour
         }
     }
 
-    // Method to clear previously instantiated objects
+
     public void ClearInstantiatedObjects()
     {
         foreach (GameObject obj in instantiatedObjects)
         {
             if (obj != null)
             {
-                DestroyImmediate(obj); // Use DestroyImmediate to work in the Editor
+                DestroyImmediate(obj);
             }
         }
         instantiatedObjects.Clear();
 
-        // Mark the action for undo in Editor
         Undo.RecordObject(this, "Clear Instantiated Objects");
     }
 

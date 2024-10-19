@@ -9,7 +9,7 @@ public class SplineMove : MonoBehaviour
     [SerializeField] private GameObject[] wagons;
     private float speed = 0f;
     private float distancePercentage = 0f;
-    private int lastBalise = 0;
+    private float previousDistancePercentage = 0f;
     public float startingSpeed = 1f;
     public float acceleration = 0.2f;
 
@@ -49,6 +49,7 @@ public class SplineMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        previousDistancePercentage = distancePercentage;
         distancePercentage += speed * Time.deltaTime / splineLength;
         speed = speed + acceleration;
         
@@ -69,12 +70,29 @@ public class SplineMove : MonoBehaviour
         BaliseController baliseController = spline.GetComponent<BaliseController>();
         if(baliseController != null)
         {
-            BaliseInfo baliseInfo = baliseController.checkForBalises(lastBalise, distancePercentage, speed > 0);
-            if (baliseInfo != null)
+            int speedDirection;
+            if(speed == 0f)
             {
-                lastBalise = baliseInfo.number;
-                Debug.Log($"Balise info: {baliseInfo.number}/{baliseInfo.groupSize},{baliseInfo.kilometer},{baliseInfo.track}");
-                comm.SendBaliseInfo(baliseInfo);
+                speedDirection = 0;
+            }
+            else if(speed > 0f)
+            {
+                speedDirection = 1;
+            }
+            else
+            {
+                speedDirection = -1;
+            }
+
+            //Debug.Log($"{previousDistancePercentage} {distancePercentage}");
+            List<BaliseInfo> baliseInformations = baliseController.checkForBalises(previousDistancePercentage, distancePercentage, speedDirection);
+            if (baliseInformations != null)
+            {
+                foreach(BaliseInfo baliseInfo in baliseInformations)
+                {
+                    //Debug.Log($"sending {baliseInfo}");
+                    comm.SendBaliseInfo(baliseInfo);
+                }
             }
         }
         else

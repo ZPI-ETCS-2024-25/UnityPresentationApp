@@ -2,55 +2,74 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class BaliseController : MonoBehaviour
 {
-    public Balises balises;
-    public int trackNumber;
+    public BalisesData balisesData;
+    public RailData railData;
+    public string trackNumber;
+    public int lineNumber;
 
-    public int getBalisesGroupSize()
-    {
-        return balises.kilometers.Length;
-    }
 
-    public BaliseInfo checkForBalises(int lastBalise,float currentDistanceProc,bool speedPlus)
+    public List<BaliseInfo> checkForBalises(float previousDistanceProc,float currentDistanceProc,int speedDirection)
     {
-        if (speedPlus && lastBalise != balises.kilometers.Length)
+        if(balisesData == null)
         {
-            if ((float)balises.kilometers[lastBalise]/(float)balises.lenght < currentDistanceProc)
-            {
-                return new BaliseInfo() 
-                { 
-                    kilometer = balises.kilometers[lastBalise],
-                    number = lastBalise+1,                   
-                    groupSize = balises.kilometers.Length,
-                    track = trackNumber,
-                    line = 1
-                };
-            }
-            else
-            {
-                return null;
-            }
+            return null;
         }
-        else if(lastBalise != 0)
+
+        if ((speedDirection == 1 && previousDistanceProc != 1f) || (speedDirection == -1 && previousDistanceProc != 0f))
         {
-            if (balises.kilometers[lastBalise-1] / balises.lenght > currentDistanceProc)
+            //Debug.Log("getting balises");
+            List<BaliseGroup> passedBalises = getPassedBalises(previousDistanceProc, currentDistanceProc);
+            List<BaliseInfo> passedBalisesInfo = getDataFromBalises(passedBalises);
+            if(passedBalisesInfo.Count > 0)
             {
-                return new BaliseInfo()
-                {
-                    kilometer = balises.kilometers[lastBalise-1],
-                    number = lastBalise,
-                    groupSize = balises.kilometers.Length,
-                    track = trackNumber,
-                    line = 1
-                };
+                //Debug.Log("more than 0");
+                return passedBalisesInfo;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
+        
         return null;
     }
+
+    private List<BaliseGroup> getPassedBalises(float previousDistanceProc, float currentDistanceProc) {
+        List<BaliseGroup> passedBalises = new List<BaliseGroup>();
+        foreach(BaliseGroup baliseGroup in balisesData.baliseGroups)
+        {
+            float baliseGroupPlacement = baliseGroup.kilometer / railData.kilometersLenght;
+            //Debug.Log(baliseGroupPlacement);
+            //Debug.Log($"{previousDistanceProc} {baliseGroupPlacement} {currentDistanceProc}");
+            if ( previousDistanceProc <= baliseGroupPlacement  && currentDistanceProc >= baliseGroupPlacement)
+            {
+                passedBalises.Add(baliseGroup);
+            }
+        }
+        return passedBalises;
+    }
+
+
+    private List<BaliseInfo> getDataFromBalises(List<BaliseGroup> passedBalises)
+    {
+        List<BaliseInfo> passedBalisesInfo = new List<BaliseInfo>();
+        foreach (BaliseGroup baliseGroup in passedBalises)
+        {
+            for (int i = 0; i < baliseGroup.balises.Length; i++)
+            {
+                passedBalisesInfo.Add(new BaliseInfo()
+                {
+                    kilometer = Convert.ToString(baliseGroup.kilometer),
+                    number = i,
+                    numberOfBalises = baliseGroup.balises.Length,
+                    trackNumber = railData.trackNumber,
+                    lineNumber = railData.lineNumber,
+                    messageType = baliseGroup.balises[i].messageType
+                });
+            }
+        }
+        return passedBalisesInfo;
+    }
+
 }
