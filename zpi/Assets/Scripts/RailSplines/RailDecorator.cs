@@ -22,8 +22,8 @@ public class RailDecorator : MonoBehaviour
     public float spacing = 2f;
     public float spacingDirectionOffset = 0.01f;
 
-    
-    public Dictionary<Spline,List<GameObject>> instantiatedObjects = new Dictionary<Spline, List<GameObject>>();
+    [SerializeField]
+    public SplineDecorationObjects splineDecorativeObjects;
     public bool resetBeforeInstantiate = true;
 
     
@@ -66,8 +66,9 @@ public class RailDecorator : MonoBehaviour
             ClearInstantiatedObjects();
         }
 
+        //Dictionary<Spline, List<GameObject>> instantiatedObjects = splineDecorativeObjects.instantiatedObjects;
 
-        for(int splineIndex = 0; splineIndex < splineContainer.Splines.Count; splineIndex++)
+        for (int splineIndex = 0; splineIndex < splineContainer.Splines.Count; splineIndex++)
         {
             float splineLength = splineContainer.CalculateLength(splineIndex);
             int numberOfObjects = Mathf.FloorToInt(splineLength / spacing);
@@ -84,13 +85,18 @@ public class RailDecorator : MonoBehaviour
 
                 GameObject instantiatedObject = Instantiate(prefab, position, rotation, splineContainer.transform);
 
-                if (!instantiatedObjects.ContainsKey(splineContainer[splineIndex]))
+                if (!splineDecorativeObjects.instantiatedObjects.Any(pair => pair.spline == splineContainer[splineIndex]))
                 {
-                    instantiatedObjects[splineContainer[splineIndex]] = new List<GameObject>() { instantiatedObject };
+                    //instantiatedObjects[splineContainer[splineIndex]] = new List<GameObject>() { instantiatedObject };
+                    splineDecorativeObjects.instantiatedObjects.Add(new SplineAndDecorations() { 
+                                                                                                spline = splineContainer[splineIndex],
+                                                                                                decorations = new List<GameObject>() {instantiatedObject } 
+                                                                                                });
                 }
                 else
                 {
-                    instantiatedObjects[splineContainer[splineIndex]].Add(instantiatedObject);
+                    //instantiatedObjects[splineContainer[splineIndex]].Add(instantiatedObject);
+                    splineDecorativeObjects.instantiatedObjects.Find(pair => pair.spline == splineContainer[splineIndex]).decorations.Add(instantiatedObject);
                 }
 
 
@@ -105,9 +111,9 @@ public class RailDecorator : MonoBehaviour
 
     public void ClearInstantiatedObjects()
     {
-        foreach(List<GameObject> splineObjlist in instantiatedObjects.Values)
+        for (int i = 0; i < splineDecorativeObjects.instantiatedObjects.Count; i++)
         {
-            foreach(GameObject obj in splineObjlist)
+            foreach(GameObject obj in splineDecorativeObjects.instantiatedObjects[i].decorations)
             {
                 if (obj != null)
                 {
@@ -115,7 +121,7 @@ public class RailDecorator : MonoBehaviour
                 }
             }
         }
-        instantiatedObjects.Clear();
+        splineDecorativeObjects.instantiatedObjects.Clear();
 
 
         Undo.RecordObject(this, "Clear Instantiated Objects");
@@ -153,9 +159,10 @@ public class RailDecorator : MonoBehaviour
                 break;
             }
         }
+        //Dictionary<Spline, List<GameObject>> instantiatedObjects = splineDecorativeObjects.instantiatedObjects;
 
 
-        if (instantiatedObjects == null || instantiatedObjects.Count == 0 || splineContainer == null || splineContainer[splineIndex] == null || splineIndex == -1)
+        if (splineDecorativeObjects == null || splineDecorativeObjects.instantiatedObjects.Count == 0 || splineContainer == null || splineContainer[splineIndex] == null || splineIndex == -1)
         {
             return; 
         }
@@ -164,27 +171,30 @@ public class RailDecorator : MonoBehaviour
         float splineLength = splineContainer.CalculateLength(splineIndex);
         int numberOfObjects = Mathf.FloorToInt(splineLength / spacing);
 
-        if (instantiatedObjects[spline].Count < numberOfObjects)
+
+        SplineAndDecorations splineAndDecorations =  splineDecorativeObjects.instantiatedObjects.Find(pair => pair.spline == splineContainer[splineIndex]);
+
+        if (splineAndDecorations.decorations.Count < numberOfObjects)
         {
             for(int i = 0; i < numberOfObjects; i++)
             {
                 GameObject instantiatedObject = Instantiate(prefab,splineContainer.transform);
-                instantiatedObjects[spline].Add(instantiatedObject);
+                splineAndDecorations.decorations.Add(instantiatedObject);
             }
         }
 
-        if(instantiatedObjects.Count > numberOfObjects)
+        if(splineAndDecorations.decorations.Count > numberOfObjects)
         {
-            for(int i =0; i < instantiatedObjects[spline].Count - numberOfObjects; i++)
+            for(int i =0; i < splineAndDecorations.decorations.Count - numberOfObjects; i++)
             {
-                DestroyImmediate(instantiatedObjects[spline][i]);
+                DestroyImmediate(splineAndDecorations.decorations[i]);
             }
-            instantiatedObjects[spline].RemoveRange(0, instantiatedObjects[spline].Count-numberOfObjects);
+            splineAndDecorations.decorations.RemoveRange(0, splineAndDecorations.decorations.Count-numberOfObjects);
         }
 
         
         float currentDistance = 0f;
-        for (int i = 0; i < instantiatedObjects.Count; i++)
+        for (int i = 0; i < splineAndDecorations.decorations.Count; i++)
         {
             float percentage = currentDistance / splineLength;
 
@@ -194,8 +204,8 @@ public class RailDecorator : MonoBehaviour
             UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction);
 
             
-            instantiatedObjects[spline][i].transform.position = position;
-            instantiatedObjects[spline][i].transform.rotation = rotation;
+            splineAndDecorations.decorations[i].transform.position = position;
+            splineAndDecorations.decorations[i].transform.rotation = rotation;
 
 
             currentDistance += spacing;
