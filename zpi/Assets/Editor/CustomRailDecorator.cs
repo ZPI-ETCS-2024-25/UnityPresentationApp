@@ -18,7 +18,7 @@ public class CustomSplineInstantiateEditor : Editor
         // Add a button to instantiate objects along the spline
         if (GUILayout.Button("Instantiate Along Spline"))
         {
-            splineInstantiate.InstantiateAlongSplineByDistance();
+            splineInstantiate.InstantiateAlongSplinesByDistance();
         }
 
         // Add a button to clear instantiated objects

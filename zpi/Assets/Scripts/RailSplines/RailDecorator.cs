@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -22,14 +23,14 @@ public class RailDecorator : MonoBehaviour
     public float spacingDirectionOffset = 0.01f;
 
     
-    public List<GameObject> instantiatedObjects = new List<GameObject>();
+    public Dictionary<Spline,List<GameObject>> instantiatedObjects = new Dictionary<Spline, List<GameObject>>();
     public bool resetBeforeInstantiate = true;
 
     
 
     private void OnEnable()
     {
-        if (splineContainer != null && splineContainer.Spline != null)
+        if (splineContainer != null && splineContainer.Splines.All(spline => spline != null))
         {
             Spline.Changed += OnSplineChanged;
         }
@@ -37,80 +38,91 @@ public class RailDecorator : MonoBehaviour
 
     private void OnDisable()
     {
-        if (splineContainer != null && splineContainer.Spline != null)
+        if (splineContainer != null && splineContainer.Splines.All(spline => spline != null))
         {
             Spline.Changed -= OnSplineChanged;
         }
     }
 
-    private void OnValidate()
+    
+    /*private void OnValidate()
     {
-        if (splineContainer != null && splineContainer.Spline != null)
+        if (splineContainer != null && splineContainer.Splines.All(spline => spline != null))
         {
             UpdatePrefabsPosition();
         }
-    }
+    }*/
 
     private void OnSplineChanged(Spline spline, int knotIndex,SplineModification modification)
     {
-        UpdatePrefabsPosition();
+        UpdatePrefabsPosition(spline);
     }
 
 
-    public void InstantiateAlongSplineByDistance()
+    public void InstantiateAlongSplinesByDistance()
     {
         if (resetBeforeInstantiate)
         {
             ClearInstantiatedObjects();
         }
 
-        // Get the total length of the spline
-        float splineLength = splineContainer.CalculateLength();
 
-        // Calculate how many objects we can fit based on the distance
-        int numberOfObjects = Mathf.FloorToInt(splineLength / spacing);
-
-        // Instantiate prefabs along the spline at the calculated distance intervals
-        float currentDistance = 0f;
-        for (int i = 0; i <= numberOfObjects; i++)
+        for(int splineIndex = 0; splineIndex < splineContainer.Splines.Count; splineIndex++)
         {
-            // Get the t (normalized position along the spline, from 0 to 1) corresponding to the current distance
-            float t = currentDistance/splineLength;
+            float splineLength = splineContainer.CalculateLength(splineIndex);
+            int numberOfObjects = Mathf.FloorToInt(splineLength / spacing);
 
-            // Evaluate position on the spline at t
-            UnityEngine.Vector3 position = splineContainer.EvaluatePosition(t);
-            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(t + spacingDirectionOffset);
-            UnityEngine.Vector3 direction = nextPosition - position;
-            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction); // You can adjust this if you need specific orientation
+            float currentDistance = 0f;
+            for (int j = 0; j <= numberOfObjects; j++)
+            {
+                float percentage = currentDistance / splineLength;
 
-            // Instantiate prefab and add it to the list
-            GameObject instantiatedObject = Instantiate(prefab,position, rotation,splineContainer.transform);
-            instantiatedObjects.Add(instantiatedObject);
+                UnityEngine.Vector3 position = splineContainer.EvaluatePosition(splineIndex, percentage);
+                UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex, percentage + spacingDirectionOffset);
+                UnityEngine.Vector3 direction = nextPosition - position;
+                UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction);
 
-            // Mark instantiated object for undo, so it can be undone in the Editor
-            Undo.RegisterCreatedObjectUndo(instantiatedObject, "Instantiate Prefabs Along Spline");
+                GameObject instantiatedObject = Instantiate(prefab, position, rotation, splineContainer.transform);
 
-            // Increase the distance for the next object
-            currentDistance += spacing;
+                if (!instantiatedObjects.ContainsKey(splineContainer[splineIndex]))
+                {
+                    instantiatedObjects[splineContainer[splineIndex]] = new List<GameObject>() { instantiatedObject };
+                }
+                else
+                {
+                    instantiatedObjects[splineContainer[splineIndex]].Add(instantiatedObject);
+                }
+
+
+                currentDistance += spacing;
+
+
+                Undo.RegisterCreatedObjectUndo(instantiatedObject, "Instantiate Prefabs Along Spline");
+            }
         }
     }
 
 
     public void ClearInstantiatedObjects()
     {
-        foreach (GameObject obj in instantiatedObjects)
+        foreach(List<GameObject> splineObjlist in instantiatedObjects.Values)
         {
-            if (obj != null)
+            foreach(GameObject obj in splineObjlist)
             {
-                DestroyImmediate(obj);
+                if (obj != null)
+                {
+                    DestroyImmediate(obj);
+                }
             }
         }
         instantiatedObjects.Clear();
+
 
         Undo.RecordObject(this, "Clear Instantiated Objects");
     }
 
     // Example method to change the color of an instantiated prefab
+    /*
     public void ChangePrefabColor(int index, Color color)
     {
         if (index >= 0 && index < instantiatedObjects.Count)
@@ -127,63 +139,65 @@ public class RailDecorator : MonoBehaviour
         {
             Debug.LogWarning("Index out of range");
         }
-    }
+    }*/
 
 
-    private void UpdatePrefabsPosition()
+    private void UpdatePrefabsPosition(Spline spline)
     {
-        //Debug.Log("update");
-        // Make sure we have instantiated objects and a valid spline
-        if (instantiatedObjects == null || instantiatedObjects.Count == 0 || splineContainer == null || splineContainer.Spline == null)
+        int splineIndex = -1;
+        for(int i = 0; i < splineContainer.Splines.Count; i++)
         {
-            return; // No objects to update or no valid spline
+            if(splineContainer.Splines[i] == spline)
+            {
+                splineIndex = i;
+                break;
+            }
         }
 
-        // Get the total length of the spline
-        float splineLength = splineContainer.CalculateLength();
+
+        if (instantiatedObjects == null || instantiatedObjects.Count == 0 || splineContainer == null || splineContainer[splineIndex] == null || splineIndex == -1)
+        {
+            return; 
+        }
+
+        
+        float splineLength = splineContainer.CalculateLength(splineIndex);
         int numberOfObjects = Mathf.FloorToInt(splineLength / spacing);
 
-        if(instantiatedObjects.Count < numberOfObjects)
+        if (instantiatedObjects[spline].Count < numberOfObjects)
         {
             for(int i = 0; i < numberOfObjects; i++)
             {
                 GameObject instantiatedObject = Instantiate(prefab,splineContainer.transform);
-                instantiatedObjects.Add(instantiatedObject);
+                instantiatedObjects[spline].Add(instantiatedObject);
             }
         }
 
         if(instantiatedObjects.Count > numberOfObjects)
         {
-            for(int i =0; i < instantiatedObjects.Count - numberOfObjects; i++)
+            for(int i =0; i < instantiatedObjects[spline].Count - numberOfObjects; i++)
             {
-                DestroyImmediate(instantiatedObjects[i]);
+                DestroyImmediate(instantiatedObjects[spline][i]);
             }
-            instantiatedObjects.RemoveRange(0, instantiatedObjects.Count-numberOfObjects);
+            instantiatedObjects[spline].RemoveRange(0, instantiatedObjects[spline].Count-numberOfObjects);
         }
 
-        // Calculate the number of objects and distance between them
+        
         float currentDistance = 0f;
-        //Debug.Log(instantiatedObjects.Count);
         for (int i = 0; i < instantiatedObjects.Count; i++)
         {
-            //Debug.Log(i);
-            // Get the t (normalized position along the spline, from 0 to 1) corresponding to the current distance
-            float t = currentDistance / splineLength;
+            float percentage = currentDistance / splineLength;
 
-            // Evaluate position on the spline at t
-            UnityEngine.Vector3 position = splineContainer.EvaluatePosition(t);
-            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(t + spacingDirectionOffset);
+            UnityEngine.Vector3 position = splineContainer.EvaluatePosition(splineIndex,percentage);
+            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex,percentage + spacingDirectionOffset);
             UnityEngine.Vector3 direction = nextPosition - position;
-            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction); // You can adjust this if you need specific orientation
+            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction);
 
-            // Instantiate prefab and add it to the list
-            instantiatedObjects[i].transform.position = position;
-            instantiatedObjects[i].transform.rotation = rotation;
+            
+            instantiatedObjects[spline][i].transform.position = position;
+            instantiatedObjects[spline][i].transform.rotation = rotation;
 
-            // Mark instantiated object for undo, so it can be undone in the Editor
-            //Undo.RegisterCreatedObjectUndo(instantiatedObjects[i], "Instantiate Prefabs Along Spline");
 
-            // Increase the distance for the next object
             currentDistance += spacing;
         }
     }
