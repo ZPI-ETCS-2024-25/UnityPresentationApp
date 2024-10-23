@@ -3,27 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using System;
+using UnityEngine.Splines;
 
 public class BaliseController : MonoBehaviour
 {
-    public BalisesData balisesData;
-    public RailData railData;
-    public string trackNumber;
-    public int lineNumber;
+    public SplineContainer splineContainer;
+    //public BalisesData balisesData;
+    //public RailData railData;
 
 
-    public List<BaliseInfo> checkForBalises(float previousDistanceProc,float currentDistanceProc,int speedDirection)
+    public List<BaliseInfo> checkForBalises(int splineIndex,float previousDistanceProc,float currentDistanceProc,int speedDirection)
     {
-        if(balisesData == null)
+        SplineData<UnityEngine.Object> bD;
+        SplineData<UnityEngine.Object> rD;
+        bool gotBaliseData = splineContainer.Splines[splineIndex].TryGetObjectData("BaliseData", out bD);
+        bool gotRailData = splineContainer.Splines[splineIndex].TryGetObjectData("RailData", out rD);
+        BalisesData baliseData = bD[0].Value as BalisesData;
+        RailData railData = rD[0].Value as RailData;
+
+
+        if (!gotBaliseData)
         {
             return null;
         }
+        
 
         if ((speedDirection == 1 && previousDistanceProc != 1f) || (speedDirection == -1 && previousDistanceProc != 0f))
         {
             //Debug.Log("getting balises");
-            List<BaliseGroup> passedBalises = getPassedBalises(previousDistanceProc, currentDistanceProc);
-            List<BaliseInfo> passedBalisesInfo = getDataFromBalises(passedBalises);
+            List<BaliseGroup> passedBalises = getPassedBalises(baliseData,railData,previousDistanceProc, currentDistanceProc);
+            List<BaliseInfo> passedBalisesInfo = getDataFromBalises(railData,passedBalises);
             if(passedBalisesInfo.Count > 0)
             {
                 //Debug.Log("more than 0");
@@ -35,7 +44,7 @@ public class BaliseController : MonoBehaviour
         return null;
     }
 
-    private List<BaliseGroup> getPassedBalises(float previousDistanceProc, float currentDistanceProc) {
+    private List<BaliseGroup> getPassedBalises(BalisesData balisesData,RailData railData,float previousDistanceProc, float currentDistanceProc) {
         List<BaliseGroup> passedBalises = new List<BaliseGroup>();
         foreach(BaliseGroup baliseGroup in balisesData.baliseGroups)
         {
@@ -51,7 +60,7 @@ public class BaliseController : MonoBehaviour
     }
 
 
-    private List<BaliseInfo> getDataFromBalises(List<BaliseGroup> passedBalises)
+    private List<BaliseInfo> getDataFromBalises(RailData railData,List<BaliseGroup> passedBalises)
     {
         List<BaliseInfo> passedBalisesInfo = new List<BaliseInfo>();
         foreach (BaliseGroup baliseGroup in passedBalises)

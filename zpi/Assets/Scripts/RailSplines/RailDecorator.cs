@@ -1,15 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
-using UnityEngine.UIElements;
-using static UnityEngine.GraphicsBuffer;
 
 [ExecuteAlways]
 public class RailDecorator : MonoBehaviour
@@ -66,7 +59,7 @@ public class RailDecorator : MonoBehaviour
             ClearInstantiatedObjects();
         }
 
-        //Dictionary<Spline, List<GameObject>> instantiatedObjects = splineDecorativeObjects.instantiatedObjects;
+        
 
         for (int splineIndex = 0; splineIndex < splineContainer.Splines.Count; splineIndex++)
         {
@@ -87,7 +80,6 @@ public class RailDecorator : MonoBehaviour
 
                 if (!splineDecorativeObjects.instantiatedObjects.Any(pair => pair.spline == splineContainer[splineIndex]))
                 {
-                    //instantiatedObjects[splineContainer[splineIndex]] = new List<GameObject>() { instantiatedObject };
                     splineDecorativeObjects.instantiatedObjects.Add(new SplineAndDecorations() { 
                                                                                                 spline = splineContainer[splineIndex],
                                                                                                 decorations = new List<GameObject>() {instantiatedObject } 
@@ -95,7 +87,6 @@ public class RailDecorator : MonoBehaviour
                 }
                 else
                 {
-                    //instantiatedObjects[splineContainer[splineIndex]].Add(instantiatedObject);
                     splineDecorativeObjects.instantiatedObjects.Find(pair => pair.spline == splineContainer[splineIndex]).decorations.Add(instantiatedObject);
                 }
 
@@ -159,7 +150,6 @@ public class RailDecorator : MonoBehaviour
                 break;
             }
         }
-        //Dictionary<Spline, List<GameObject>> instantiatedObjects = splineDecorativeObjects.instantiatedObjects;
 
 
         if (splineDecorativeObjects == null || splineDecorativeObjects.instantiatedObjects.Count == 0 || splineContainer == null || splineContainer[splineIndex] == null || splineIndex == -1)
@@ -198,10 +188,10 @@ public class RailDecorator : MonoBehaviour
         {
             float percentage = currentDistance / splineLength;
 
-            UnityEngine.Vector3 position = splineContainer.EvaluatePosition(splineIndex,percentage);
-            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex,percentage + spacingDirectionOffset);
-            UnityEngine.Vector3 direction = nextPosition - position;
-            UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction);
+            Vector3 position = splineContainer.EvaluatePosition(splineIndex,percentage);
+            Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex,percentage + spacingDirectionOffset);
+            Vector3 direction = nextPosition - position;
+            Quaternion rotation = Quaternion.LookRotation(direction);
 
             
             splineAndDecorations.decorations[i].transform.position = position;
@@ -211,4 +201,25 @@ public class RailDecorator : MonoBehaviour
             currentDistance += spacing;
         }
     }
+
+    private void Test()
+    {
+        Dictionary<int,List<int>> linkedSplines = new Dictionary<int,List<int>>();
+        for(int i =0; i < splineContainer.Splines.Count; i++)
+        {
+            Spline spline = splineContainer.Splines[i];
+            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count-1);
+            IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
+            if(linked.Count != 0)
+            {
+                linkedSplines[i] = new List<int>();
+                foreach (SplineKnotIndex skiLinked in linked)
+                {
+                    linkedSplines[i].Add(skiLinked.Spline);
+                }
+            }
+        }
+    }
+
+
 }
