@@ -16,6 +16,7 @@ public class BaliseController : MonoBehaviour
     {
         SplineData<UnityEngine.Object> bD;
         SplineData<UnityEngine.Object> rD;
+        //Debug.Log("start");
         bool gotBaliseData = splineContainer.Splines[splineIndex].TryGetObjectData("BaliseData", out bD);
         bool gotRailData = splineContainer.Splines[splineIndex].TryGetObjectData("RailData", out rD);
         BalisesData baliseData = bD[0].Value as BalisesData;
@@ -26,7 +27,11 @@ public class BaliseController : MonoBehaviour
         {
             return null;
         }
-        
+
+
+        //BalisesData baliseData = bD[0].Value as BalisesData;
+        //RailData railData = rD[0].Value as RailData;
+
 
         if ((speedDirection == 1 && previousDistanceProc != 1f) || (speedDirection == -1 && previousDistanceProc != 0f))
         {

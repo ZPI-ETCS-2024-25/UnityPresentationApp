@@ -71,10 +71,10 @@ public class RailDecorator : MonoBehaviour
             {
                 float percentage = currentDistance / splineLength;
 
-                UnityEngine.Vector3 position = splineContainer.EvaluatePosition(splineIndex, percentage);
-                UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex, percentage + spacingDirectionOffset);
-                UnityEngine.Vector3 direction = nextPosition - position;
-                UnityEngine.Quaternion rotation = UnityEngine.Quaternion.LookRotation(direction);
+                Vector3 position = splineContainer.EvaluatePosition(splineIndex, percentage);
+                Vector3 nextPosition = splineContainer.EvaluatePosition(splineIndex, percentage + spacingDirectionOffset);
+                Vector3 direction = nextPosition - position;
+                Quaternion rotation = Quaternion.LookRotation(direction);
 
                 GameObject instantiatedObject = Instantiate(prefab, position, rotation, splineContainer.transform);
 
@@ -201,25 +201,4 @@ public class RailDecorator : MonoBehaviour
             currentDistance += spacing;
         }
     }
-
-    private void Test()
-    {
-        Dictionary<int,List<int>> linkedSplines = new Dictionary<int,List<int>>();
-        for(int i =0; i < splineContainer.Splines.Count; i++)
-        {
-            Spline spline = splineContainer.Splines[i];
-            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count-1);
-            IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
-            if(linked.Count != 0)
-            {
-                linkedSplines[i] = new List<int>();
-                foreach (SplineKnotIndex skiLinked in linked)
-                {
-                    linkedSplines[i].Add(skiLinked.Spline);
-                }
-            }
-        }
-    }
-
-
 }
