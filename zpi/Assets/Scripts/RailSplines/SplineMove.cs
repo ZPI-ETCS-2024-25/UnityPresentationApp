@@ -32,6 +32,7 @@ public class SplineMove : MonoBehaviour
 
 
     public float wagonSeparationDistance = 0.03f;
+    public float heightoffSet = 1f; 
 
 
     void Start()
@@ -98,7 +99,7 @@ public class SplineMove : MonoBehaviour
         if(previousDistancePercentage != distancePercentage)
         {
             float rotationDistanceCalculation = Mathf.Min(1f, distancePercentage + rotationCalculation);
-            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(spline, rotationDistanceCalculation);
+            UnityEngine.Vector3 nextPosition = splineContainer.EvaluatePosition(spline, rotationDistanceCalculation) + new Unity.Mathematics.float3(0, heightoffSet, 0);
             UnityEngine.Vector3 direction = nextPosition - rotatingObject.transform.position;
             if(direction != UnityEngine.Vector3.zero)
             {
@@ -114,7 +115,7 @@ public class SplineMove : MonoBehaviour
 
         if(currenctDistance + percentageTravelled <= 1f)
         {
-            gameObject.transform.position = splineContainer.EvaluatePosition(spline, currenctDistance + percentageTravelled);
+            gameObject.transform.position = splineContainer.EvaluatePosition(spline, currenctDistance + percentageTravelled) + new Unity.Mathematics.float3(0,heightoffSet,0);
 
             afterMovingDistance = currenctDistance + percentageTravelled;
             afterMovingSpline = spline;
@@ -128,14 +129,14 @@ public class SplineMove : MonoBehaviour
                 float newSplineLenght = splineContainer.CalculateLength(newSpline);
                 float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
 
-                gameObject.transform.position = splineContainer.EvaluatePosition(newSpline, percentageTravelledNewSpline);
+                gameObject.transform.position = splineContainer.EvaluatePosition(newSpline, percentageTravelledNewSpline) + new Unity.Mathematics.float3(0, heightoffSet, 0);
 
                 afterMovingDistance = percentageTravelledNewSpline;
                 afterMovingSpline = newSpline;
             }
             catch
             {
-                gameObject.transform.position = splineContainer.EvaluatePosition(spline, 1f);
+                gameObject.transform.position = splineContainer.EvaluatePosition(spline, 1f) + new Unity.Mathematics.float3(0, heightoffSet, 0);
 
                 afterMovingDistance = 1f;
                 afterMovingSpline = spline;
@@ -154,7 +155,7 @@ public class SplineMove : MonoBehaviour
 
             if (wagonDistance[i] + percentageTravelled <= 1f)
             {
-                wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i] + percentageTravelled);
+                wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i] + percentageTravelled) + new Unity.Mathematics.float3(0, heightoffSet, 0);
                 wagonDistance[i] = wagonDistance[i] + percentageTravelled;
                 RotateObject(wagons[i], wagonSplines[i], wagonDistance[i]);
                 wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
@@ -176,13 +177,13 @@ public class SplineMove : MonoBehaviour
                     wagonSplines[i] = newSpline;
                     wagonDistance[i] = percentageTravelledNewSpline;
 
-                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i]);
+                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i]) + new Unity.Mathematics.float3(0, heightoffSet, 0);
                     RotateObject(wagons[i], wagonSplines[i], wagonDistance[i]);
                     wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
                 }
                 catch
                 {
-                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], 1f);
+                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], 1f) + new Unity.Mathematics.float3(0, heightoffSet, 0);
                     wagonDistance[i] = 1f;
                     RotateObject(wagons[i], wagonSplines[i], wagonDistance[i]);
                     wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
