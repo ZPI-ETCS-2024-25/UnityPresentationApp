@@ -34,6 +34,7 @@ public class UnityETCSComm : MonoBehaviour
 
     public void SendBaliseInfo(BaliseInfo info)
     {
+        Debug.Log($"Track:{info.trackNumber}  Line:{info.lineNumber}  Kilometer:{info.kilometer}  Number:{info.number}   Message:{info.messageType}");
         StartCoroutine(communication
             .POSTRequest(serverUri, info
             , response => { Debug.Log(response); })
