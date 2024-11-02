@@ -23,6 +23,11 @@ public class PathManager : MonoBehaviour
             Spline spline = splineContainer.Splines[i];
             SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1);
             IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
+
+            SplineData<UnityEngine.Object> rD;
+            bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+            RailData railData = rD[0].Value as RailData;
+
             if (linked.Count != 1)
             {
                 linkedSplines[i] = new List<(int,bool)>();
@@ -30,13 +35,21 @@ public class PathManager : MonoBehaviour
                 {
                     if(skiLinked.Spline != i)
                     {
-                        if(skiLinked.Knot != 0)
+
+                        SplineData<UnityEngine.Object> rDOther;
+                        bool gotRailDataOther = splineContainer.Splines[skiLinked.Spline].TryGetObjectData("RailData", out rDOther);
+                        RailData railDataOther = rDOther[0].Value as RailData;
+
+                        if (gotRailData && gotRailDataOther)
                         {
-                            linkedSplines[i].Add((skiLinked.Spline,true));
-                        }
-                        else
-                        {
-                            linkedSplines[i].Add((skiLinked.Spline, false));;
+                            if (skiLinked.Knot != 0 && railData.endingKnotGroup != railDataOther.endingKnotGroup)
+                            {
+                                linkedSplines[i].Add((skiLinked.Spline, true));
+                            }
+                            else if(skiLinked.Knot == 0 && railData.endingKnotGroup != railDataOther.startingKnotGroup)
+                            {
+                                linkedSplines[i].Add((skiLinked.Spline, false)); ;
+                            }
                         }
                     }
                 }
@@ -53,6 +66,13 @@ public class PathManager : MonoBehaviour
             Spline spline = splineContainer.Splines[i];
             SplineKnotIndex skiBase = new SplineKnotIndex(i, 0);
             IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
+
+
+            SplineData<UnityEngine.Object> rD;
+            bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+            RailData railData = rD[0].Value as RailData;
+
+
             if (linked.Count != 1)
             {
                 linkedSplines[i] = new List<(int,bool)>();
@@ -61,13 +81,20 @@ public class PathManager : MonoBehaviour
                     if (skiLinked.Spline != i)
                     {
 
-                        if (skiLinked.Knot != 0)
+                        SplineData<UnityEngine.Object> rDOther;
+                        bool gotRailDataOther = splineContainer.Splines[skiLinked.Spline].TryGetObjectData("RailData", out rDOther);
+                        RailData railDataOther = rDOther[0].Value as RailData;
+
+                        if (gotRailData && gotRailDataOther)
                         {
-                            linkedSplines[i].Add((skiLinked.Spline, true));
-                        }
-                        else
-                        {
-                            linkedSplines[i].Add((skiLinked.Spline, false)); ;
+                            if (skiLinked.Knot != 0 && railData.startingKnotGroup != railDataOther.endingKnotGroup)
+                            {
+                                linkedSplines[i].Add((skiLinked.Spline, true));
+                            }
+                            else if (skiLinked.Knot == 0 && railData.startingKnotGroup != railDataOther.startingKnotGroup)
+                            {
+                                linkedSplines[i].Add((skiLinked.Spline, false)); ;
+                            }
                         }
                     }
                 }
@@ -80,6 +107,6 @@ public class PathManager : MonoBehaviour
     {
         UpdatePath();
         UpdateReversePath();
-        //Debug.Log("cos");
+        Debug.Log("cos");
     }
 }
