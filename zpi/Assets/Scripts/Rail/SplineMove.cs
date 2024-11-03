@@ -14,6 +14,8 @@ public class SplineMove : MonoBehaviour
     public int startingSpline;
     private int currentSpline;
     private List<(int Spline,bool Backward)> previousSplineInfo;
+    private List<(UnityEngine.Vector3 KnotPosition, int PathIndex)> nextSplinesInfo;
+    private int nextSplineIndex;
 
 
     [SerializeField]
@@ -42,9 +44,11 @@ public class SplineMove : MonoBehaviour
     {
         currentSpline = startingSpline;
         previousSplineInfo = new List<(int,bool)>() { (currentSpline,backwards) };
+        nextSplinesInfo = new List<(UnityEngine.Vector3 KnotPosition, int PathIndex)>();
         speed = startingSpeed;
 
         InitialiseWagons();
+        PrepareNextSplinesInfo();
     }
 
     /*private void MoveWagons(float distancePercentage)
@@ -143,8 +147,8 @@ public class SplineMove : MonoBehaviour
             {
                 try
                 {
-                    int newSpline = splineContainer.GetComponent<PathManager>().path[spline][0].Spline;
-                    backwards = splineContainer.GetComponent<PathManager>().path[spline][0].Backward;
+                    int newSpline = splineContainer.GetComponent<PathManager>().path[spline][nextSplineIndex].Spline;
+                    backwards = splineContainer.GetComponent<PathManager>().path[spline][nextSplineIndex].Backward;
                     float moveLeftover = currenctDistance + percentageTravelled - 1f;
                     float newSplineLenght = splineContainer.CalculateLength(newSpline);
                     float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
@@ -157,6 +161,7 @@ public class SplineMove : MonoBehaviour
                     {
                         changeTrainPosition(newSpline, 1f-percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
                     }
+                    PrepareNextSplinesInfo();
                 }
                 catch
                 {
@@ -174,20 +179,22 @@ public class SplineMove : MonoBehaviour
             {
                 try
                 {
-                    int newSpline = splineContainer.GetComponent<PathManager>().reversePath[spline][0].Spline;
-                    backwards = splineContainer.GetComponent<PathManager>().reversePath[spline][0].Backward;
+                    int newSpline = splineContainer.GetComponent<PathManager>().reversePath[spline][nextSplineIndex].Spline;
+                    backwards = splineContainer.GetComponent<PathManager>().reversePath[spline][nextSplineIndex].Backward;
+
                     float moveLeftover = percentageTravelled - currenctDistance;
                     float newSplineLenght = splineContainer.CalculateLength(newSpline);
                     float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-
+                    
                     if (!backwards)
                     {
-                        changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
+                        changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance); 
                     }
                     else
                     {
                         changeTrainPosition(newSpline, 1f - percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
                     }
+                    PrepareNextSplinesInfo();
                 }
                 catch
                 {
@@ -406,5 +413,46 @@ public class SplineMove : MonoBehaviour
 
         distancePercentage -= wagonsLenghtSum / splineLength;
         
+    }
+
+
+    private void PrepareNextSplinesInfo()
+    {
+        nextSplinesInfo.Clear();
+
+        try
+        {
+            List<(int, bool)> nextSplines;
+            if (!backwards)
+            {
+                nextSplines = splineContainer.GetComponent<PathManager>().path[currentSpline];
+            }
+            else
+            {
+                nextSplines = splineContainer.GetComponent<PathManager>().reversePath[currentSpline];
+            }
+
+            int index = 0;
+            foreach ((int Spline, bool Backward) nextSpline in nextSplines)
+            {
+                if (nextSpline.Backward != true)
+                {
+                    nextSplinesInfo.Add((splineContainer.Splines[nextSpline.Spline][1].Position, index));
+                }
+                else
+                {
+                    int count = splineContainer.Splines[nextSpline.Spline].Count;
+                    nextSplinesInfo.Add((splineContainer.Splines[nextSpline.Spline][count - 1].Position, index));
+                }
+                index++;
+            }
+
+
+            nextSplineIndex = 0;
+        }
+        catch
+        {
+            nextSplineIndex = -1;
+        }
     }
 }

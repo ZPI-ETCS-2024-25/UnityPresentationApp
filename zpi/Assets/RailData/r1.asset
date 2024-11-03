@@ -16,3 +16,5 @@ MonoBehaviour:
   lineNumber: 1
   startKilometers: 0
   endKilometers: 20
+  startingKnotGroup: 1
+  endingKnotGroup: 1

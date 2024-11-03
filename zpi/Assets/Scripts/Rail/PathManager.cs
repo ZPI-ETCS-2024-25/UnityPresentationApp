@@ -107,6 +107,6 @@ public class PathManager : MonoBehaviour
     {
         UpdatePath();
         UpdateReversePath();
-        Debug.Log("cos");
+        //Debug.Log("cos");
     }
 }
