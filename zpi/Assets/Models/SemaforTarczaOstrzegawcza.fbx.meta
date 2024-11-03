@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: d74f2c8a6ed78aa43841ea0cb63be635
+guid: b665ac8382d42274698ad8ef797231f5
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -17,13 +17,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Red
-    second: {fileID: 2100000, guid: 2ca2cf1abed4895478fe98e0bbc52165, type: 2}
+      name: Gray
+    second: {fileID: 2100000, guid: 2e0472a3056abe542a6251a7510043e6, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: White
-    second: {fileID: 2100000, guid: 2c547fa710e149046ad8aad019b2d3fe, type: 2}
+      name: ShieldImage
+    second: {fileID: 2100000, guid: 8bb312f50252bd24b97cc4290cdf6cb6, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 1174607048
+    second: {fileID: 2800000, guid: 75f3e3a086709ba479a00db235f3b8a9, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
