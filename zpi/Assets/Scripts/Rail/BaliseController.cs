@@ -9,7 +9,7 @@ public class BaliseController : MonoBehaviour
 {
     public SplineContainer splineContainer;
 
-    public List<BaliseInfo> checkForBalises(int splineIndex,float previousDistanceProc,float currentDistanceProc,int speedDirection)
+    public List<BaliseInfo> checkForBalises(int splineIndex,float previousDistanceProc,float currentDistanceProc,bool backward)
     {
         SplineData<UnityEngine.Object> bD;
         SplineData<UnityEngine.Object> rD;
@@ -26,9 +26,9 @@ public class BaliseController : MonoBehaviour
 
 
 
-        if ((speedDirection == 1 && previousDistanceProc < currentDistanceProc) || (speedDirection == -1 && previousDistanceProc > currentDistanceProc))
+        if ((!backward && previousDistanceProc < currentDistanceProc) || (backward && previousDistanceProc > currentDistanceProc))
         {
-            List<BaliseGroup> passedBalises = getPassedBalises(baliseData,railData,previousDistanceProc, currentDistanceProc,speedDirection);
+            List<BaliseGroup> passedBalises = getPassedBalises(baliseData,railData,previousDistanceProc, currentDistanceProc,backward);
             if(passedBalises.Count == 0)
             {
                 return null;
@@ -36,7 +36,7 @@ public class BaliseController : MonoBehaviour
             List<BaliseInfo> passedBalisesInfo = getDataFromBalises(railData,passedBalises);
             if(passedBalisesInfo.Count > 0)
             {
-                if (speedDirection == -1)
+                if (backward)
                 {
                     passedBalisesInfo.Reverse();
                 }
@@ -46,19 +46,19 @@ public class BaliseController : MonoBehaviour
         return null;
     }
 
-    private List<BaliseGroup> getPassedBalises(BalisesData balisesData,RailData railData,float previousDistanceProc, float currentDistanceProc, int speedDirection) {
+    private List<BaliseGroup> getPassedBalises(BalisesData balisesData,RailData railData,float previousDistanceProc, float currentDistanceProc, bool backward) {
         List<BaliseGroup> passedBalises = new List<BaliseGroup>();
         foreach(BaliseGroup baliseGroup in balisesData.baliseGroups)
         {
             float baliseGroupPlacement = baliseGroup.kilometer / Math.Abs(railData.startKilometers-railData.endKilometers);
-            if(speedDirection == 1)
+            if(!backward)
             {
                 if (previousDistanceProc <= baliseGroupPlacement && currentDistanceProc >= baliseGroupPlacement)
                 {
                     passedBalises.Add(baliseGroup);
                 }
             }
-            if (speedDirection == -1)
+            if (backward)
             {
                 if (currentDistanceProc <= baliseGroupPlacement && previousDistanceProc >= baliseGroupPlacement)
                 {
@@ -81,7 +81,7 @@ public class BaliseController : MonoBehaviour
                 passedBalisesInfo.Add(new BaliseInfo()
                 {
                     kilometer = Convert.ToString(railData.startKilometers + baliseGroup.kilometer),
-                    number = i,
+                    number = i+1,
                     numberOfBalises = baliseGroup.balises.Length,
                     trackNumber = railData.trackNumber,
                     lineNumber = railData.lineNumber,
