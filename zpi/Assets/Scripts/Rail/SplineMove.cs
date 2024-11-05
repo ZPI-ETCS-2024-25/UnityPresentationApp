@@ -119,7 +119,43 @@ public class SplineMove : MonoBehaviour
         float splineLength = splineContainer.CalculateLength(spline);
         float percentageTravelled = speed * Time.fixedDeltaTime / splineLength;
 
-        if (!backwards)
+        float nextProcentage = backwards ? currenctDistance - percentageTravelled : currenctDistance + percentageTravelled;
+        bool limitNotReached = backwards ? nextProcentage >= 0f                   : nextProcentage <= 1f;
+
+        
+        if (limitNotReached)
+        {
+            changeTrainPosition(spline, nextProcentage, out afterMovingSpline, out afterMovingDistance); //if limit not reached move train
+        }
+        else
+        {
+            try
+            {
+                Dictionary<int,List<(int Spline,bool Backward)>> path = backwards ? splineContainer.GetComponent<PathManager>().reversePath : splineContainer.GetComponent<PathManager>().path;
+
+                int newSpline = path[spline][nextSplineIndex].Spline; //if reached change spline
+                backwards = path[spline][nextSplineIndex].Backward; // and possibly direction of travel
+
+                float percentageLeftover = backwards ? percentageTravelled - currenctDistance : currenctDistance + percentageTravelled - 1f; //how much procent was overfloved
+                float newSplineLenght = splineContainer.CalculateLength(newSpline);
+                float percentageLeftoverNewSpline = percentageLeftover * splineLength / newSplineLenght; //changing prom procent of old spline to procent of new spline
+                percentageLeftoverNewSpline = backwards ? 1f - percentageLeftoverNewSpline : percentageLeftoverNewSpline; // if backwards then start coutning from 1f
+
+                changeTrainPosition(newSpline, percentageLeftoverNewSpline, out afterMovingSpline, out afterMovingDistance);
+
+                PrepareNextSplinesInfo();
+                PointArrow();
+            }
+            catch
+            {
+                float maximumPercentage = backwards ? 0f : 1f; //if something goes wrong stop at maximum/minimum spline percentage
+                changeTrainPosition(spline, maximumPercentage, out afterMovingSpline, out afterMovingDistance);
+            }
+        }
+        
+
+
+        /*if (!backwards)
         {
             if (currenctDistance + percentageTravelled <= 1f)
             {
@@ -134,15 +170,10 @@ public class SplineMove : MonoBehaviour
                     float moveLeftover = currenctDistance + percentageTravelled - 1f;
                     float newSplineLenght = splineContainer.CalculateLength(newSpline);
                     float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-
-                    if (!backwards)
-                    {
-                        changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
-                    }
-                    else
-                    {
-                        changeTrainPosition(newSpline, 1f-percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
-                    }
+                    percentageTravelledNewSpline = backwards ? 1f - percentageTravelledNewSpline : percentageTravelledNewSpline;
+                    
+                    changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
+                    
                     PrepareNextSplinesInfo();
                     PointArrow();
                 }
@@ -168,15 +199,10 @@ public class SplineMove : MonoBehaviour
                     float moveLeftover = percentageTravelled - currenctDistance;
                     float newSplineLenght = splineContainer.CalculateLength(newSpline);
                     float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-                    
-                    if (!backwards)
-                    {
-                        changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance); 
-                    }
-                    else
-                    {
-                        changeTrainPosition(newSpline, 1f - percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
-                    }
+                    percentageTravelledNewSpline = backwards ? 1f - percentageTravelledNewSpline : percentageTravelledNewSpline;
+
+                    changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
+
                     PrepareNextSplinesInfo();
                     PointArrow();
                 }
@@ -185,7 +211,7 @@ public class SplineMove : MonoBehaviour
                     changeTrainPosition(spline, 0f, out afterMovingSpline, out afterMovingDistance);
                 }
             }
-        }
+        }*/
     }
 
 
