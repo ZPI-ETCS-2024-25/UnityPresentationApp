@@ -4,6 +4,7 @@ using UnityEngine.Splines;
 using System;
 using System.Numerics;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 public class SplineMove : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class SplineMove : MonoBehaviour
 
     public float startingSpeed = 1f;
     public float acceleration = 0.2f;
+    public float accelerationChange = 0.1f;
     public bool backwards = false;
     public float rotationCalculation = 0.05f;
     private float speed = 0f;
@@ -57,7 +59,7 @@ public class SplineMove : MonoBehaviour
     void FixedUpdate()
     {
         previousDistancePercentage = distancePercentage;
-        speed = speed + acceleration;
+        speed = Math.Max(speed + acceleration,0f);
 
         
         MoveTrain(currentSpline, distancePercentage,out currentSpline,out distancePercentage);
@@ -132,6 +134,14 @@ public class SplineMove : MonoBehaviour
             try
             {
                 Dictionary<int,List<(int Spline,bool Backward)>> path = backwards ? splineContainer.GetComponent<PathManager>().reversePath : splineContainer.GetComponent<PathManager>().path;
+
+                if(!path.ContainsKey(spline)) { //stop if end of track
+                    speed = 0f;
+                    acceleration = 0f;
+                    afterMovingSpline = spline;
+                    afterMovingDistance = backwards ? 0f : 1f;
+                    return;
+                }
 
                 int newSpline = path[spline][nextSplineIndex].Spline; //if reached change spline
                 backwards = path[spline][nextSplineIndex].Backward; // and possibly direction of travel
@@ -362,6 +372,41 @@ public class SplineMove : MonoBehaviour
         else
         {
             arrow.SetActive(false);
+        }
+    }
+
+
+    public void changeTrackLeft()
+    {
+        if (nextSplineIndex  != 0 && nextSplineIndex != -1)
+        {
+            nextSplineIndex -= 1;
+        }
+        PointArrow();
+    }
+
+    public void changeTrackRight()
+    {
+        if (nextSplineIndex != nextSplinesInfo.Count-1 && nextSplineIndex != -1)
+        {
+            nextSplineIndex += 1;
+        }
+        PointArrow();
+    }
+
+    public void changeAcceleration(InputAction.CallbackContext context)
+    {
+        float value = context.ReadValue<float>();
+        if(value == 1)
+        {
+            acceleration += accelerationChange;
+        }
+        else
+        {
+            if(speed != 0)
+            {
+                acceleration -= accelerationChange;
+            }
         }
     }
 }
