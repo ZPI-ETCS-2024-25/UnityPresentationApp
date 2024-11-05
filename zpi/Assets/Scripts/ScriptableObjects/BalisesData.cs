@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New balises",menuName ="Balises Data")]
+[System.Serializable]
 public class BalisesData : ScriptableObject
 {
     public List<BaliseGroup> baliseGroups;

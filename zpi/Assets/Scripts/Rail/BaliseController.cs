@@ -19,7 +19,7 @@ public class BaliseController : MonoBehaviour
         RailData railData = rD[0].Value as RailData;
 
 
-        if (!gotBaliseData || !gotRailData)
+        if (!gotBaliseData || !gotRailData || baliseData == null || railData == null)
         {
             return null;
         }
@@ -48,6 +48,11 @@ public class BaliseController : MonoBehaviour
 
     private List<BaliseGroup> getPassedBalises(BalisesData balisesData,RailData railData,float previousDistanceProc, float currentDistanceProc, bool backward) {
         List<BaliseGroup> passedBalises = new List<BaliseGroup>();
+
+        if(balisesData.baliseGroups.Count == 0) {
+            return passedBalises;
+        }
+
         foreach(BaliseGroup baliseGroup in balisesData.baliseGroups)
         {
             float baliseGroupPlacement = baliseGroup.kilometer / Math.Abs(railData.startKilometers-railData.endKilometers);
