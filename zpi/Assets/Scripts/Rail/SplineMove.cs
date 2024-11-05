@@ -146,72 +146,13 @@ public class SplineMove : MonoBehaviour
                 PrepareNextSplinesInfo();
                 PointArrow();
             }
-            catch
+            catch (Exception e)
             {
+                Debug.Log(e.ToString());
                 float maximumPercentage = backwards ? 0f : 1f; //if something goes wrong stop at maximum/minimum spline percentage
                 changeTrainPosition(spline, maximumPercentage, out afterMovingSpline, out afterMovingDistance);
             }
         }
-        
-
-
-        /*if (!backwards)
-        {
-            if (currenctDistance + percentageTravelled <= 1f)
-            {
-                changeTrainPosition(spline, currenctDistance + percentageTravelled, out afterMovingSpline, out afterMovingDistance);
-            }
-            else
-            {
-                try
-                {
-                    int newSpline = splineContainer.GetComponent<PathManager>().path[spline][nextSplineIndex].Spline;
-                    backwards = splineContainer.GetComponent<PathManager>().path[spline][nextSplineIndex].Backward;
-                    float moveLeftover = currenctDistance + percentageTravelled - 1f;
-                    float newSplineLenght = splineContainer.CalculateLength(newSpline);
-                    float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-                    percentageTravelledNewSpline = backwards ? 1f - percentageTravelledNewSpline : percentageTravelledNewSpline;
-                    
-                    changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
-                    
-                    PrepareNextSplinesInfo();
-                    PointArrow();
-                }
-                catch
-                {
-                    changeTrainPosition(spline, 1f, out afterMovingSpline, out afterMovingDistance);
-                }
-            }
-        }
-        else
-        {
-            if (currenctDistance - percentageTravelled >= 0f)
-            {
-                changeTrainPosition(spline, currenctDistance - percentageTravelled, out afterMovingSpline, out afterMovingDistance);
-            }
-            else
-            {
-                try
-                {
-                    int newSpline = splineContainer.GetComponent<PathManager>().reversePath[spline][nextSplineIndex].Spline;
-                    backwards = splineContainer.GetComponent<PathManager>().reversePath[spline][nextSplineIndex].Backward;
-
-                    float moveLeftover = percentageTravelled - currenctDistance;
-                    float newSplineLenght = splineContainer.CalculateLength(newSpline);
-                    float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-                    percentageTravelledNewSpline = backwards ? 1f - percentageTravelledNewSpline : percentageTravelledNewSpline;
-
-                    changeTrainPosition(newSpline, percentageTravelledNewSpline, out afterMovingSpline, out afterMovingDistance);
-
-                    PrepareNextSplinesInfo();
-                    PointArrow();
-                }
-                catch
-                {
-                    changeTrainPosition(spline, 0f, out afterMovingSpline, out afterMovingDistance);
-                }
-            }
-        }*/
     }
 
 
@@ -237,17 +178,12 @@ public class SplineMove : MonoBehaviour
 
             if (limitNotReached)
             {
-                //wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i] + percentageTravelled) + new Unity.Mathematics.float3(0, heightoffSet, 0);
                 changeWagonPosition(i, nextProcentage);
-                //wagonDistance[i] = wagonDistance[i] + percentageTravelled;
-                //RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                //wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
             }
             else
             {
                 try
                 {
-                    //Debug.Log("start");
                     int currentSpline = previousSplineInfo.FindIndex(info => info.Spline == wagonSplines[i]);
                     int newSpline = previousSplineInfo[currentSpline + 1].Spline;
                     bool newDirection = previousSplineInfo[currentSpline + 1].Backward;
@@ -255,124 +191,25 @@ public class SplineMove : MonoBehaviour
                     {
                         previousSplineInfo.RemoveAt(0);
                     }
-                    //Debug.Log("new path");
-                    //float moveLeftover = wagonDistance[i] + percentageTravelled - 1f;
-                    //float newSplineLenght = splineContainer.CalculateLength(newSpline);
-                    //float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
 
 
                     float percentageLeftover = wagonBackward[i] ? percentageTravelled - wagonDistance[i] : wagonDistance[i] + percentageTravelled - 1f; //how much procent was overfloved
                     float newSplineLenght = splineContainer.CalculateLength(newSpline);
                     float percentageLeftoverNewSpline = percentageLeftover * splineLength / newSplineLenght; //changing prom procent of old spline to procent of new spline
-                    //percentageLeftoverNewSpline = backwards ? 1f - percentageLeftoverNewSpline : percentageLeftoverNewSpline; // if backwards then start coutning from 1f
-                    //Debug.Log("calculated");
 
                     wagonSplines[i] = newSpline;
                     wagonBackward[i] = newDirection;
                     wagonDistance[i] = wagonBackward[i] ? 1f - percentageLeftoverNewSpline : percentageLeftoverNewSpline;
-                    //Debug.Log("saved data");
 
                     changeWagonPosition(i, wagonDistance[i]);
-                    //Debug.Log("moved");
-                    //wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i]) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                    //RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                    //wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
                 }
                 catch(Exception e)
                 {
                     Debug.Log(e.ToString());
                     float maximumPercentage = backwards ? 0f : 1f; //if something goes wrong stop at maximum/minimum spline percentage
-                    //wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], 1f) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                    //wagonDistance[i] = 1f;
-                    //RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                    //wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
                     changeWagonPosition(i, maximumPercentage);
                 }
             }
-
-            /*
-            if (!wagonBackward[i])
-            {
-                if (wagonDistance[i] + percentageTravelled <= 1f)
-                {
-                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i] + percentageTravelled) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                    wagonDistance[i] = wagonDistance[i] + percentageTravelled;
-                    RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                    wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                }
-                else
-                {
-                    try
-                    {
-                        int currentSpline = previousSplineInfo.FindIndex(info => info.Spline == wagonSplines[i]);
-                        int newSpline = previousSplineInfo[currentSpline + 1].Spline;
-                        bool newDirection = previousSplineInfo[currentSpline + 1].Backward;
-                        if (i == 0)
-                        {
-                            previousSplineInfo.RemoveAt(0);
-                        }
-                        float moveLeftover = wagonDistance[i] + percentageTravelled - 1f;
-                        float newSplineLenght = splineContainer.CalculateLength(newSpline);
-                        float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-
-                        wagonSplines[i] = newSpline;
-                        wagonBackward[i] = newDirection;
-                        wagonDistance[i] = wagonBackward[i] ? 1f-percentageTravelled : percentageTravelledNewSpline;
-                        
-                        wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i]) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                        RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                        wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                    }
-                    catch
-                    {
-                        wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], 1f) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                        wagonDistance[i] = 1f;
-                        RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                        wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                    }
-                }
-            }
-            else
-            {
-                if (wagonDistance[i] - percentageTravelled >= 0f)
-                {
-                    wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i] - percentageTravelled) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                    wagonDistance[i] = wagonDistance[i] - percentageTravelled;
-                    RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                    wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                }
-                else
-                {
-                    try
-                    {
-                        int currentSpline = previousSplineInfo.FindIndex(info => info.Spline == wagonSplines[i]);
-                        int newSpline = previousSplineInfo[currentSpline + 1].Spline;
-                        bool newDirection = previousSplineInfo[currentSpline + 1].Backward;
-                        if (i == 0)
-                        {
-                            previousSplineInfo.RemoveAt(0);
-                        }
-                        float moveLeftover = percentageTravelled - wagonDistance[i];
-                        float newSplineLenght = splineContainer.CalculateLength(newSpline);
-                        float percentageTravelledNewSpline = moveLeftover * splineLength / newSplineLenght;
-
-                        wagonSplines[i] = newSpline;
-                        wagonBackward[i] = newDirection;
-                        wagonDistance[i] = wagonBackward[i] ? 1f - percentageTravelled : percentageTravelledNewSpline;
-
-                        wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], wagonDistance[i]) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                        RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                        wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                    }
-                    catch
-                    {
-                        wagons[i].transform.position = splineContainer.EvaluatePosition(wagonSplines[i], 0f) + new Unity.Mathematics.float3(0, heightoffSet, 0);
-                        wagonDistance[i] = 0f;
-                        RotateObject(wagons[i], wagonSplines[i], wagonDistance[i], wagonBackward[i]);
-                        wagons[i].transform.Rotate(-90, 0, 0); //correct rotation
-                    }
-                }
-            }*/
         }
     }
 
@@ -399,16 +236,6 @@ public class SplineMove : MonoBehaviour
         wagonBackward = new bool[wagons.Length];
 
         InitialiseWagonsPlacement();
-
-        /*
-        if (!backwards)
-        {
-            InitialiseWagonsPlacement();
-        }
-        else
-        {
-            InitialiseWagonsPlacementReverse();
-        }*/
     }
 
     
@@ -465,70 +292,6 @@ public class SplineMove : MonoBehaviour
             distancePercentage -= wagonsLenghtSum / splineLength;
         }
     }
-
-    /*
-    private void InitialiseWagonsPlacement()
-    {
-        float trainScaleMultiplier = transform.localScale.x;
-        float splineLength = splineContainer.CalculateLength(currentSpline);
-
-
-
-        float wagonsLenghtSum = 0.0f;
-        for (int i = 0; i < wagons.Length; i++)
-        {
-            wagonBackward[i] = false;
-
-
-
-            //this model has its length as y
-            float wagonsLength = wagons[i].GetComponent<BoxCollider>().size.y * trainScaleMultiplier;
-            wagonsLenghtSum += wagonsLength;
-   
-            for (int j = wagons.Length - 1; j > i; j--)
-            {
-                wagonDistance[j] = wagonDistance[j] + (wagonsLength / splineLength);
-            }
-        }   
-        distancePercentage += wagonsLenghtSum / splineLength;
-    }
-
-
-
-    private void InitialiseWagonsPlacementReverse()
-    {
-        float trainScaleMultiplier = transform.localScale.x;
-        float splineLength = splineContainer.CalculateLength(currentSpline);
-
-
-        for(int i = 0; i < wagons.Length; i++)
-        {
-            wagonDistance[i] = 1f;
-        }
-
-        float wagonsLenghtSum = 0.0f;
-        for (int i = 0; i < wagons.Length; i++)
-        {
-            wagonBackward[i] = true;
-
-
-
-            //this model has its length as y
-            float wagonsLength = wagons[i].GetComponent<BoxCollider>().size.y * trainScaleMultiplier;
-            wagonsLenghtSum += wagonsLength;
-            
-            for (int j = 0; j < i; j++)
-            {
-                wagonDistance[j] = wagonDistance[j] - (wagonsLength / splineLength);
-            } 
-        }
-        distancePercentage = 1f;
-        previousDistancePercentage = 1f;
-
-        distancePercentage -= wagonsLenghtSum / splineLength;
-        
-    }*/
-    
 
     private void PrepareNextSplinesInfo()
     {
