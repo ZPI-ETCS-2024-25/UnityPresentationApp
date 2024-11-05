@@ -25,12 +25,12 @@
                 },
                 {
                     "name": "Change acceleration",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "dad678cd-1fb4-4112-9635-fb8f3b77d1a7",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -68,7 +68,7 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "positive",
+                    "name": "Positive",
                     "id": "5c1f9039-3de0-4ac2-b88e-47bde072f6de",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
@@ -79,7 +79,7 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "negative",
+                    "name": "Negative",
                     "id": "0f66a5dc-0277-495d-b930-5624af244734",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",

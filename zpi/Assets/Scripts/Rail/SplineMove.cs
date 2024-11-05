@@ -5,6 +5,7 @@ using System;
 using System.Numerics;
 using System.Linq;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class SplineMove : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class SplineMove : MonoBehaviour
     public float startingSpeed = 1f;
     public float acceleration = 0.2f;
     public float accelerationChange = 0.1f;
+    private float accelerationDirection = 0f; 
+    private float accelarationChangeRate = 0f;
     public bool backwards = false;
     public float rotationCalculation = 0.05f;
     private float speed = 0f;
@@ -41,7 +44,7 @@ public class SplineMove : MonoBehaviour
 
 
     public float wagonSeparationDistance = 0.03f;
-    public float heightoffSet = 1f; 
+    public float heightoffSet = 1f;
 
 
     void Start()
@@ -60,6 +63,13 @@ public class SplineMove : MonoBehaviour
     {
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
+        acceleration += accelerationChange * accelarationChangeRate;
+        acceleration += accelerationChange * accelerationDirection;
+        if(speed == 0f)
+        {
+            accelarationChangeRate = 0f;
+            accelerationDirection = 0f;
+        }
 
         
         MoveTrain(currentSpline, distancePercentage,out currentSpline,out distancePercentage);
@@ -399,14 +409,20 @@ public class SplineMove : MonoBehaviour
         float value = context.ReadValue<float>();
         if(value == 1)
         {
-            acceleration += accelerationChange;
+            accelerationDirection = 1;
         }
         else
         {
             if(speed != 0)
             {
-                acceleration -= accelerationChange;
+                accelerationDirection = -1;
             }
         }
+    }
+
+
+    public void changeAccelerationChangeRate(float value)
+    {
+        accelarationChangeRate = value / 5f; 
     }
 }
