@@ -63,12 +63,14 @@ public class SplineMove : MonoBehaviour
     {
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
+
         acceleration += accelerationChange * accelarationChangeRate;
         acceleration += accelerationChange * accelerationDirection;
-        if(speed == 0f)
+ 
+
+        if(acceleration < -0.2f)
         {
-            accelarationChangeRate = 0f;
-            accelerationDirection = 0f;
+            acceleration = -0.2f;
         }
 
         
