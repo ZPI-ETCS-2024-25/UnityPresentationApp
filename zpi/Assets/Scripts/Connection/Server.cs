@@ -1,20 +1,30 @@
+using Palmmedia.ReportGenerator.Core.Common;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading;
 using UnityEngine;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public class Server : MonoBehaviour
 {
+    public bool turnOff = false;
     private HttpListener listener;
     private Thread listenerThread;
     private bool _isRunning = false;
-    private string unityServerUri = "http://127.0.0.1:8001/";
+    public string unityServerUri = "http://127.0.0.1:8001/";
+    public event EventHandler<bool> BreakCommand;
 
 
     private void Start()
     {
-        StartServer(unityServerUri);      
+        if (!turnOff)
+        {
+            StartServer(unityServerUri);
+        }
+        //StartServer(unityServerUri);      
     }
 
     void OnApplicationQuit()
@@ -22,6 +32,11 @@ public class Server : MonoBehaviour
         StopServer();
     }
 
+
+    protected virtual void OnBreakCommand(bool startOrFinish)
+    {
+        BreakCommand?.Invoke(this,startOrFinish);
+    }
 
 
     public void StartServer(string uriPrefix)
@@ -42,8 +57,12 @@ public class Server : MonoBehaviour
     public void StopServer()
     {
         _isRunning = false;
-        listener.Stop();
-        listener.Close();
+
+        if(listener != null)
+        {
+            listener.Stop();
+            listener.Close();
+        }
 
         if (listenerThread != null && listenerThread.IsAlive)
         {
@@ -71,6 +90,22 @@ public class Server : MonoBehaviour
                     using (var reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding))
                     {
                         string receivedMessage = reader.ReadToEnd();
+                        try
+                        {
+                            JObject json = JObject.Parse(receivedMessage);
+                            string messageType = json["messageType"]?.Value<string>() ?? "";
+                            bool breakCommand = json["BreakCommand"]?.Value<bool>() ?? false;
+                            if (messageType == "brake")
+                            {
+                                OnBreakCommand(breakCommand);
+                                Debug.Log("success");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Log(e.ToString());
+                        }
+
                         Debug.Log("Message received from client: " + receivedMessage);
                     }
 

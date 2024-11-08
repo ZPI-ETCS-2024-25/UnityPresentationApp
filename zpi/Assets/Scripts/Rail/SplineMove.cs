@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class SplineMove : MonoBehaviour
 {
     public UnityETCSComm comm;
+    public Server server;
 
 
     public SplineContainer splineContainer;
@@ -54,9 +55,12 @@ public class SplineMove : MonoBehaviour
         nextSplinesInfo = new List<(UnityEngine.Vector3 KnotPosition, int PathIndex)>();
         speed = startingSpeed;
 
+        server.BreakCommand += StopTrainApp;
+
         InitialiseWagons();
         PrepareNextSplinesInfo();
         PointArrow();
+        
     }
 
     void FixedUpdate()
@@ -101,6 +105,18 @@ public class SplineMove : MonoBehaviour
         else
         {
             Debug.Log("No ballise controler");
+        }
+    }
+
+    private void StopTrainApp(object o, bool stop)
+    {
+        if (stop)
+        {
+            acceleration = -2f;
+        }
+        else
+        {
+            acceleration = 0f;
         }
     }
 
