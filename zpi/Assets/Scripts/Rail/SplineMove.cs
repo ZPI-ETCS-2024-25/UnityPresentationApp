@@ -32,9 +32,13 @@ public class SplineMove : MonoBehaviour
 
     public float startingSpeed = 1f;
     public float acceleration = 0.2f;
-    public float accelerationChange = 0.1f;
-    private float accelerationDirection = 0f; 
-    private float accelarationChangeRate = 0f;
+    public float maxAcceleration = 1f;
+    public float minAcceleration = -1f;
+    //public float accelerationChange = 0.1f;
+    //private float accelerationDirection = 0f; 
+    //private float accelarationChangeRate = 0f;
+
+
     public bool backwards = false;
     public float rotationCalculation = 0.05f;
     private float speed = 0f;
@@ -67,14 +71,11 @@ public class SplineMove : MonoBehaviour
     {
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
-
-        acceleration += accelerationChange * accelarationChangeRate;
-        acceleration += accelerationChange * accelerationDirection;
  
 
-        if(acceleration < -0.2f)
+        if(acceleration < minAcceleration)
         {
-            acceleration = -0.2f;
+            acceleration = minAcceleration;
         }
 
         
@@ -427,13 +428,13 @@ public class SplineMove : MonoBehaviour
         float value = context.ReadValue<float>();
         if(value == 1)
         {
-            accelerationDirection = 1;
+            acceleration = maxAcceleration;
         }
         else
         {
             if(speed != 0)
             {
-                accelerationDirection = -1;
+                acceleration = minAcceleration;
             }
         }
     }
@@ -441,6 +442,13 @@ public class SplineMove : MonoBehaviour
 
     public void changeAccelerationChangeRate(float value)
     {
-        accelarationChangeRate = value / 5f; 
+        if(value >= 0)
+        {
+            acceleration = maxAcceleration * value / 5f;
+        }
+        else
+        {
+            acceleration = minAcceleration * value  * (-1f)/ 5f;
+        }
     }
 }
