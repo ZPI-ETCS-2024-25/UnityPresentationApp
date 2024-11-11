@@ -11,17 +11,19 @@ public class SplineMove : MonoBehaviour
 {
     public UnityETCSComm comm;
     public Server server;
+    public PathManager pathManager;
+    public BaliseController baliseController;
+
+    public bool checkForBalises = true;
 
 
     public SplineContainer splineContainer;
     public int startingSpline;
     private int currentSpline;
     private List<(int Spline,bool Backward)> previousSplineInfo;
-
-    private List<(UnityEngine.Vector3 KnotPosition, int PathIndex)> nextSplinesInfo;
     private int nextSplineIndex;
-    public GameObject arrowPrefab;
-    private GameObject arrow;
+    //private List<(UnityEngine.Vector3 KnotPosition, int PathIndex)> nextSplinesInfo;
+    //private int nextSplineIndex;
 
     [SerializeField]
     private GameObject[] wagons;
@@ -34,9 +36,6 @@ public class SplineMove : MonoBehaviour
     public float acceleration = 0.2f;
     public float maxAcceleration = 1f;
     public float minAcceleration = -1f;
-    //public float accelerationChange = 0.1f;
-    //private float accelerationDirection = 0f; 
-    //private float accelarationChangeRate = 0f;
 
 
     public bool backwards = false;
@@ -56,14 +55,16 @@ public class SplineMove : MonoBehaviour
     {
         currentSpline = startingSpline;
         previousSplineInfo = new List<(int,bool)>() { (currentSpline,backwards) };
-        nextSplinesInfo = new List<(UnityEngine.Vector3 KnotPosition, int PathIndex)>();
+        nextSplineIndex = pathManager.GetNextSplineIndex(currentSpline,backwards);
+        //nextSplinesInfo = new List<(UnityEngine.Vector3 KnotPosition, int PathIndex)>();
         speed = startingSpeed;
 
         server.BreakCommand += StopTrainApp;
+        pathManager.JunctionChanged += UpdateNextSplineIndex;
 
         InitialiseWagons();
-        PrepareNextSplinesInfo();
-        PointArrow();
+        //PrepareNextSplinesInfo();
+        //PointArrow();
         
     }
 
@@ -89,23 +90,25 @@ public class SplineMove : MonoBehaviour
         }
 
         MoveWagons();
-        
-        
-        BaliseController baliseController = splineContainer.GetComponent<BaliseController>();
-        if(baliseController != null)
+
+
+        if (checkForBalises)
         {
-            List<BaliseInfo> baliseInformations = baliseController.checkForBalises(currentSpline,previousDistancePercentage, distancePercentage, backwards);
-            if (baliseInformations != null)
+            if (baliseController != null)
             {
-                foreach(BaliseInfo baliseInfo in baliseInformations)
+                List<BaliseInfo> baliseInformations = baliseController.checkForBalises(currentSpline, previousDistancePercentage, distancePercentage, backwards);
+                if (baliseInformations != null)
                 {
-                    comm.SendBaliseInfo(baliseInfo);
+                    foreach (BaliseInfo baliseInfo in baliseInformations)
+                    {
+                        comm.SendBaliseInfo(baliseInfo);
+                    }
                 }
             }
-        }
-        else
-        {
-            Debug.Log("No ballise controler");
+            else
+            {
+                Debug.Log("No ballise controler");
+            }
         }
     }
 
@@ -182,8 +185,9 @@ public class SplineMove : MonoBehaviour
 
                 changeTrainPosition(newSpline, percentageLeftoverNewSpline, out afterMovingSpline, out afterMovingDistance);
 
-                PrepareNextSplinesInfo();
-                PointArrow();
+                pathManager.GetNextSplineIndex(currentSpline, backwards);
+                //PrepareNextSplinesInfo();
+                //PointArrow();
             }
             catch (Exception e)
             {
@@ -332,7 +336,7 @@ public class SplineMove : MonoBehaviour
         }
     }
 
-    private void PrepareNextSplinesInfo()
+    /*private void PrepareNextSplinesInfo()
     {
         nextSplinesInfo.Clear();
 
@@ -363,9 +367,9 @@ public class SplineMove : MonoBehaviour
         {
             nextSplineIndex = -1;
         }
-    }
+    }*/
 
-    private void PointArrow()
+    /*private void PointArrow()
     {
         if(nextSplineIndex != -1)
         {
@@ -402,25 +406,25 @@ public class SplineMove : MonoBehaviour
         {
             arrow.SetActive(false);
         }
-    }
+    }*/
 
 
     public void changeTrackLeft()
     {
-        if (nextSplineIndex  != 0 && nextSplineIndex != -1)
+        /*if (nextSplineIndex  != 0 && nextSplineIndex != -1)
         {
             nextSplineIndex -= 1;
         }
-        PointArrow();
+        PointArrow();*/
     }
 
     public void changeTrackRight()
     {
-        if (nextSplineIndex != nextSplinesInfo.Count-1 && nextSplineIndex != -1)
+        /*if (nextSplineIndex != nextSplinesInfo.Count-1 && nextSplineIndex != -1)
         {
             nextSplineIndex += 1;
         }
-        PointArrow();
+        PointArrow();*/
     }
 
     public void changeAcceleration(InputAction.CallbackContext context)
@@ -450,5 +454,11 @@ public class SplineMove : MonoBehaviour
         {
             acceleration = minAcceleration * value  * (-1f)/ 5f;
         }
+    }
+
+
+    public void UpdateNextSplineIndex()
+    {
+        nextSplineIndex = pathManager.GetNextSplineIndex(currentSpline, backwards);
     }
 }

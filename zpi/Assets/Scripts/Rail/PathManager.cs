@@ -1,5 +1,8 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -7,13 +10,33 @@ using UnityEngine.Splines;
 public class PathManager : MonoBehaviour
 {
     public SplineContainer splineContainer;
+
     public Dictionary<int, List<(int Spline,bool Backward)>> path;
     public Dictionary<int, List<(int Spline,bool Backward)>> reversePath;
 
+    public Dictionary<int,int> junctions;
+    public Dictionary<int, int> reverseJunctions;
+    public event Action JunctionChanged;
+
+    public GameObject arrowPrefab;
+    private List<GameObject> arrows;
+
     private void Start()
     {
-        UpdatePathfinding();       
+        UpdatePathfinding();
+        CreateArrows();
     }
+
+
+    public void UpdatePathfinding()
+    {
+        UpdatePath();
+        UpdateReversePath();
+        UpdateJunctions();
+        UpdateReverseJunctions();
+        //Debug.Log("cos");
+    }
+
 
     public void UpdatePath()
     {
@@ -103,10 +126,97 @@ public class PathManager : MonoBehaviour
         reversePath = linkedSplines;
     }
 
-    public void UpdatePathfinding()
+    private void UpdateJunctions()
     {
-        UpdatePath();
-        UpdateReversePath();
-        //Debug.Log("cos");
+        junctions = new Dictionary<int, int>();
+        foreach(int i in path.Keys)
+        {
+            if (path[i].Count > 1)
+            {
+                //junctions[i] = path[i][0].Spline;
+                junctions[i] = 0;
+            }
+        }
+    }
+
+    private void UpdateReverseJunctions()
+    {
+        reverseJunctions = new Dictionary<int, int>();
+        foreach (int i in reversePath.Keys)
+        {
+            if (reversePath[i].Count > 1)
+            {
+                //junctions[i] = reversePath[i][0].Spline;
+                reverseJunctions[i] = 0;
+            }
+        }
+    }
+
+
+    public int GetNextSplineIndex(int currentSpline,bool currentBackward)
+    {
+        Dictionary<int, int> junctionsSource = currentBackward ? reverseJunctions : junctions;
+        Dictionary<int, List<(int Spline, bool Backward)>> pathSource = currentBackward ? reversePath : path;
+        if (junctionsSource.ContainsKey(currentSpline))
+        {
+            return junctionsSource[currentSpline]; //there is junction
+        }
+        else
+        {
+            if (pathSource.ContainsKey(currentSpline))
+            {
+                return 0; //there is no junction but there is path
+            }
+            else
+            {
+                return -1; //end of the line
+            }
+        }
+    }
+
+
+    public void CreateArrows()
+    {
+        arrows = new List<GameObject>();
+        foreach (int i in junctions.Keys)
+        {
+            GameObject arrow = Instantiate(arrowPrefab);
+            PositionArrow(arrow,i,false);
+            arrows.Add(arrow);
+        }
+
+        foreach (int i in reverseJunctions.Keys)
+        {
+            GameObject arrow = Instantiate(arrowPrefab);
+            PositionArrow(arrow, i, true);
+            arrows.Add(arrow);
+        }
+    }
+
+
+    private void PositionArrow(GameObject arrow, int spline,bool  backward)
+    {
+        UnityEngine.Vector3 localPosition = backward ? splineContainer[spline][0].Position 
+                                                     : splineContainer[spline][  splineContainer[spline].Count-1  ].Position;
+        UnityEngine.Vector3 worldPosition = splineContainer.transform.TransformPoint(localPosition);
+
+
+        int nextSplinePathIndex = backward ? reverseJunctions[spline] : junctions[spline];
+        int nextSplineContainerIndex = backward ? reversePath[spline][nextSplinePathIndex].Spline 
+                                                : path[spline][nextSplinePathIndex].Spline;
+        UnityEngine.Vector3 localPositionNext = backward ? splineContainer[nextSplineContainerIndex][1].Position
+                                                         : splineContainer[nextSplineContainerIndex][splineContainer[nextSplineContainerIndex].Count - 2].Position;
+        UnityEngine.Vector3 worldPositionNext = splineContainer.transform.TransformPoint(localPositionNext);
+
+        UnityEngine.Vector3 direction = worldPositionNext - worldPosition;
+        arrow.transform.position = worldPosition;
+        arrow.transform.rotation = UnityEngine.Quaternion.LookRotation(direction, transform.up);
+        arrow.transform.Rotate(0, 90, 0); //correct rotation
+    }
+
+
+    protected virtual void OnJunctionchanged()
+    {
+        JunctionChanged?.Invoke();
     }
 }

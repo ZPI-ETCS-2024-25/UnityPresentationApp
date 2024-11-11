@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134a0651b9e9434b8e00f4c2c3d2aa9, type: 3}
   m_Name: r2
   m_EditorClassIdentifier: 
-  trackNumber: l1
+  trackNumber: r1
   lineNumber: 2
   startKilometers: 20
   endKilometers: 30
-  startingKnotGroup: 2
-  endingKnotGroup: 1
+  startingKnotGroup: 0
+  endingKnotGroup: 0
