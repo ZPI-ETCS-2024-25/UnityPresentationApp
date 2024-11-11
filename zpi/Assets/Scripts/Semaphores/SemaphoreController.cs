@@ -7,14 +7,14 @@ public class SemaphoreController : MonoBehaviour
 {
 
     [SerializeField] private GameObject[] lightLens;
-    [SerializeField] private Material blankLight;
+    [SerializeField] protected Material blankLight;
     [SerializeField] protected Material redLight;
     [SerializeField] protected Material orangeLight;
     [SerializeField] protected Material greenLight;
     [SerializeField] protected Material whiteLight;
 
-    [SerializeField] private float blinkDelay = 1.0f;
-    private bool isBlinking = false; //check to keep one coroutine running
+    [SerializeField] protected float blinkDelay = 1.0f;
+    private bool isBlinking = true; //check to keep one coroutine running
     private Coroutine blinkingCoroutine; //reference for coroutine to stop it
     private Material blinkColor;
     private int blinkLensIndex;
@@ -24,7 +24,7 @@ public class SemaphoreController : MonoBehaviour
 
     protected void ResetLights()
     {
-        Debug.Log("Reset");
+        //Debug.Log("Reset");
         for (int i = 0; i < lightLens.Length; i++)
         {
             lightLens[i].GetComponent<MeshRenderer>().material = blankLight;
@@ -33,17 +33,17 @@ public class SemaphoreController : MonoBehaviour
 
     protected void SetLight(int lightIndex, Material color)
     {
-        Debug.Log(lightIndex + color.name);
+        //Debug.Log(lightIndex + color.name);
         lightLens[lightIndex].GetComponent<MeshRenderer>().material = color;
     }
 
     private IEnumerator BlinkLight(int lightIndex, Material color)
     {
         isBlinking = true;
-        lightLens[lightIndex].GetComponent<MeshRenderer>().material = color;
+        SetLight(lightIndex, color);
         yield return new WaitForSeconds(blinkDelay);
 
-        lightLens[lightIndex].GetComponent<MeshRenderer>().material = blankLight;
+        SetLight(lightIndex, blankLight);
         yield return new WaitForSeconds(blinkDelay);
         isBlinking = false;
     }
@@ -67,13 +67,13 @@ public class SemaphoreController : MonoBehaviour
         Debug.Log("Implement in subclass");
     }
 
-    private void Start()
+    void Start()
     {
         blinkLensIndex = 0;
         blinkColor = blankLight;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         SetSignal(currentSignal);
         if (!isBlinking)
