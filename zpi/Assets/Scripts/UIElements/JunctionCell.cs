@@ -21,10 +21,21 @@ public class JunctionCell : MonoBehaviour,ICell
         _cellIndex = cellIndex;
         _contactInfo = contactInfo;
 
+
+
         nameLabel.text = contactInfo.Name;
 
         position.ClearOptions();
-        List<string> newOptions = contactInfo.AllowedPositions.ConvertAll(x => x.ToString()) ;
+        List<string> newOptions = contactInfo.AllowedPositions.ConvertAll(x => x.Name) ;
         position.AddOptions(newOptions);
+
+        position.onValueChanged.AddListener(OnDropdownValueChange);
+    }
+
+
+    private void OnDropdownValueChange(int value)
+    {
+        int changed = _contactInfo.AllowedPositions[value].Index;
+        _contactInfo.PathManager.ChangeJunction(_contactInfo.Position,_contactInfo.Backward,changed);
     }
 }

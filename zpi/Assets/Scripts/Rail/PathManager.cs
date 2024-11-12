@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
@@ -12,7 +13,9 @@ public struct JunctionInfo
 {
     public string Name;
     public int Position;
-    public List<int> AllowedPositions;
+    public List<(int Index,string Name)> AllowedPositions;
+    public bool Backward;
+    public PathManager PathManager;
 }
 
 
@@ -145,7 +148,6 @@ public class PathManager : MonoBehaviour
         {
             if (path[i].Count > 1)
             {
-                //junctions[i] = path[i][0].Spline;
                 junctions[i] = 0;
             }
         }
@@ -158,7 +160,6 @@ public class PathManager : MonoBehaviour
         {
             if (reversePath[i].Count > 1)
             {
-                //junctions[i] = reversePath[i][0].Spline;
                 reverseJunctions[i] = 0;
             }
         }
@@ -176,8 +177,22 @@ public class PathManager : MonoBehaviour
 
             if (gotRailData)
             {
-                List<int> allowedPositions = path[i].Select(pair => pair.Spline).ToList();
-                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = junctions[i] , AllowedPositions = allowedPositions});
+                List<(int, string)> allowedPositions = new List<(int, string)>();
+                int count = 0;
+                foreach ((int Spline,bool Backward) pair in path[i])
+                {
+                    SplineData<UnityEngine.Object> rDOther;
+                    bool gotRailDataOther = splineContainer.Splines[pair.Spline].TryGetObjectData("RailData", out rDOther);
+                    RailData railDataOther = rDOther[0].Value as RailData;
+
+                    if (gotRailData)
+                    {
+                        allowedPositions.Add((count, railDataOther.name));
+                    }
+                    count++;
+                }
+                
+                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = i , AllowedPositions = allowedPositions,Backward = false,PathManager = this});
             }
             else
             {
@@ -192,8 +207,22 @@ public class PathManager : MonoBehaviour
 
             if (gotRailData)
             {
-                List<int> allowedPositions = reversePath[i].Select(pair => pair.Spline).ToList();
-                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = junctions[i] ,AllowedPositions = allowedPositions});
+                List<(int, string)> allowedPositions = new List<(int, string)>();
+                int count = 0;
+                foreach ((int Spline, bool Backward) pair in reversePath[i])
+                {
+                    SplineData<UnityEngine.Object> rDOther;
+                    bool gotRailDataOther = splineContainer.Splines[pair.Spline].TryGetObjectData("RailData", out rDOther);
+                    RailData railDataOther = rDOther[0].Value as RailData;
+
+                    if (gotRailData)
+                    {
+                        allowedPositions.Add((count, railDataOther.name));
+                    }
+                    count++;
+                }
+
+                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = i ,AllowedPositions = allowedPositions,Backward = true,PathManager = this});
             }
             else
             {
@@ -243,6 +272,20 @@ public class PathManager : MonoBehaviour
         }
     }
 
+    private void RepositionArrows()
+    {
+        for(int i = 0; i<junctions.Count;i++)
+        {
+            List<int> keys = junctions.Keys.ToList();
+            PositionArrow(arrows[i], keys[i], false);
+        }
+        for(int i = junctions.Count; i < reverseJunctions.Count + junctions.Count; i++)
+        {
+            List<int> keys = reverseJunctions.Keys.ToList();
+            PositionArrow(arrows[i], keys[i], true);
+        }
+    }
+
 
     private void PositionArrow(GameObject arrow, int spline,bool  backward)
     {
@@ -270,8 +313,12 @@ public class PathManager : MonoBehaviour
     }
 
 
-    public void ChangeJunction(int index,int nextPosition)
+    public void ChangeJunction(int index,bool backward,int changed)
     {
-
+        //Debug.Log("changing");
+        Dictionary<int, int> junctionsSource = backward ? reverseJunctions : junctions;
+        junctionsSource[index] = changed;
+        RepositionArrows();
+        OnJunctionchanged();
     }
 }
