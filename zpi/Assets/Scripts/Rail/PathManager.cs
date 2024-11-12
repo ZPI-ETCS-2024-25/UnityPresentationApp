@@ -2,10 +2,19 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
+
+public struct JunctionInfo
+{
+    public string Name;
+    public int Position;
+    public List<int> AllowedPositions;
+}
+
 
 public class PathManager : MonoBehaviour
 {
@@ -16,14 +25,17 @@ public class PathManager : MonoBehaviour
 
     public Dictionary<int,int> junctions;
     public Dictionary<int, int> reverseJunctions;
+    public List<JunctionInfo> junctionInfo;
+
     public event Action JunctionChanged;
 
     public GameObject arrowPrefab;
-    private List<GameObject> arrows;
+    public List<GameObject> arrows;
 
-    private void Start()
+    private void Awake()
     {
         UpdatePathfinding();
+        GetJunctionInfo();
         CreateArrows();
     }
 
@@ -153,6 +165,44 @@ public class PathManager : MonoBehaviour
     }
 
 
+    private void GetJunctionInfo()
+    {
+        junctionInfo = new List<JunctionInfo>();
+        foreach(int i in junctions.Keys)
+        {
+            SplineData<UnityEngine.Object> rD;
+            bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+            RailData railData = rD[0].Value as RailData;
+
+            if (gotRailData)
+            {
+                List<int> allowedPositions = path[i].Select(pair => pair.Spline).ToList();
+                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = junctions[i] , AllowedPositions = allowedPositions});
+            }
+            else
+            {
+                Debug.Log("junction info: rail data not present");
+            }
+        }
+        foreach (int i in reverseJunctions.Keys)
+        {
+            SplineData<UnityEngine.Object> rD;
+            bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+            RailData railData = rD[0].Value as RailData;
+
+            if (gotRailData)
+            {
+                List<int> allowedPositions = reversePath[i].Select(pair => pair.Spline).ToList();
+                junctionInfo.Add(new JunctionInfo() { Name = railData.name, Position = junctions[i] ,AllowedPositions = allowedPositions});
+            }
+            else
+            {
+                Debug.Log("junction info: rail data not present");
+            }
+        }
+    }
+
+
     public int GetNextSplineIndex(int currentSpline,bool currentBackward)
     {
         Dictionary<int, int> junctionsSource = currentBackward ? reverseJunctions : junctions;
@@ -214,9 +264,14 @@ public class PathManager : MonoBehaviour
         arrow.transform.Rotate(0, 90, 0); //correct rotation
     }
 
-
     protected virtual void OnJunctionchanged()
     {
         JunctionChanged?.Invoke();
+    }
+
+
+    public void ChangeJunction(int index,int nextPosition)
+    {
+
     }
 }
