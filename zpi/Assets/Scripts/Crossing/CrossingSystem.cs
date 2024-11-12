@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class CrossingSystem : MonoBehaviour
 {
+    [SerializeField] private UnityServerComm comm;
     [SerializeField] private SemaphoreCrossingsController semaphoreController;
     [SerializeField] private Animator animator;
     public bool close = false;
     public bool open = false;
-    private bool changingState = false;
     private Coroutine openingCoroutine;
     [SerializeField] private float barrierDelay = 6.0f;
+    [SerializeField] private bool damagedCrossing = false;
 
     private IEnumerator OpenCrossingEnumerator()
     {
@@ -38,6 +39,14 @@ public class CrossingSystem : MonoBehaviour
         }
         animator.SetBool("Close", true);
         semaphoreController.StartBlinking();
+    }
+
+    void Start()
+    {
+        if (damagedCrossing)
+        {
+            comm.SendCrossingState(0, damagedCrossing);
+        }
     }
 
     // Update is called once per frame

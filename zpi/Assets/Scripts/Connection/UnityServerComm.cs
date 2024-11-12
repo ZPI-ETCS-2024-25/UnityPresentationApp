@@ -6,10 +6,30 @@ public class UnityServerComm : MonoBehaviour
 {
     public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8002/";
-
+    private string unityEndPoint = "unity/";
+    //unity/crossingState
     void Start()
     {
-        RegisterTrain(7,200,80000,100,1000);
+        //RegisterTrain(7,200,80000,100,1000);
+    }
+
+    private void SendPOSTRequest(string endPoint, object postData)
+    {
+        StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
+    }
+
+    public void SendCrossingState(int crossingId, bool damaged)
+    {
+        SendPOSTRequest("crossingState/", new CrossingState()
+        {
+            crossingId = crossingId,
+            damaged = damaged
+        }) ;
+    }
+
+    public void SendSemaphoreSignal(int semaphoreId)
+    {
+
     }
 
     private void RegisterTrain(int trainId, int lenghtMeters, int weightKilos, int maxSpeedMps, int breakWeight)
@@ -24,6 +44,11 @@ public class UnityServerComm : MonoBehaviour
     } 
 }
 
+public class CrossingState
+{
+    public int crossingId;
+    public bool damaged;
+}
 
 public class TrainRegister
 {
