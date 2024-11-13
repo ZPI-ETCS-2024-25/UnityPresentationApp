@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public struct CrossingInfo
+{
+    public string Name;
+    public bool State;
+    public List<(int Index, string Name)> AllowedStates;
+    public CrossingSystem CrossingSystem;
+}
+
 public class CrossingSystem : MonoBehaviour
 {
     [SerializeField] private UnityServerComm comm;
@@ -13,6 +21,26 @@ public class CrossingSystem : MonoBehaviour
     private Coroutine openingCoroutine;
     [SerializeField] private float barrierDelay = 6.0f;
     [SerializeField] private bool damagedCrossing = false;
+
+    public CrossingInfo crossingInfo;
+    private List<(int Index, string Name)> allowedStatesList;
+
+    private List<(int Index, string Name)> GetAllowedStates()
+    {
+        List<(int, string)> allowedStates = new List<(int, string)>();
+        allowedStates.Add((0, "Working"));
+        allowedStates.Add((1, "Damaged"));
+
+        return allowedStates;
+    }
+
+    public CrossingInfo GetCrossingInfo()
+    {
+        return new CrossingInfo()
+        {
+            Name = this.name, State = damagedCrossing, AllowedStates = allowedStatesList, CrossingSystem = this 
+        };
+    }
 
     private IEnumerator OpenCrossingEnumerator()
     {
@@ -43,6 +71,9 @@ public class CrossingSystem : MonoBehaviour
 
     void Start()
     {
+        allowedStatesList = GetAllowedStates();
+        crossingInfo = GetCrossingInfo();
+
         if (damagedCrossing)
         {
             comm.SendCrossingState(0, damagedCrossing);
@@ -52,12 +83,12 @@ public class CrossingSystem : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (close) {
-            CloseCrossing();
-            close = false;
-        }if (open) {
-            OpenCrossing(); 
-            open = false; 
-        }
+        //if (close) {
+        //    CloseCrossing();
+        //    close = false;
+        //}if (open) {
+        //    OpenCrossing(); 
+        //    open = false; 
+        //}
     }
 }

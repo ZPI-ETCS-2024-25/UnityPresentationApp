@@ -1,35 +1,54 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SemaphoreWarningShieldController : SemaphoreController
 {
-    override public void SetSignal(SemaphoreSignals signal)
+    private SemaphoreWarningShieldSignals prevSignal;
+    public SemaphoreWarningShieldSignals currSignal;
+    public void SetSignal(SemaphoreWarningShieldSignals signal)
     {
-        if (signal != prevSignal)
+        if ((int)signal != currentSignal)
         {
             StopBlinkLight();
             ResetLights();
-            Debug.Log(signal);
+
             switch (signal)
             {
-                case SemaphoreSignals.Os1:
+                case SemaphoreWarningShieldSignals.Os1:
                     SetLight(1, orangeLight);
                     break;
-                case SemaphoreSignals.Os2:
+                case SemaphoreWarningShieldSignals.Os2:
                     SetLight(0, greenLight);
                     break;
-                case SemaphoreSignals.Os3:
+                case SemaphoreWarningShieldSignals.Os3:
                     StartBlinkLight(0, greenLight);
                     break;
-                case SemaphoreSignals.Os4:
+                case SemaphoreWarningShieldSignals.Os4:
                     StartBlinkLight(1, orangeLight);
                     break;
-                default:
-                    Debug.Log("Bad signal " + signal);
-                    break;
             }
-            prevSignal = signal;
+            currentSignal = (int)signal;
         }
     }
+
+    override protected List<(int, string)> GetAllowedSignals()
+    {
+        List<(int, string)> allowedSignals = new List<(int, string)>();
+
+        foreach (SemaphoreFiveChamberSignals signal in Enum.GetValues(typeof(SemaphoreFiveChamberSignals)))
+        {
+            allowedSignals.Add(((int)signal, signal.ToString()));
+        }
+
+        return allowedSignals;
+    }
+}
+public enum SemaphoreWarningShieldSignals
+{
+    Os1,
+    Os2,
+    Os3,
+    Os4
 }

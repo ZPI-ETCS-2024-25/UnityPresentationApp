@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
+public struct SemaphoreInfo
+{
+    public string Name;
+    public int Signal;
+    public List<(int Index, string Name)> AllowedSignals;
+    public SemaphoreController SemaphoreController;
+}
+
 public class SemaphoreController : MonoBehaviour
 {
 
@@ -18,9 +26,10 @@ public class SemaphoreController : MonoBehaviour
     private Coroutine blinkingCoroutine; //reference for coroutine to stop it
     private Material blinkColor;
     private int blinkLensIndex;
+    public int currentSignal;
 
-    protected SemaphoreSignals prevSignal;
-    public SemaphoreSignals currentSignal;
+    public SemaphoreInfo semaphoreInfo;
+    protected List<(int, string)> allowedSignalsList;
 
     protected void ResetLights()
     {
@@ -63,19 +72,47 @@ public class SemaphoreController : MonoBehaviour
         isBlinking = true;
     }
 
-    virtual public void SetSignal(SemaphoreSignals signal){
-        Debug.Log("Implement in subclass");
+    public void SetSignal(){
+        Debug.Log("Implement overload in subclass/bad call");
     }
 
-    void Start()
+    virtual protected List<(int, string)> GetAllowedSignals()
+    {
+        return new List<(int, string)>();
+    }
+
+    public SemaphoreInfo GetSemaphoreInfo()
+    {
+        return new SemaphoreInfo()
+        {
+            Name = this.name,
+            Signal = currentSignal,
+            AllowedSignals = allowedSignalsList,
+            SemaphoreController = this
+        };
+    }
+
+    private void Awake()
+    {
+        allowedSignalsList = GetAllowedSignals();
+        semaphoreInfo = GetSemaphoreInfo();
+    }
+
+    private void Start()
     {
         blinkLensIndex = 0;
         blinkColor = blankLight;
+        SemaphoreInfo test = GetSemaphoreInfo();
+        Debug.Log(test.Name);
+        foreach ((int idx, string nam) in test.AllowedSignals)
+        {
+            Debug.Log(idx + " " + nam);
+        }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        SetSignal(currentSignal);
+        //SetSignal(currentSignal);
         if (!isBlinking)
         {
             blinkingCoroutine = StartCoroutine(BlinkLight(blinkLensIndex, blinkColor));
@@ -83,22 +120,22 @@ public class SemaphoreController : MonoBehaviour
     }
 }
 
-public enum SemaphoreSignals{
-    S1,
-    S2,
-    S4,
-    S5,
-    S10,
-    S10a,
-    S12,
-    S12a,
-    S13,
-    S13a,
-    Os1,
-    Os2, 
-    Os3, 
-    Os4,
-    Osp1,
-    Osp2,
-}
+//public enum SemaphoreSignals{
+//    S1,
+//    S2,
+//    S4,
+//    S5,
+//    S10,
+//    S10a,
+//    S12,
+//    S12a,
+//    S13,
+//    S13a,
+//    Os1,
+//    Os2, 
+//    Os3, 
+//    Os4,
+//    Osp1,
+//    Osp2,
+//}
 

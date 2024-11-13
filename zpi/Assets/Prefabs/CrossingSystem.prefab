@@ -34,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9660161
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalRotation.x
@@ -42,7 +42,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.25848177
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalRotation.z
@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 29.96
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -125,8 +125,6 @@ MonoBehaviour:
   greenLight: {fileID: 0}
   whiteLight: {fileID: 0}
   blinkDelay: 0.8
-  currentSignal: 0
-  barrierDelay: 6
 --- !u!114 &7824892251847966933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,10 +137,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae36ba0d962c084d95a32c10ee383c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   semaphoreController: {fileID: 7778838226647885130}
   animator: {fileID: 8213447061143045141}
   close: 0
   open: 0
+  barrierDelay: 6
+  damagedCrossing: 0
 --- !u!95 &8213447061143045141
 Animator:
   serializedVersion: 5
