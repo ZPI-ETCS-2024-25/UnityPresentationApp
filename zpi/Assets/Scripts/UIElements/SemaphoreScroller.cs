@@ -5,7 +5,7 @@ using PolyAndCode.UI;
 
 
 
-public class JunctionScroller : MonoBehaviour, IRecyclableScrollRectDataSource
+public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
 {
     public PathManager pathManager;
 
@@ -15,17 +15,15 @@ public class JunctionScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     [SerializeField]
     private int _dataLength;
 
-    //Dummy data List
     private List<JunctionInfo> _contactList = new List<JunctionInfo>();
 
-    //Recyclable scroll rect's data source must be assigned in Awake.
+
     private void Awake()
     {
         GetJunctions();
         //InitData();
         _recyclableScrollRect.DataSource = this;
     }
-
 
 
     private void GetJunctions()
