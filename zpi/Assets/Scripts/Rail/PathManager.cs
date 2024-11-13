@@ -1,11 +1,6 @@
-using JetBrains.Annotations;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Unity.IO.LowLevel.Unsafe;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -25,6 +20,7 @@ public class PathManager : MonoBehaviour
 
     public Dictionary<int, List<(int Spline,bool Backward)>> path;
     public Dictionary<int, List<(int Spline,bool Backward)>> reversePath;
+    public Dictionary<(int Spline, bool Backward), List<(int Spline, bool Backward)>> paths;
 
     public Dictionary<int,int> junctions;
     public Dictionary<int, int> reverseJunctions;
@@ -49,7 +45,6 @@ public class PathManager : MonoBehaviour
         UpdateReversePath();
         UpdateJunctions();
         UpdateReverseJunctions();
-        //Debug.Log("cos");
     }
 
 
@@ -59,7 +54,7 @@ public class PathManager : MonoBehaviour
         for (int i = 0; i < splineContainer.Splines.Count; i++)
         {
             Spline spline = splineContainer.Splines[i];
-            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1);
+            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1/**/);
             IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
 
             SplineData<UnityEngine.Object> rD;
@@ -80,11 +75,11 @@ public class PathManager : MonoBehaviour
 
                         if (gotRailData && gotRailDataOther)
                         {
-                            if (skiLinked.Knot != 0 && railData.endingKnotGroup != railDataOther.endingKnotGroup)
+                            if (skiLinked.Knot != 0 && railData.endingKnotGroup/**/ != railDataOther.endingKnotGroup)
                             {
                                 linkedSplines[i].Add((skiLinked.Spline, true));
                             }
-                            else if(skiLinked.Knot == 0 && railData.endingKnotGroup != railDataOther.startingKnotGroup)
+                            else if(skiLinked.Knot == 0 && railData.endingKnotGroup/**/ != railDataOther.startingKnotGroup)
                             {
                                 linkedSplines[i].Add((skiLinked.Spline, false)); ;
                             }
@@ -93,7 +88,7 @@ public class PathManager : MonoBehaviour
                 }
             }
         }
-        path = linkedSplines;
+        path = linkedSplines/**/;
     }
 
     public void UpdateReversePath()
@@ -140,6 +135,80 @@ public class PathManager : MonoBehaviour
         }
         reversePath = linkedSplines;
     }
+
+
+    public void UpdatePathCombined()
+    {
+        Dictionary<(int,bool), List<(int, bool)>> paths = new Dictionary<(int,bool), List<(int, bool)>>();
+        for (int i = 0; i < splineContainer.Splines.Count; i++)
+        {
+            Spline spline = splineContainer.Splines[i];
+            SplineKnotIndex lastKnot = new SplineKnotIndex(i, spline.Count - 1);
+            SplineKnotIndex firstKnot = new SplineKnotIndex(i, 0);
+
+            List<(int, bool)> connectedSplinesForward = GetConnectedPaths(lastKnot,i,false);
+            List<(int, bool)> connectedSplinesBackward = GetConnectedPaths(firstKnot, i, true);
+
+            if(connectedSplinesForward.Count != 0)
+            {
+                paths[(i, false)] = connectedSplinesForward;
+            }
+            if (connectedSplinesBackward.Count != 0)
+            {
+                paths[(i, true)] = connectedSplinesBackward;
+            }
+        }
+        this.paths = paths;
+    }
+
+    private List<(int, bool)> GetConnectedPaths(SplineKnotIndex knot,int splineIndex,bool backward)
+    {
+        List<(int, bool)> connectedSplines = new  List<(int, bool)>();
+        IReadOnlyList<SplineKnotIndex> linkedKnots = splineContainer.KnotLinkCollection.GetKnotLinks(knot);
+
+        SplineData<UnityEngine.Object> rD;
+        bool gotRailData = splineContainer.Splines[splineIndex].TryGetObjectData("RailData", out rD);
+        RailData railData = rD[0].Value as RailData;
+
+        if(linkedKnots.Count != 1)
+        {
+            foreach (SplineKnotIndex skiLinked in linkedKnots)
+            {
+                int knotGroup = backward ? railData.startingKnotGroup : railData.endingKnotGroup;
+                (int,bool)? info = GetInfoFromConnected(skiLinked,splineIndex,knotGroup);
+                if (info != null) {
+                    connectedSplines.Add(info.Value);
+                }
+            }
+        }
+        return connectedSplines;
+    }
+
+    private (int, bool)? GetInfoFromConnected(SplineKnotIndex knotInfo,int originalSplineIndex,int originalKnotGroup)
+    {
+        if (knotInfo.Spline != originalSplineIndex)
+        {
+            SplineData<UnityEngine.Object> rD;
+            bool gotRailData = splineContainer.Splines[knotInfo.Spline].TryGetObjectData("RailData", out rD);
+            RailData railData = rD[0].Value as RailData;
+
+            if (gotRailData)
+            {
+                bool connectedKnotIsLast = knotInfo.Knot  != 0 ? originalKnotGroup != railData.endingKnotGroup : originalKnotGroup != railData.startingKnotGroup;
+                if (connectedKnotIsLast)
+                {
+                    return (knotInfo.Spline, true);
+                }
+                else if (!connectedKnotIsLast)
+                {
+                    return (knotInfo.Spline,false);
+                }
+            }
+        }
+        return null;
+    }
+
+
 
     private void UpdateJunctions()
     {
