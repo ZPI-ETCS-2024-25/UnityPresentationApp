@@ -52,7 +52,7 @@ public class CrossingSystem : MonoBehaviour
 
     public void OpenCrossing()
     {
-        if (openingCoroutine == null)
+        if (openingCoroutine == null && !damagedCrossing)
         {
             openingCoroutine = StartCoroutine(OpenCrossingEnumerator());
         }
@@ -60,13 +60,16 @@ public class CrossingSystem : MonoBehaviour
 
     public void CloseCrossing()
     {
-        if (openingCoroutine != null)
+        if (!damagedCrossing)
         {
-            StopCoroutine(openingCoroutine);
-            openingCoroutine = null;
+            if (openingCoroutine != null)
+            {
+                StopCoroutine(openingCoroutine);
+                openingCoroutine = null;
+            }
+            animator.SetBool("Close", true);
+            semaphoreController.StartBlinking();
         }
-        animator.SetBool("Close", true);
-        semaphoreController.StartBlinking();
     }
 
     void Start()
@@ -80,7 +83,6 @@ public class CrossingSystem : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         //if (close) {

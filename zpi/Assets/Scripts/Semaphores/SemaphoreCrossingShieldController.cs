@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SemaphoreCrossingShieldController : SemaphoreController
 {
-    private SemaphoreCrossingShieldSignals prevSignal;
-
     public void SetSignal(SemaphoreCrossingShieldSignals signal)
     {
         if ((int)signal != currentSignal)

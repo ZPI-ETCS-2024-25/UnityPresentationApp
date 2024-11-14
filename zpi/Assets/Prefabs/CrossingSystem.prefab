@@ -1,5 +1,72 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2348411106703867337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3820918873214186555}
+  - component: {fileID: 23002804831373595}
+  - component: {fileID: 6539998908563401876}
+  m_Layer: 0
+  m_Name: CrossingTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3820918873214186555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348411106703867337}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 44.53, y: 0, z: 1.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2572176270473462127}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &23002804831373595
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348411106703867337}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5030632, y: 3.6364129, z: 2.8577366}
+  m_Center: {x: 0.2515326, y: 1.3182071, z: 0.169119}
+--- !u!114 &6539998908563401876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348411106703867337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ba080dfbde2e4c4eb8a56141476101a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crossing: {fileID: 2952641840701168597}
 --- !u!1001 &2609991899359995524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70,7 +137,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3820918873214186555}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
       insertIndex: -1
@@ -95,6 +165,11 @@ GameObject:
 --- !u!1 &1919871074272871229 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4511565985046259129, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
+  m_PrefabInstance: {fileID: 2609991899359995524}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2572176270473462127 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8275811cf30f7dd42b111316e816524f, type: 3}
   m_PrefabInstance: {fileID: 2609991899359995524}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2952641840701168597 stripped
@@ -125,6 +200,7 @@ MonoBehaviour:
   greenLight: {fileID: 0}
   whiteLight: {fileID: 0}
   blinkDelay: 0.8
+  currentSignal: 0
 --- !u!114 &7824892251847966933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,7 +218,7 @@ MonoBehaviour:
   animator: {fileID: 8213447061143045141}
   close: 0
   open: 0
-  barrierDelay: 6
+  barrierDelay: 3
   damagedCrossing: 0
 --- !u!95 &8213447061143045141
 Animator:

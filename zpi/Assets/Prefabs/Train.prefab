@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2149752206565573290}
   m_Layer: 0
   m_Name: train-engine
-  m_TagString: Untagged
+  m_TagString: Train
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,11 +119,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comm: {fileID: 0}
-  spline: {fileID: 0}
+  server: {fileID: 0}
+  pathManager: {fileID: 0}
+  baliseController: {fileID: 0}
+  checkForBalises: 1
+  splineContainer: {fileID: 0}
+  startingSpline: 0
   wagons:
   - {fileID: 6014820887448370186}
   startingSpeed: 1
   acceleration: 0.01
+  maxAcceleration: 1
+  minAcceleration: -1
+  backwards: 0
+  rotationCalculation: 0.05
+  wagonSeparationDistance: 0.03
+  heightoffSet: 1
 --- !u!1 &6014820887448370186
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class SemaphoreWarningShieldController : SemaphoreController
 {
-    private SemaphoreWarningShieldSignals prevSignal;
-    public SemaphoreWarningShieldSignals currSignal;
     public void SetSignal(SemaphoreWarningShieldSignals signal)
     {
         if ((int)signal != currentSignal)
