@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SemaphoreFiveChamberController : SemaphoreController
 {
-    public void SetSignal(SemaphoreFiveChamberSignals signal)
+    public override void SetSignal(int signalIndex)
     {
+        SemaphoreFiveChamberSignals signal = (SemaphoreFiveChamberSignals)signalIndex;
         if ((int)signal != currentSignal)
         {
             StopBlinkLight();

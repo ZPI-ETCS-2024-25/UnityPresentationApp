@@ -7,7 +7,7 @@ using PolyAndCode.UI;
 
 public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
 {
-    public PathManager pathManager;
+    public SemaphoreManager semaphoreManager;
 
     [SerializeField]
     RecyclableScrollRect _recyclableScrollRect;
@@ -15,21 +15,21 @@ public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     [SerializeField]
     private int _dataLength;
 
-    private List<JunctionInfo> _contactList = new List<JunctionInfo>();
+    private List<SemaphoreInfo> _contactList = new List<SemaphoreInfo>();
 
 
     private void Awake()
     {
-        GetJunctions();
+        GetSemaphores();
         //InitData();
         _recyclableScrollRect.DataSource = this;
     }
 
 
-    private void GetJunctions()
+    private void GetSemaphores()
     {
-        _dataLength = pathManager.junctionInfo.Count;
-        _contactList = pathManager.junctionInfo;
+        _contactList = semaphoreManager.GetSempahoreInfos();
+        _dataLength = _contactList.Count;
     }
 
     #region DATA-SOURCE
@@ -49,7 +49,7 @@ public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     public void SetCell(ICell cell, int index)
     {
         //Casting to the implemented Cell
-        var item = cell as JunctionCell;
+        var item = cell as SemaphoreCell;
         item.ConfigureCell(_contactList[index], index);
     }
 

@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SemaphoreWarningShieldController : SemaphoreController
 {
-    public void SetSignal(SemaphoreWarningShieldSignals signal)
+    public override void SetSignal(int signalIndex)
     {
+        SemaphoreWarningShieldSignals signal = (SemaphoreWarningShieldSignals)signalIndex;
         if ((int)signal != currentSignal)
         {
             StopBlinkLight();

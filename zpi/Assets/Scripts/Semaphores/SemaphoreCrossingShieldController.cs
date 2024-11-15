@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class SemaphoreCrossingShieldController : SemaphoreController
 {
-    public void SetSignal(SemaphoreCrossingShieldSignals signal)
+    public override void SetSignal(int signalIndex)
     {
+        SemaphoreCrossingShieldSignals signal = (SemaphoreCrossingShieldSignals)signalIndex;
         if ((int)signal != currentSignal)
         {
             StopBlinkLight();

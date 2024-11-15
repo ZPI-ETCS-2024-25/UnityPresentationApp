@@ -11,7 +11,7 @@ public struct SemaphoreInfo
     public SemaphoreController SemaphoreController;
 }
 
-public class SemaphoreController : MonoBehaviour
+public abstract class SemaphoreController : MonoBehaviour
 {
 
     [SerializeField] private GameObject[] lightLens;
@@ -27,6 +27,7 @@ public class SemaphoreController : MonoBehaviour
     private Material blinkColor;
     private int blinkLensIndex;
     public int currentSignal;
+    public string name = "semaphore";
 
     public SemaphoreInfo semaphoreInfo;
     protected List<(int, string)> allowedSignalsList;
@@ -72,8 +73,9 @@ public class SemaphoreController : MonoBehaviour
         isBlinking = true;
     }
 
-    public void SetSignal(){
-        Debug.Log("Implement overload in subclass/bad call");
+    public virtual void SetSignal(int signalIndex)
+    {
+        Debug.Log("Not implemented");
     }
 
     virtual protected List<(int, string)> GetAllowedSignals()
@@ -85,7 +87,7 @@ public class SemaphoreController : MonoBehaviour
     {
         return new SemaphoreInfo()
         {
-            Name = this.name,
+            Name = name,
             Signal = currentSignal,
             AllowedSignals = allowedSignalsList,
             SemaphoreController = this
@@ -102,12 +104,12 @@ public class SemaphoreController : MonoBehaviour
     {
         blinkLensIndex = 0;
         blinkColor = blankLight;
-        SemaphoreInfo test = GetSemaphoreInfo();
+        /*SemaphoreInfo test = GetSemaphoreInfo();
         Debug.Log(test.Name);
         foreach ((int idx, string nam) in test.AllowedSignals)
         {
             Debug.Log(idx + " " + nam);
-        }
+        }*/
     }
 
     private void FixedUpdate()
