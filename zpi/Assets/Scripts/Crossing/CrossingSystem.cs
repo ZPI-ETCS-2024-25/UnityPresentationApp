@@ -19,11 +19,12 @@ public class CrossingSystem : MonoBehaviour
     public bool close = false;
     public bool open = false;
     private Coroutine openingCoroutine;
+    public string Name;
     [SerializeField] private float barrierDelay = 6.0f;
     [SerializeField] private bool damagedCrossing = false;
 
     public CrossingInfo crossingInfo;
-    private List<(int Index, string Name)> allowedStatesList;
+    private List<(int Index, string Name)> allowedStatesList = new List<(int Index, string Name)> { (0,"Working"),(1,"Damaged")};
 
     private List<(int Index, string Name)> GetAllowedStates()
     {
@@ -38,7 +39,7 @@ public class CrossingSystem : MonoBehaviour
     {
         return new CrossingInfo()
         {
-            Name = this.name, State = damagedCrossing, AllowedStates = allowedStatesList, CrossingSystem = this 
+            Name = Name, State = damagedCrossing, AllowedStates = allowedStatesList, CrossingSystem = this 
         };
     }
 
@@ -74,13 +75,19 @@ public class CrossingSystem : MonoBehaviour
 
     void Start()
     {
-        allowedStatesList = GetAllowedStates();
+        //allowedStatesList = GetAllowedStates();
         crossingInfo = GetCrossingInfo();
 
         if (damagedCrossing)
         {
             comm.SendCrossingState(0, damagedCrossing);
         }
+    }
+
+
+    public void ChangeCrossingState(int state)
+    {
+        damagedCrossing = state == 0 ? false : true;
     }
 
     void FixedUpdate()

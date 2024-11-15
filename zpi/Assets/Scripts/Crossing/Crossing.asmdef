@@ -1,0 +1,17 @@
+{
+    "name": "Crossing",
+    "rootNamespace": "",
+    "references": [
+        "GUID:02de59b482617c34ca97c302d7e53e4e",
+        "GUID:863a97a5138eb074ea3e5833b3fc6ef7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
