@@ -90,6 +90,34 @@
                     "isPartOfComposite": true
                 }
             ]
+        },
+        {
+            "name": "Camera",
+            "id": "460c18d0-d43e-47b0-abf3-5a9c3817aa1f",
+            "actions": [
+                {
+                    "name": "Change camera",
+                    "type": "Button",
+                    "id": "84ca65d5-14df-4603-b482-e32027fde9d3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2dd3ff4a-b0d2-4476-9a3c-5a630df2e6e0",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Change camera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
