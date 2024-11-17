@@ -11,7 +11,12 @@ public class SemaphoreManager : MonoBehaviour
         List<SemaphoreInfo> semaphoreInfos = new List<SemaphoreInfo>();
         foreach (SemaphoreController semaphore in semaphores)
         {
-            semaphoreInfos.Add(semaphore.GetSemaphoreInfo());
+            semaphoreInfos.Add(new SemaphoreInfo() { 
+                Name = semaphore.name,
+                Signal = semaphore.currentSignal,
+                AllowedSignals = semaphore.GetAllowedSignals(),
+                SemaphoreController = semaphore
+            });
         }
         return semaphoreInfos;
     }

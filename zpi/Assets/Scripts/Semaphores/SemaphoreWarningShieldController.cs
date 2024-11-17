@@ -32,7 +32,7 @@ public class SemaphoreWarningShieldController : SemaphoreController
         }
     }
 
-    override protected List<(int, string)> GetAllowedSignals()
+    override public List<(int, string)> GetAllowedSignals()
     {
         List<(int, string)> allowedSignals = new List<(int, string)>();
 

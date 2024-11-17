@@ -13,6 +13,7 @@ public class SplineMove : MonoBehaviour
     public Server server;
     public PathManager pathManager;
     public BaliseController baliseController;
+    public LenghtManager lenghtManager;
 
     public bool checkForBalises = true;
 
@@ -36,6 +37,7 @@ public class SplineMove : MonoBehaviour
     public float acceleration = 0.2f;
     public float maxAcceleration = 1f;
     public float minAcceleration = -1f;
+    private bool endOfline = false;
 
 
     public bool backwards = false;
@@ -70,11 +72,20 @@ public class SplineMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (endOfline)//jesli to koniec
+        {
+            comm.SendSpeedInfo(0f);
+            return;
+        }
+
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
- 
+        float speedKPH = speed * lenghtManager.modifier * 3.6f;
+        comm.SendSpeedInfo(speedKPH);
 
-        if(acceleration < minAcceleration)
+
+
+        if (acceleration < minAcceleration)
         {
             acceleration = minAcceleration;
         }
@@ -168,6 +179,7 @@ public class SplineMove : MonoBehaviour
                 Dictionary<int,List<(int Spline,bool Backward)>> path = backwards ? splineContainer.GetComponent<PathManager>().reversePath : splineContainer.GetComponent<PathManager>().path;
 
                 if(!path.ContainsKey(spline)) { //stop if end of track
+                    endOfline = true;
                     speed = 0f;
                     acceleration = 0f;
                     afterMovingSpline = spline;

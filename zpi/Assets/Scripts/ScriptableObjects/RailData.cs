@@ -9,6 +9,8 @@ public class RailData : ScriptableObject
     public int lineNumber;
     public float startKilometers;
     public float endKilometers;
+    public float inputedKilometers;
+    public float realKilometers;
     public int startingKnotGroup = 1;
     public int endingKnotGroup = 1;
 }

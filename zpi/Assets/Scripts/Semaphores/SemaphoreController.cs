@@ -78,7 +78,7 @@ public abstract class SemaphoreController : MonoBehaviour
         Debug.Log("Not implemented");
     }
 
-    virtual protected List<(int, string)> GetAllowedSignals()
+    virtual public List<(int, string)> GetAllowedSignals()
     {
         return new List<(int, string)>();
     }
@@ -98,6 +98,10 @@ public abstract class SemaphoreController : MonoBehaviour
     {
         allowedSignalsList = GetAllowedSignals();
         semaphoreInfo = GetSemaphoreInfo();
+        //Debug.Log($"{name}");
+        //Debug.Log($"pre {allowedSignalsList}");
+        //allowedSignalsList = semaphoreInfo.AllowedSignals;
+        //Debug.Log($"post {allowedSignalsList}");
     }
 
     private void Start()

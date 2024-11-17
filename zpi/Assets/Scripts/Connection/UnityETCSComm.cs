@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
@@ -40,6 +41,19 @@ public class UnityETCSComm : MonoBehaviour
             , response => { Debug.Log(response); })
         );
     }
+
+    public void SendSpeedInfo(float speed)
+    {
+        StartCoroutine(communication
+            .POSTRequest(serverUri, new SpeedInfo()
+            {
+                messageType = "NS",
+                NewSpeed = speed
+            }
+            , response => { Debug.Log(response); })
+        );
+        Debug.Log(speed);
+    }
 }
 
 
@@ -52,4 +66,10 @@ public class BaliseInfo
     public string trackNumber; //na string, numer pasu ulicy
     public int lineNumber; //sub track / ulica
     public string messageType;// typ ¿¹dania string
+}
+
+public class SpeedInfo
+{
+    public string messageType;
+    public float NewSpeed;
 }

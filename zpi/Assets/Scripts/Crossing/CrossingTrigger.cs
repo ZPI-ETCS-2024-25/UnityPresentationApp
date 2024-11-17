@@ -13,7 +13,7 @@ public class CrossingTrigger : MonoBehaviour
         crossingSystem = crossing.GetComponent<CrossingSystem>();
 
         triggerDistanceFromCrossing = Vector3.Distance(this.transform.position, crossing.transform.position);
-        Debug.Log(this.name + ": " + triggerDistanceFromCrossing);
+        //Debug.Log(this.name + ": " + triggerDistanceFromCrossing);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +21,7 @@ public class CrossingTrigger : MonoBehaviour
         if (other.CompareTag("Train"))
         {
             float trainDistanceFromCrossing = Vector3.Distance(other.transform.position, crossing.transform.position);
-            Debug.Log(other.name + ": " + trainDistanceFromCrossing);
+            //Debug.Log(other.name + ": " + trainDistanceFromCrossing);
 
             bool isMovingForward = trainDistanceFromCrossing > triggerDistanceFromCrossing;
 
