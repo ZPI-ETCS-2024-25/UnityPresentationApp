@@ -80,7 +80,7 @@ public class SplineMove : MonoBehaviour
 
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
-        float speedKPH = speed * lenghtManager.modifier * 3.6f;
+        float speedKPH = speed * lenghtManager.modifier*50f*3600f;
         comm.SendSpeedInfo(speedKPH);
 
 
