@@ -5,7 +5,7 @@ using PolyAndCode.UI;
 
 
 
-public class JunctionScroller : MonoBehaviour, IRecyclableScrollRectDataSource
+public class JunctionScroller : MultiMenuWrapper, IRecyclableScrollRectDataSource
 {
     public PathManager pathManager;
 
@@ -22,11 +22,8 @@ public class JunctionScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     private void Awake()
     {
         GetJunctions();
-        //InitData();
         _recyclableScrollRect.DataSource = this;
     }
-
-
 
     private void GetJunctions()
     {

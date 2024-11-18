@@ -52,7 +52,7 @@ public class UnityETCSComm : MonoBehaviour
             }
             , response => { Debug.Log(response); })
         );
-        Debug.Log(speed);
+        //Debug.Log(speed);
     }
 }
 

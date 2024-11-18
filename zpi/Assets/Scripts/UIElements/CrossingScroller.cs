@@ -5,7 +5,7 @@ using PolyAndCode.UI;
 
 
 
-public class CrossingScroller : MonoBehaviour, IRecyclableScrollRectDataSource
+public class CrossingScroller : MultiMenuWrapper, IRecyclableScrollRectDataSource
 {
     public CrossingManager crossingManager;
 
@@ -21,7 +21,6 @@ public class CrossingScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     private void Awake()
     {
         GetCrossings();
-        //InitData();
         _recyclableScrollRect.DataSource = this;
     }
 

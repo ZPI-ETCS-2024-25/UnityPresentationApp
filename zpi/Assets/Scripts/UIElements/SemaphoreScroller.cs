@@ -5,7 +5,7 @@ using PolyAndCode.UI;
 
 
 
-public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
+public class SemaphoreScroller : MultiMenuWrapper, IRecyclableScrollRectDataSource
 {
     public SemaphoreManager semaphoreManager;
 
@@ -21,10 +21,8 @@ public class SemaphoreScroller : MonoBehaviour, IRecyclableScrollRectDataSource
     private void Awake()
     {
         GetSemaphores();
-        //InitData();
         _recyclableScrollRect.DataSource = this;
     }
-
 
     private void GetSemaphores()
     {
