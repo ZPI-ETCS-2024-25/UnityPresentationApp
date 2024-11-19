@@ -100,4 +100,9 @@ public class CrossingSystem : MonoBehaviour
         //    open = false; 
         //}
     }
+
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
 }

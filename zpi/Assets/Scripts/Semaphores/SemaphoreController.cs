@@ -124,6 +124,11 @@ public abstract class SemaphoreController : MonoBehaviour
             blinkingCoroutine = StartCoroutine(BlinkLight(blinkLensIndex, blinkColor));
         }
     }
+
+    public void SetActive(bool active)
+    {
+        gameObject.SetActive(active);
+    }
 }
 
 //public enum SemaphoreSignals{

@@ -41,7 +41,8 @@ public class SplineMove : MonoBehaviour
 
 
     public bool backwards = false;
-    public float rotationCalculation = 0.05f;
+    public float rotationCalculation = 0.03f;
+    public float minRotationCalculation = 3f;
     private float speed = 0f;
 
 
@@ -178,7 +179,6 @@ public class SplineMove : MonoBehaviour
             {
                 Dictionary<int,List<(int Spline,bool Backward)>> path = backwards ? splineContainer.GetComponent<PathManager>().reversePath : splineContainer.GetComponent<PathManager>().path;
 
-                Debug.Log("if end");
                 if(!path.ContainsKey(spline)) { //stop if end of track
                     endOfline = true;
                     speed = 0f;
@@ -187,22 +187,20 @@ public class SplineMove : MonoBehaviour
                     afterMovingDistance = backwards ? 0f : 1f;
                     return;
                 }
-                Debug.Log("not end");
 
                 int newSpline = path[spline][nextSplineIndex].Spline; //if reached change spline
                 backwards = path[spline][nextSplineIndex].Backward; // and possibly direction of travel
-                
-                Debug.Log("found new path");
 
                 float percentageLeftover = backwards ? percentageTravelled - currenctDistance : currenctDistance + percentageTravelled - 1f; //how much procent was overfloved
                 float newSplineLenght = splineContainer.CalculateLength(newSpline);
                 float percentageLeftoverNewSpline = percentageLeftover * splineLength / newSplineLenght; //changing prom procent of old spline to procent of new spline
                 percentageLeftoverNewSpline = backwards ? 1f - percentageLeftoverNewSpline : percentageLeftoverNewSpline; // if backwards then start coutning from 1f
-                Debug.Log("calcuations sucess");
+
+                rotationCalculation = Math.Min(rotationCalculation * newSplineLenght, minRotationCalculation)/newSplineLenght;
+
                 changeTrainPosition(newSpline, percentageLeftoverNewSpline, out afterMovingSpline, out afterMovingDistance);
-                Debug.Log("moved");
+
                 pathManager.GetNextSplineIndex(currentSpline, backwards);
-                Debug.Log("got next info");
                 //PrepareNextSplinesInfo();
                 //PointArrow();
             }
