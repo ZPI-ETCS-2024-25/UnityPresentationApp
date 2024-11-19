@@ -41,7 +41,8 @@ public class SplineMove : MonoBehaviour
 
 
     public bool backwards = false;
-    public float rotationCalculation = 0.05f;
+    public float rotationCalculation = 0.03f;
+    public float minRotationCalculation = 3f;
     private float speed = 0f;
 
 
@@ -194,6 +195,8 @@ public class SplineMove : MonoBehaviour
                 float newSplineLenght = splineContainer.CalculateLength(newSpline);
                 float percentageLeftoverNewSpline = percentageLeftover * splineLength / newSplineLenght; //changing prom procent of old spline to procent of new spline
                 percentageLeftoverNewSpline = backwards ? 1f - percentageLeftoverNewSpline : percentageLeftoverNewSpline; // if backwards then start coutning from 1f
+
+                rotationCalculation = Math.Min(rotationCalculation * newSplineLenght, minRotationCalculation)/newSplineLenght;
 
                 changeTrainPosition(newSpline, percentageLeftoverNewSpline, out afterMovingSpline, out afterMovingDistance);
 

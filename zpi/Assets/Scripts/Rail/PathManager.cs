@@ -53,6 +53,7 @@ public class PathManager : MonoBehaviour
         Dictionary<int, List<(int,bool)>> linkedSplines = new Dictionary<int, List<(int,bool)>>();
         for (int i = 0; i < splineContainer.Splines.Count; i++)
         {
+            //Debug.Log($"rail {i}");
             Spline spline = splineContainer.Splines[i];
             SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1/**/);
             IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
@@ -60,6 +61,8 @@ public class PathManager : MonoBehaviour
             SplineData<UnityEngine.Object> rD;
             bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
             RailData railData = rD[0].Value as RailData;
+
+            //Debug.Log($"linked number {linked.Count}");
 
             if (linked.Count != 1)
             {
