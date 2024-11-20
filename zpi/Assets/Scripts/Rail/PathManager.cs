@@ -69,6 +69,10 @@ public class PathManager : MonoBehaviour
                 linkedSplines[i] = new List<(int,bool)>();
                 foreach (SplineKnotIndex skiLinked in linked)
                 {
+                    if (skiLinked.Knot >= spline.Count)//prevent ghost knots
+                    {
+                        continue;
+                    }
                     if(skiLinked.Spline != i)
                     {
 
@@ -88,6 +92,10 @@ public class PathManager : MonoBehaviour
                             }
                         }
                     }
+                }
+                if (linkedSplines[i].Count == 0)//prevent empty paths
+                {
+                    linkedSplines.Remove(i);
                 }
             }
         }
