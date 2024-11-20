@@ -401,4 +401,39 @@ public class PathManager : MonoBehaviour
         RepositionArrows();
         OnJunctionchanged();
     }
+
+    public void DebugPrintPathing()
+    {
+        Debug.Log("Path forward");
+        DebugPrintPath(path);
+        Debug.Log("Path backward");
+        DebugPrintPath(reversePath);
+        Debug.Log("Junctions forward");
+        DebugPrintJunctions(junctions,path);
+        Debug.Log("Junctions backward");
+        DebugPrintJunctions(reverseJunctions, reversePath);
+    }
+
+    public void DebugPrintPath(Dictionary<int, List<(int Spline, bool Backward)>> path)
+    {
+        UpdatePathfinding();
+        foreach(int spline in path.Keys)
+        {
+            string nextSplines = "";
+            foreach((int,bool) pair in path[spline])
+            {
+                nextSplines += $"({pair.Item1},{pair.Item2})";
+            }
+            Debug.Log($"Spline {spline} can go : {nextSplines}");
+        }
+    }
+
+    public void DebugPrintJunctions(Dictionary<int, int> junctions, Dictionary<int, List<(int Spline, bool Backward)>> path)
+    {
+        UpdatePathfinding();
+        foreach (int spline in junctions.Keys)
+        {
+            Debug.Log($"Junction at spline {spline} is currently set at : {path[spline][junctions[spline]]}");
+        }
+    }
 }

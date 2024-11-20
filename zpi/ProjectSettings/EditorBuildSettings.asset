@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Train.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ErrorTestWorld.unity
+    guid: bafefe7f360f0784587a01470ca3bb90
+  - enabled: 1
+    path: Assets/Scenes/ManualTests.unity
+    guid: fd41df65464360c41b000f129ba8ea88
   m_configObjects: {}
