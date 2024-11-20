@@ -362,7 +362,7 @@ public class PathManager : MonoBehaviour
         for(int i = junctions.Count; i < reverseJunctions.Count + junctions.Count; i++)
         {
             List<int> keys = reverseJunctions.Keys.ToList();
-            PositionArrow(arrows[i], keys[i], true);
+            PositionArrow(arrows[i], keys[i-junctions.Count], true);
         }
     }
 

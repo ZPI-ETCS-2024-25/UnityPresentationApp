@@ -482,8 +482,8 @@ public class SplineMove : MonoBehaviour
 
     public void UpdateNextSplineIndex()
     {
-        Debug.Log(nextSplineIndex);
+        //Debug.Log(nextSplineIndex);
         nextSplineIndex = pathManager.GetNextSplineIndex(currentSpline, backwards);
-        Debug.Log(nextSplineIndex);
+        //Debug.Log(nextSplineIndex);
     }
 }
