@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b134a0651b9e9434b8e00f4c2c3d2aa9, type: 3}
   m_Name: rail2-3
   m_EditorClassIdentifier: 
-  trackNumber: 1
+  trackNumber: 2
   lineNumber: 1
   startKilometers: 0.3
   endKilometers: 0.4
   inputedKilometers: 0.099999994
-  realKilometers: 0.049416237
+  realKilometers: 0.11502258
   startingKnotGroup: 1
   endingKnotGroup: 0
