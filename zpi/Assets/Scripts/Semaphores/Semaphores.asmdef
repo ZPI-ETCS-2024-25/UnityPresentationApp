@@ -1,3 +1,16 @@
 {
-	"name": "Semaphores"
+    "name": "Semaphores",
+    "rootNamespace": "",
+    "references": [
+        "GUID:863a97a5138eb074ea3e5833b3fc6ef7"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

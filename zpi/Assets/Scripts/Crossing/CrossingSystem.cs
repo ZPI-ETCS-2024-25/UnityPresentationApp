@@ -80,7 +80,7 @@ public class CrossingSystem : MonoBehaviour
 
         if (damagedCrossing)
         {
-            comm.SendCrossingState(0, damagedCrossing);
+            SendCrossingStateToServer();
         }
     }
 
@@ -104,5 +104,10 @@ public class CrossingSystem : MonoBehaviour
     public void SetActive(bool active)
     {
         gameObject.SetActive(active);
+    }
+
+    public void SendCrossingStateToServer()
+    {
+        comm.SendCrossingState(0, damagedCrossing);
     }
 }

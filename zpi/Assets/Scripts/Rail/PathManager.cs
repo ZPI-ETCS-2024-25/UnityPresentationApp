@@ -16,6 +16,7 @@ public struct JunctionInfo
 
 public class PathManager : MonoBehaviour
 {
+    public UnityServerComm comm;
     public SplineContainer splineContainer;
 
     public Dictionary<int, List<(int Spline,bool Backward)>> path;
@@ -400,6 +401,7 @@ public class PathManager : MonoBehaviour
         junctionsSource[index] = changed;
         RepositionArrows();
         OnJunctionchanged();
+        comm.SendJunctionState(0,true);
     }
 
     public void DebugPrintPathing()

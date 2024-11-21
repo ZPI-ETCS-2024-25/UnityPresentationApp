@@ -33,6 +33,8 @@ public class CrossingTrigger : MonoBehaviour
             {
                 crossingSystem.OpenCrossing();
             }
+
+            crossingSystem.SendCrossingStateToServer();
         }
     }
 }

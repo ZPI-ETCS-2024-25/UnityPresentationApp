@@ -43,9 +43,9 @@ public class SemaphoreCrossingShieldController : SemaphoreController
         return allowedSignals;
     }
 
-    private void FixedUpdate()
+    public override bool shouldGo()
     {
-
+        return ((SemaphoreCrossingShieldSignals)currentSignal == SemaphoreCrossingShieldSignals.Osp1 ? true : false);
     }
 }
 

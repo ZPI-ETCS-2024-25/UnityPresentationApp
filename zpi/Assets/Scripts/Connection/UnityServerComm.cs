@@ -22,15 +22,29 @@ public class UnityServerComm : MonoBehaviour
     {
         SendPOSTRequest("crossingState/", new CrossingState()
         {
-            crossingId = crossingId,
-            damaged = damaged
+            CrossingId = crossingId,
+            IsFunctional = damaged
         }) ;
     }
 
-    public void SendSemaphoreSignal(int semaphoreId)
+    public void SendSemaphoreSignal(int semaphoreId, bool shouldGo)
     {
-
+        SendPOSTRequest("semaphoreState/", new SemaphoreState()
+        {
+            SemaphoreId = semaphoreId,
+            Go = shouldGo
+        });
     }
+
+    public void SendJunctionState(int junctionId, bool straight)
+    {
+        SendPOSTRequest("JunctionState/", new JunctionState()
+        {
+            JunctionId = junctionId,
+            Straight = straight
+        });
+    }
+
 
     private void RegisterTrain(int trainId, int lenghtMeters, int weightKilos, int maxSpeedMps, int breakWeight)
     {
@@ -46,8 +60,20 @@ public class UnityServerComm : MonoBehaviour
 
 public class CrossingState
 {
-    public int crossingId;
-    public bool damaged;
+    public int CrossingId;
+    public bool IsFunctional;
+}
+
+public class SemaphoreState
+{
+    public int SemaphoreId;
+    public bool Go;
+}
+
+public class JunctionState
+{
+    public int JunctionId;
+    public bool Straight;
 }
 
 public class TrainRegister

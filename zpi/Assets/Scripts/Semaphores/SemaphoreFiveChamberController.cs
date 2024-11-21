@@ -76,6 +76,11 @@ public class SemaphoreFiveChamberController : SemaphoreController
 
         return allowedSignals;
     }
+
+    public override bool shouldGo()
+    {
+        return ((SemaphoreFiveChamberSignals)currentSignal == SemaphoreFiveChamberSignals.S1 ? true : false);
+    }
 }
 public enum SemaphoreFiveChamberSignals
 {

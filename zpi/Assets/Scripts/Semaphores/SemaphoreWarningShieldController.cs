@@ -43,6 +43,11 @@ public class SemaphoreWarningShieldController : SemaphoreController
 
         return allowedSignals;
     }
+
+    public override bool shouldGo()
+    {
+        return ( (SemaphoreWarningShieldSignals)currentSignal == SemaphoreWarningShieldSignals.Os1 ? true : false);
+    }
 }
 public enum SemaphoreWarningShieldSignals
 {
