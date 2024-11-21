@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc635456da4d7d44f85d0b87326239be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   splineContainer: {fileID: 1006069163}
   arrowPrefab: {fileID: 2867955227674987296, guid: 6f1659148c069c74f816e8cf26c360c3, type: 3}
   arrows: []
