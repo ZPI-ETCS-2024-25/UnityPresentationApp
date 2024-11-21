@@ -19,7 +19,13 @@ public class RailDecorator : MonoBehaviour
     public SplineDecorationObjects splineDecorativeObjects;
     public bool resetBeforeInstantiate = true;
 
-    
+
+    public void Start()
+    {
+        ClearInstantiatedObjects();
+        InstantiateAlongSplinesByDistance();
+    }
+
 
     private void OnEnable()
     {
