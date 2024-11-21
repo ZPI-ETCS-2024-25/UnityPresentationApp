@@ -4672,7 +4672,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4054194729700395905, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -107.3
+      value: -90.3
       objectReference: {fileID: 0}
     - target: {fileID: 4054194729700395905, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7015,6 +7015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc635456da4d7d44f85d0b87326239be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   splineContainer: {fileID: 1833071513}
   arrowPrefab: {fileID: 2867955227674987296, guid: 6f1659148c069c74f816e8cf26c360c3, type: 3}
   arrows: []
@@ -8815,8 +8816,8 @@ MonoBehaviour:
         y: -0.0000038146973
         z: 5408.5835
       TangentIn:
-        x: -0
-        y: -0
+        x: 0
+        y: 0
         z: -6.3415446
       TangentOut:
         x: 0
@@ -8825,13 +8826,13 @@ MonoBehaviour:
       Rotation:
         value:
           x: 0
-          y: 0.8536016
+          y: 0.8536015
           z: 0
-          w: -0.5209266
+          w: -0.5209265
     m_MetaData:
     - Mode: 0
       Tension: 0.5
-    - Mode: 0
+    - Mode: 3
       Tension: 0.5
     m_Closed: 0
     m_IntData:
@@ -8943,8 +8944,8 @@ MonoBehaviour:
         y: -0.0000038146973
         z: 5396.7017
       TangentIn:
-        x: -0
-        y: -0
+        x: 0
+        y: 0
         z: -9.753497
       TangentOut:
         x: 0
@@ -8959,7 +8960,7 @@ MonoBehaviour:
     m_MetaData:
     - Mode: 2
       Tension: 0.5
-    - Mode: 0
+    - Mode: 3
       Tension: 0.5
     m_Closed: 0
     m_IntData:
@@ -9110,6 +9111,302 @@ MonoBehaviour:
           m_DataPoints:
           - m_Index: 0
             m_Value: {fileID: 11400000, guid: a4e642bd739f1934f86a6efaacc4192a, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 1962.4958
+        y: -0.0000038146973
+        z: 5396.7017
+      TangentIn:
+        x: 0
+        y: 0
+        z: -20.32072
+      TangentOut:
+        x: 0
+        y: 0
+        z: 20.32072
+      Rotation:
+        value:
+          x: 0
+          y: 0.85629976
+          z: 0
+          w: -0.51647913
+    - Position:
+        x: 1782.7546
+        y: -0.0000038146973
+        z: 5301.906
+      TangentIn:
+        x: -0
+        y: -0
+        z: -20.32072
+      TangentOut:
+        x: 0
+        y: 0
+        z: 20.32072
+      Rotation:
+        value:
+          x: 0
+          y: 0.8562998
+          z: 0
+          w: -0.5164791
+    m_MetaData:
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: af6319861b0bdae4f8f51a73be788782, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: af6319861b0bdae4f8f51a73be788782, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 1955.6024
+        y: -0.0000038146973
+        z: 5408.5835
+      TangentIn:
+        x: 0
+        y: 0
+        z: -20.456833
+      TangentOut:
+        x: 0
+        y: 0
+        z: 20.456833
+      Rotation:
+        value:
+          x: 0
+          y: 0.85838485
+          z: 0
+          w: -0.5130064
+    - Position:
+        x: 1775.4363
+        y: -0.0000038146973
+        z: 5311.69
+      TangentIn:
+        x: -0
+        y: -0
+        z: -20.456833
+      TangentOut:
+        x: 0
+        y: 0
+        z: 20.456833
+      Rotation:
+        value:
+          x: 0
+          y: 0.8583848
+          z: 0
+          w: -0.5130064
+    m_MetaData:
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: de22ec810ce6f9141abe0907730f2a4d, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: de22ec810ce6f9141abe0907730f2a4d, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 1962.4958
+        y: -0.0000038146973
+        z: 5396.7017
+      TangentIn:
+        x: 0
+        y: 0
+        z: -2.975424
+      TangentOut:
+        x: 0
+        y: 0
+        z: 21.168915
+      Rotation:
+        value:
+          x: 0
+          y: 0.8684188
+          z: 0
+          w: -0.4958314
+    - Position:
+        x: 1938.3179
+        y: -0.0000038146973
+        z: 5373.483
+      TangentIn:
+        x: -0
+        y: -0
+        z: -15.381666
+      TangentOut:
+        x: 0
+        y: 0
+        z: 34.898018
+      Rotation:
+        value:
+          x: 0
+          y: 0.89273566
+          z: 0
+          w: -0.4505808
+    - Position:
+        x: 1787.4535
+        y: -0.0000038146973
+        z: 5289.735
+      TangentIn:
+        x: -0
+        y: -0
+        z: -17.255085
+      TangentOut:
+        x: 0
+        y: 0
+        z: 17.255085
+      Rotation:
+        value:
+          x: 0
+          y: 0.8617868
+          z: 0
+          w: -0.5072707
+    m_MetaData:
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: a21eaadfe319f5b4a97b325f09e644d0, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: a21eaadfe319f5b4a97b325f09e644d0, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 1955.6024
+        y: -0.0000038146973
+        z: 5408.5835
+      TangentIn:
+        x: 0
+        y: 0
+        z: -3.6047132
+      TangentOut:
+        x: 0
+        y: 0
+        z: 21.539284
+      Rotation:
+        value:
+          x: 0
+          y: 0.8634266
+          z: 0
+          w: -0.5044742
+    - Position:
+        x: 1921.1526
+        y: -0.0000038146973
+        z: 5399.161
+      TangentIn:
+        x: -0
+        y: -0
+        z: -16.248425
+      TangentOut:
+        x: 0
+        y: 0
+        z: 35.47206
+      Rotation:
+        value:
+          x: 0
+          y: 0.82425123
+          z: 0
+          w: -0.56622434
+    - Position:
+        x: 1769.1578
+        y: -0.0000038146973
+        z: 5322.536
+      TangentIn:
+        x: -0
+        y: -0
+        z: -17.02169
+      TangentOut:
+        x: 0
+        y: 0
+        z: 17.02169
+      Rotation:
+        value:
+          x: 0
+          y: 0.85151654
+          z: 0
+          w: -0.5243277
+    m_MetaData:
+    - Mode: 3
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: 9487c309ad8ecb24699faaf1bdc28ab7, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: 9487c309ad8ecb24699faaf1bdc28ab7, type: 2}
   m_Knots:
     m_KnotsLink:
     - Knots:
@@ -9254,6 +9551,20 @@ MonoBehaviour:
       - Spline: 29
         Knot: 0
       - Spline: 31
+        Knot: 0
+    - Knots:
+      - Spline: 29
+        Knot: 1
+      - Spline: 32
+        Knot: 0
+      - Spline: 34
+        Knot: 0
+    - Knots:
+      - Spline: 27
+        Knot: 1
+      - Spline: 33
+        Knot: 0
+      - Spline: 35
         Knot: 0
 --- !u!1 &1848096717
 GameObject:
