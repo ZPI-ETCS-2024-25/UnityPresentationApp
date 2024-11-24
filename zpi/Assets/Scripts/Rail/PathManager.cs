@@ -378,9 +378,12 @@ public class PathManager : MonoBehaviour
         int nextSplinePathIndex = backward ? reverseJunctions[spline] : junctions[spline];
         int nextSplineContainerIndex = backward ? reversePath[spline][nextSplinePathIndex].Spline 
                                                 : path[spline][nextSplinePathIndex].Spline;
-        UnityEngine.Vector3 localPositionNext = backward ? splineContainer[nextSplineContainerIndex][1].Position
-                                                         : splineContainer[nextSplineContainerIndex][splineContainer[nextSplineContainerIndex].Count - 2].Position;
+        bool nextSplineBackward = backward ? reversePath[spline][nextSplinePathIndex].Backward
+                                                : path[spline][nextSplinePathIndex].Backward;
+        UnityEngine.Vector3 localPositionNext = nextSplineBackward ? splineContainer[nextSplineContainerIndex][splineContainer[nextSplineContainerIndex].Count - 2].Position
+                                                         : splineContainer[nextSplineContainerIndex][1].Position;
         UnityEngine.Vector3 worldPositionNext = splineContainer.transform.TransformPoint(localPositionNext);
+
 
         UnityEngine.Vector3 direction = worldPositionNext - worldPosition;
         arrow.transform.position = worldPosition;

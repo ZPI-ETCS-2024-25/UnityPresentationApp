@@ -11,6 +11,7 @@ public class ObjectRenderDistance : MonoBehaviour
     public SplineDecorationObjects decorativeObjects;
     public SemaphoreManager semaphoreManager;
     public CrossingManager crossingManager;
+    public PathManager pathmanager;
     public float nearestSplineDistance;
     public float nearestObjectDistance;
     private bool[] activeSplines;
@@ -55,6 +56,10 @@ public class ObjectRenderDistance : MonoBehaviour
         if(crossingManager != null)
         {
             UpdateCrossings();
+        }
+        if(pathmanager != null)
+        {
+            UpdateArrows();
         }
     }
 
@@ -157,5 +162,20 @@ public class ObjectRenderDistance : MonoBehaviour
             }
         }
         Debug.Log(s);
+    }
+
+    private void UpdateArrows()
+    {
+        foreach (GameObject arrow in pathmanager.arrows)
+        {
+            if (Vector3.Distance(gameObject.transform.position, arrow.transform.position) > nearestObjectDistance)
+            {
+                arrow.SetActive(false);
+            }
+            else
+            {
+                arrow.SetActive(true);
+            }
+        }
     }
 }
