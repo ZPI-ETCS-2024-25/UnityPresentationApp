@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 
 public class Server : MonoBehaviour
 {
+    public UnityETCSComm comm;
     public bool turnOff = false;
     private HttpListener listener;
     private Thread listenerThread;
@@ -94,11 +95,20 @@ public class Server : MonoBehaviour
                         {
                             JObject json = JObject.Parse(receivedMessage);
                             string messageType = json["messageType"]?.Value<string>() ?? "";
-                            bool breakCommand = json["BreakCommand"]?.Value<bool>() ?? false;
+                            //bool breakCommand = json["BreakCommand"]?.Value<bool>() ?? false;
                             if (messageType == "brake")
                             {
+                                bool breakCommand = json["BreakCommand"]?.Value<bool>() ?? false;
                                 OnBreakCommand(breakCommand);
                                 Debug.Log("success");
+                            }
+                            if(messageType == "alive")
+                            {
+                                string source = json["SOURCE"]?.Value<string>() ?? "";
+                                if(source == "DRIVER")
+                                {
+                                    comm.SendIsAliveInfo();
+                                }
                             }
                         }
                         catch (Exception e)
