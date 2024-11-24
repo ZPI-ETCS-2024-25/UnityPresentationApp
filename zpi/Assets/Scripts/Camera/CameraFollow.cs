@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    private Vector3 posOffset;
     private Quaternion rotOffset;
     private Vector3 currentVelocity = Vector3.zero;
+    private Vector3 targetPosition = Vector3.zero;
+    private Quaternion targetRotation = Quaternion.identity;
+    [SerializeField] private float maxDistance = 3f;
     [SerializeField] private Transform target;
     [SerializeField] private float smoothTime; //distance follow smoothing amount
     [SerializeField] private float rotationSpeed; //rotation follow smothing amount
@@ -15,13 +18,14 @@ public class CameraFollow : MonoBehaviour
 
     private void CalculateCameraPosition()
     {
-        Vector3 targetPosition = target.position + target.rotation * cameraPosOffset;
+        targetPosition = target.position + target.rotation * cameraPosOffset;
+
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, smoothTime);
     }
 
     private void CalculateCameraRotation(float timeType)
     {
-        Quaternion targetRotation = target.rotation * rotOffset;
+        targetRotation = target.rotation * rotOffset;
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * timeType);
     }
 
