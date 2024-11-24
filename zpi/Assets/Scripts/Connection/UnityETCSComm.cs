@@ -57,7 +57,7 @@ public class UnityETCSComm : MonoBehaviour
 }
 
 
-public class BaliseInfo
+public class BaliseInfo:UnityMessage
 {   
     //wszystko z duzych
     public string kilometer; //kilometry nie resetuja sie pomiedzy liniami, float lub double, przy wysylaniu string
@@ -68,8 +68,13 @@ public class BaliseInfo
     public string messageType;// typ ¿¹dania string
 }
 
-public class SpeedInfo
+public class SpeedInfo:UnityMessage
 {
     public string messageType;
     public float NewSpeed;
+}
+
+public class UnityMessage
+{
+    public string source = "UNITY";
 }
