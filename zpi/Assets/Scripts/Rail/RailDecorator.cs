@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
-[ExecuteAlways]
+
 public class RailDecorator : MonoBehaviour
 {
     
@@ -24,6 +24,16 @@ public class RailDecorator : MonoBehaviour
     {
         ClearInstantiatedObjects();
         InstantiateAlongSplinesByDistance();
+
+        GameObject[] g = GameObject.FindObjectsOfType<GameObject>(true);
+        foreach(GameObject go in g)
+        {
+            if(go.name == "TrainTrack(Clone)")
+            {
+                Debug.Log("destroy");
+                DestroyImmediate(go);
+            }
+        }
     }
 
 
@@ -37,13 +47,26 @@ public class RailDecorator : MonoBehaviour
 
     private void OnDisable()
     {
+        if (Application.isPlaying)
+        {
+            ClearInstantiatedObjects();
+        }
         if (splineContainer != null && splineContainer.Splines.All(spline => spline != null))
         {
             Spline.Changed -= OnSplineChanged;
         }
     }
 
-    
+    private void OnApplicationQuit()
+    {
+        if (Application.isPlaying)
+        {
+            //Debug.Log("clear");
+            ClearInstantiatedObjects();
+        }
+    }
+
+
     /*private void OnValidate()
     {
         if (splineContainer != null && splineContainer.Splines.All(spline => spline != null))
@@ -83,6 +106,7 @@ public class RailDecorator : MonoBehaviour
                 Quaternion rotation = Quaternion.LookRotation(direction);
 
                 GameObject instantiatedObject = Instantiate(prefab, position, rotation, splineContainer.transform);
+                //instantiatedObject.hideFlags = HideFlags.HideInHierarchy;
 
                 if (!splineDecorativeObjects.instantiatedObjects.Any(pair => pair.spline == splineContainer[splineIndex]))
                 {
@@ -100,7 +124,7 @@ public class RailDecorator : MonoBehaviour
                 currentDistance += spacing;
 
 
-                Undo.RegisterCreatedObjectUndo(instantiatedObject, "Instantiate Prefabs Along Spline");
+                //Undo.RegisterCreatedObjectUndo(instantiatedObject, "Instantiate Prefabs Along Spline");
             }
         }
     }
@@ -121,7 +145,7 @@ public class RailDecorator : MonoBehaviour
         splineDecorativeObjects.instantiatedObjects.Clear();
 
 
-        Undo.RecordObject(this, "Clear Instantiated Objects");
+        //Undo.RecordObject(this, "Clear Instantiated Objects");
     }
 
     // Example method to change the color of an instantiated prefab
@@ -175,6 +199,7 @@ public class RailDecorator : MonoBehaviour
             for(int i = 0; i < numberOfObjects; i++)
             {
                 GameObject instantiatedObject = Instantiate(prefab,splineContainer.transform);
+                //instantiatedObject.hideFlags = HideFlags.DontSave;
                 splineAndDecorations.decorations.Add(instantiatedObject);
             }
         }

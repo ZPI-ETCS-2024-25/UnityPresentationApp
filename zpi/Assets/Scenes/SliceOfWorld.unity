@@ -1209,6 +1209,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3021864896043528633, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 170785775}
+    - targetCorrespondingSourceObject: {fileID: 3021864896043528633, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 170785777}
   m_SourcePrefab: {fileID: 100100000, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
 --- !u!4 &170785771 stripped
 Transform:
@@ -1313,6 +1316,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 84ca65d5-14df-4603-b482-e32027fde9d3
     m_ActionName: Camera/Change camera[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5854ca7d-e826-4154-97a1-f4a0bb44f879
+    m_ActionName: Camera/Look[/Mouse/delta/up,/Pen/delta/up,/Mouse/delta/down,/Pen/delta/down,/Mouse/delta/left,/Pen/delta/left,/Mouse/delta/right,/Pen/delta/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 34f6037f-00ff-4b85-aa9c-f65b776aa7a8
+    m_ActionName: Camera/Lock Camera[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1345,6 +1356,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &170785777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 170785773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fc9016366dcefe4baf2aec80c1614e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  splineContainer: {fileID: 1833071513}
+  decorativeObjects: {fileID: 11400000, guid: e169b7a60ec8e1b46b3109be94a5c21a, type: 2}
+  semaphoreManager: {fileID: 1527432687}
+  crossingManager: {fileID: 0}
+  nearestSplineDistance: 120
+  nearestObjectDistance: 100
+  debugSpline: 10
 --- !u!1 &178752558
 GameObject:
   m_ObjectHideFlags: 0
@@ -7954,6 +7984,14 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 84ca65d5-14df-4603-b482-e32027fde9d3
     m_ActionName: Camera/Change camera[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5854ca7d-e826-4154-97a1-f4a0bb44f879
+    m_ActionName: Camera/Look[/Mouse/delta/up,/Pen/delta/up,/Mouse/delta/down,/Pen/delta/down,/Mouse/delta/left,/Pen/delta/left,/Mouse/delta/right,/Pen/delta/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 34f6037f-00ff-4b85-aa9c-f65b776aa7a8
+    m_ActionName: Camera/Lock Camera[/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Camera
@@ -8750,8 +8788,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833071507}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.7, y: 38.458427, z: 2.6}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -12.7, y: 38.458424, z: 2.6000006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9436,10 +9474,10 @@ MonoBehaviour:
         z: 0
       Rotation:
         value:
-          x: -0.0045890072
-          y: 0.50764483
-          z: 0.004396531
-          w: 0.861543
+          x: 0.0007403723
+          y: 0.507647
+          z: 0.0012565388
+          w: 0.861564
     - Position:
         x: 1853.6028
         y: 0
@@ -12447,7 +12485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2823ef10c81aa543a76627bc332e56b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  semaphoreManager: {fileID: 0}
+  semaphoreManager: {fileID: 1527432687}
   _recyclableScrollRect: {fileID: 2095605513}
   _dataLength: 10
 --- !u!114 &2095605513
