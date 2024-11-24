@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Osp1State : ISemaphoreState
 {
-    string name = "Osp1 20 km/h";
+    //string name = "Osp1 20 km/h";
+    string name = "Osp1";
     public string GetName()
     {
         return name;

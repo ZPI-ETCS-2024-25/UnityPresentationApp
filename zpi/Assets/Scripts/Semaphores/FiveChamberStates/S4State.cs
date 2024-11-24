@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class S4State : ISemaphoreState
 {
-    string name = "S04 Next 40 or 60km/h";
+    //string name = "S04 Next 40 or 60km/h";
+    string name = "S04";
     public string GetName()
     {
         return name;

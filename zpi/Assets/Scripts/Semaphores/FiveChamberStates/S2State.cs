@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class S2State : ISemaphoreState
 {
-    string name = "S02 Max";
+    //string name = "S02 Max";
+    string name = "S02";
     public string GetName()
     {
         return name;
