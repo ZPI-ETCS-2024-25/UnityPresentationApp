@@ -1,0 +1,16 @@
+{
+    "name": "FiveChamberStates",
+    "rootNamespace": "",
+    "references": [
+        "GUID:02de59b482617c34ca97c302d7e53e4e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

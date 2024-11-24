@@ -1,85 +1,96 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class SemaphoreFiveChamberController : SemaphoreController
 {
-    public override void SetSignal(int signalIndex)
+    //public override void SetSignal(int signalIndex)
+    //{
+    //    SemaphoreFiveChamberSignals signal = (SemaphoreFiveChamberSignals)signalIndex;
+    //    if ((int)signal != currentSignal)
+    //    {
+    //        StopBlinkLight();
+    //        ResetLights();
+
+    //        switch (signal)
+    //        {
+    //            case SemaphoreFiveChamberSignals.S1:
+    //                SetLight(2, redLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S2:
+    //                SetLight(0, greenLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S4:
+    //                StartBlinkLight(1, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S5:
+    //                SetLight(1, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S10:
+    //                SetLight(0, greenLight);
+    //                SetLight(3, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S12:
+    //                StartBlinkLight(1, orangeLight);
+    //                SetLight(3, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S13:
+    //                SetLight(1, orangeLight);
+    //                SetLight(3, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S10a:
+    //                SetLight(0, greenLight);
+    //                SetLight(3, orangeLight);
+
+    //                SetLight(5, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S12a:
+    //                StartBlinkLight(1, orangeLight);
+    //                SetLight(3, orangeLight);
+
+    //                SetLight(5, orangeLight);
+    //                break;
+    //            case SemaphoreFiveChamberSignals.S13a:
+    //                SetLight(1, orangeLight);
+    //                SetLight(3, orangeLight);
+
+    //                SetLight(5, orangeLight);
+    //                break;
+    //            default:
+    //                Debug.Log("Bad signal " + signal);
+    //                break;
+    //        }
+    //        currentSignal = (int)signal;
+    //    }
+    //}
+
+    override public List<(int, ISemaphoreState)> GetAllowedStates()
     {
-        SemaphoreFiveChamberSignals signal = (SemaphoreFiveChamberSignals)signalIndex;
-        if ((int)signal != currentSignal)
+        List<(int, ISemaphoreState)> allowedStates = new List<(int, ISemaphoreState)>();
+
+        var assembly = Assembly.Load("FiveChamberStates");
+
+        if (assembly == null)
         {
-            StopBlinkLight();
-            ResetLights();
-
-            switch (signal)
-            {
-                case SemaphoreFiveChamberSignals.S1:
-                    SetLight(2, redLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S2:
-                    SetLight(0, greenLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S4:
-                    StartBlinkLight(1, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S5:
-                    SetLight(1, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S10:
-                    SetLight(0, greenLight);
-                    SetLight(3, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S12:
-                    StartBlinkLight(1, orangeLight);
-                    SetLight(3, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S13:
-                    SetLight(1, orangeLight);
-                    SetLight(3, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S10a:
-                    SetLight(0, greenLight);
-                    SetLight(3, orangeLight);
-
-                    SetLight(5, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S12a:
-                    StartBlinkLight(1, orangeLight);
-                    SetLight(3, orangeLight);
-
-                    SetLight(5, orangeLight);
-                    break;
-                case SemaphoreFiveChamberSignals.S13a:
-                    SetLight(1, orangeLight);
-                    SetLight(3, orangeLight);
-
-                    SetLight(5, orangeLight);
-                    break;
-                default:
-                    Debug.Log("Bad signal " + signal);
-                    break;
-            }
-            currentSignal = (int)signal;
+            Debug.LogError("Could not load Assembly.");
+            return allowedStates;
         }
-    }
 
-    override public List<(int, string)> GetAllowedSignals()
-    {
-        List<(int, string)> allowedSignals = new List<(int, string)>();
+        var stateTypeList = assembly.GetTypes()
+            .Where(t => typeof(ISemaphoreState).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
+            .ToList();
 
-        foreach (SemaphoreFiveChamberSignals signal in Enum.GetValues(typeof(SemaphoreFiveChamberSignals)))
+        int i = 0;
+        foreach (var type in stateTypeList)
         {
-            allowedSignals.Add(((int)signal, signal.ToString()));
+            ISemaphoreState state = (ISemaphoreState)Activator.CreateInstance(type);
+            allowedStates.Add((i, state));
         }
 
-        return allowedSignals;
-    }
-
-    public override bool shouldGo()
-    {
-        return ((SemaphoreFiveChamberSignals)currentSignal == SemaphoreFiveChamberSignals.S1 ? true : false);
+        return allowedStates;
     }
 }
 public enum SemaphoreFiveChamberSignals

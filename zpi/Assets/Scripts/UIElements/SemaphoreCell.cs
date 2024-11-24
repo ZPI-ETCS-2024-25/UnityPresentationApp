@@ -26,7 +26,7 @@ public class SemaphoreCell : MonoBehaviour, ICell
         nameLabel.text = contactInfo.Name;
 
         position.ClearOptions();
-        List<string> newOptions = contactInfo.AllowedSignals.ConvertAll(x => x.Name);
+        List<string> newOptions = contactInfo.AllowedStates.ConvertAll(x => x.Name.GetName());
         position.AddOptions(newOptions);
 
         position.onValueChanged.AddListener(OnDropdownValueChange);
@@ -35,7 +35,7 @@ public class SemaphoreCell : MonoBehaviour, ICell
 
     private void OnDropdownValueChange(int value)
     {
-        int changed = _contactInfo.AllowedSignals[value].Index;
-        _contactInfo.SemaphoreController.SetSignal(changed);
+        ISemaphoreState changed = _contactInfo.AllowedStates[value].Name;
+        _contactInfo.SemaphoreController.SetState(changed);
     }
 }

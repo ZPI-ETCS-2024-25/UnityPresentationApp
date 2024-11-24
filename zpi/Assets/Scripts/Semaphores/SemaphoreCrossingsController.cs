@@ -52,9 +52,4 @@ public class SemaphoreCrossingsController : SemaphoreController
             blinkingCoroutine = StartCoroutine(BlinkCrossingLights());
         }
     }
-
-    public override bool shouldGo()
-    {
-        throw new System.Exception("Calling should go for crossing!");
-    }
 }
