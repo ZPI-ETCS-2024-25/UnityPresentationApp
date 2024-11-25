@@ -54,18 +54,17 @@ public class PathManager : MonoBehaviour
         Dictionary<int, List<(int,bool)>> linkedSplines = new Dictionary<int, List<(int,bool)>>();
         for (int i = 0; i < splineContainer.Splines.Count; i++)
         {
-            //Debug.Log($"rail {i}");
+
             Spline spline = splineContainer.Splines[i];
-            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1/**/);
+            SplineKnotIndex skiBase = new SplineKnotIndex(i, spline.Count - 1);
             IReadOnlyList<SplineKnotIndex> linked = splineContainer.KnotLinkCollection.GetKnotLinks(skiBase);
 
             SplineData<UnityEngine.Object> rD;
             bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
             RailData railData = rD[0].Value as RailData;
 
-            //Debug.Log($"linked number {linked.Count}");
 
-            if (linked.Count != 1)
+            if (linked.Count != 1) //are we connected more than 1 knots
             {
                 linkedSplines[i] = new List<(int,bool)>();
                 foreach (SplineKnotIndex skiLinked in linked)
@@ -74,7 +73,7 @@ public class PathManager : MonoBehaviour
                     {
                         continue;
                     }
-                    if(skiLinked.Spline != i)
+                    if(skiLinked.Spline != i) //knot different from myself
                     {
 
                         SplineData<UnityEngine.Object> rDOther;
@@ -83,11 +82,11 @@ public class PathManager : MonoBehaviour
 
                         if (gotRailData && gotRailDataOther)
                         {
-                            if (skiLinked.Knot != 0 && railData.endingKnotGroup/**/ != railDataOther.endingKnotGroup)
+                            if (skiLinked.Knot != 0 && railData.endingKnotGroup != railDataOther.endingKnotGroup)
                             {
                                 linkedSplines[i].Add((skiLinked.Spline, true));
                             }
-                            else if(skiLinked.Knot == 0 && railData.endingKnotGroup/**/ != railDataOther.startingKnotGroup)
+                            else if(skiLinked.Knot == 0 && railData.endingKnotGroup != railDataOther.startingKnotGroup)
                             {
                                 linkedSplines[i].Add((skiLinked.Spline, false)); ;
                             }

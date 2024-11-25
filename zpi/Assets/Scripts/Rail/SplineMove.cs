@@ -187,15 +187,7 @@ public class SplineMove : MonoBehaviour
                     afterMovingDistance = backwards ? 0f : 1f;
                     return;
                 }
-                /*foreach(int z in path.Keys)
-                {
-                    string n = "";
-                    foreach((int,bool) pair in path[z])
-                    {
-                        n += $"({pair.Item1},{pair.Item2})";
-                    }
-                    Debug.Log($"{z} : {n}");
-                }*/
+
                 int newSpline = path[spline][nextSplineIndex].Spline; //if reached change spline
                 backwards = path[spline][nextSplineIndex].Backward; // and possibly direction of travel
 
@@ -209,8 +201,6 @@ public class SplineMove : MonoBehaviour
                 changeTrainPosition(newSpline, percentageLeftoverNewSpline, out afterMovingSpline, out afterMovingDistance);
 
                 nextSplineIndex = pathManager.GetNextSplineIndex(currentSpline, backwards);
-                //PrepareNextSplinesInfo();
-                //PointArrow();
             }
             catch (Exception e)
             {

@@ -71,14 +71,7 @@ public class ObjectRenderDistance : MonoBehaviour
             Spline spline = splineAndDecorations.spline;
             Vector3 myDistnace = splineContainer.transform.InverseTransformPoint(gameObject.transform.position);
             float nearestDistance = SplineUtility.GetNearestPoint(spline, myDistnace,out float3 closestPoint, out float t,iterations:5);
-            if(count == debugSpline)
-            {
-                //Debug.Log(nearestDistance);
-                //Debug.Log(splineLenghts[count]);
-                //Debug.Log(Vector3.Distance(gameObject.transform.position, splineCenters[count]));
-                //Debug.Log($"{nearestDistance > nearestSplineDistance} {Vector3.Distance(gameObject.transform.position, splineCenters[count]) > splineLenghts[count]}");
-                //Debug.Log(closestPoint);
-            }
+
             if (nearestDistance > nearestSplineDistance && Vector3.Distance(myDistnace, splineCenters[count]) > splineLenghts[count]/1.6f)
             {
                 if (activeSplines[count])
