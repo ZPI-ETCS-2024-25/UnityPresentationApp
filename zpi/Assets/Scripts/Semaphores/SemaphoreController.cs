@@ -30,7 +30,7 @@ public abstract class SemaphoreController : MonoBehaviour
     public ISemaphoreState currentState;
 
     public SemaphoreInfo semaphoreInfo;
-    protected List<(int, ISemaphoreState)> allowedStatesList;
+    public List<(int, ISemaphoreState)> allowedStatesList;
 
     protected void ResetLights()
     {

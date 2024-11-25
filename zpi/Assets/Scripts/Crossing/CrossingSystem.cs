@@ -14,10 +14,9 @@ public struct CrossingInfo
 public class CrossingSystem : MonoBehaviour
 {
     [SerializeField] private UnityServerComm comm;
-    [SerializeField] private SemaphoreCrossingsController semaphoreController;
+    [SerializeField] private SemaphoreCrossingsController semaphoreRoadController;
+    [SerializeField] private List<SemaphoreCrossingShieldController> semaphoreCrossingShieldList;
     [SerializeField] private Animator animator;
-    public bool close = false;
-    public bool open = false;
     private Coroutine openingCoroutine;
     public string Name;
     [SerializeField] private float barrierDelay = 6.0f;
@@ -25,15 +24,6 @@ public class CrossingSystem : MonoBehaviour
 
     public CrossingInfo crossingInfo;
     private List<(int Index, string Name)> allowedStatesList = new List<(int Index, string Name)> { (0,"Working"),(1,"Damaged")};
-
-    private List<(int Index, string Name)> GetAllowedStates()
-    {
-        List<(int, string)> allowedStates = new List<(int, string)>();
-        allowedStates.Add((0, "Working"));
-        allowedStates.Add((1, "Damaged"));
-
-        return allowedStates;
-    }
 
     public CrossingInfo GetCrossingInfo()
     {
@@ -47,7 +37,7 @@ public class CrossingSystem : MonoBehaviour
     {
         animator.SetBool("Close", false);
         yield return new WaitForSeconds(barrierDelay);
-        semaphoreController.StopBlinking();
+        semaphoreRoadController.StopBlinking();
         openingCoroutine = null;
     }
 
@@ -69,7 +59,7 @@ public class CrossingSystem : MonoBehaviour
                 openingCoroutine = null;
             }
             animator.SetBool("Close", true);
-            semaphoreController.StartBlinking();
+            semaphoreRoadController.StartBlinking();
         }
     }
 
@@ -84,21 +74,32 @@ public class CrossingSystem : MonoBehaviour
         }
     }
 
+    public void SetCrossingShieldSemaphoresState(int stateIdx)
+    {
+        foreach (SemaphoreController semaphoreController in semaphoreCrossingShieldList)
+        {
+            ISemaphoreState state = semaphoreController.allowedStatesList[stateIdx].Item2;
+            semaphoreController.SetState(state);
+        }
+    }
 
     public void ChangeCrossingState(int state)
     {
-        damagedCrossing = state == 0 ? false : true;
+        if (state == 0)
+        {
+            damagedCrossing = false;
+            SetCrossingShieldSemaphoresState(1);
+        }
+        else
+        {
+            damagedCrossing = true;
+            SetCrossingShieldSemaphoresState(2);
+        }
     }
 
     void FixedUpdate()
     {
-        //if (close) {
-        //    CloseCrossing();
-        //    close = false;
-        //}if (open) {
-        //    OpenCrossing(); 
-        //    open = false; 
-        //}
+
     }
 
     public void SetActive(bool active)

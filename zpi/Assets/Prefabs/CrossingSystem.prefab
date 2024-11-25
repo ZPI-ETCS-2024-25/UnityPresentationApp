@@ -189,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4874839749c14ec4ab9d2086c813b1a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   lightLens:
   - {fileID: 5617541592652779605}
   - {fileID: 1916635495001467385}
@@ -200,7 +201,7 @@ MonoBehaviour:
   greenLight: {fileID: 0}
   whiteLight: {fileID: 0}
   blinkDelay: 0.8
-  currentSignal: 0
+  name: semaphore
 --- !u!114 &7824892251847966933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,10 +215,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comm: {fileID: 0}
-  semaphoreController: {fileID: 7778838226647885130}
+  semaphoreRoadController: {fileID: 7778838226647885130}
+  semaphoreTrainTrackList: []
   animator: {fileID: 8213447061143045141}
   close: 0
   open: 0
+  Name: 
   barrierDelay: 3
   damagedCrossing: 0
 --- !u!95 &8213447061143045141

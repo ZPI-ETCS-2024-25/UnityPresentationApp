@@ -1411,7 +1411,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135354482542337344, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.726
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 4135354482542337344, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1419,7 +1419,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4135354482542337344, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.706
+      value: -0.99
       objectReference: {fileID: 0}
     - target: {fileID: 6536907238204580968, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3783,12 +3783,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751d16b373c21c548926c93117fdaa41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 2
   target: {fileID: 170785771}
   smoothTime: 0.001
   rotationSpeed: 3.5
-  cameraPosOffset: {x: 0, y: 8, z: -3}
-  cameraXAngle: 35
+  cameraPosOffset: {x: 0, y: 8, z: -6}
+  cameraXAngle: 25
 --- !u!81 &504174737
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4327,7 +4326,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751d16b373c21c548926c93117fdaa41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1
   target: {fileID: 1955643989}
   smoothTime: 0.001
   rotationSpeed: 8

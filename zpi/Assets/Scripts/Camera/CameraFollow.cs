@@ -9,7 +9,6 @@ public class CameraFollow : MonoBehaviour
     private Vector3 currentVelocity = Vector3.zero;
     private Vector3 targetPosition = Vector3.zero;
     private Quaternion targetRotation = Quaternion.identity;
-    [SerializeField] private float maxDistance = 3f;
     [SerializeField] private Transform target;
     [SerializeField] private float smoothTime; //distance follow smoothing amount
     [SerializeField] private float rotationSpeed; //rotation follow smothing amount

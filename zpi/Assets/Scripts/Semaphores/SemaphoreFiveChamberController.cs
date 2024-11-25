@@ -71,7 +71,7 @@ public class SemaphoreFiveChamberController : SemaphoreController
     {
         List<(int, ISemaphoreState)> allowedStates = new List<(int, ISemaphoreState)>();
 
-        var assembly = Assembly.Load("FiveChamberStates");
+        Assembly assembly = Assembly.Load("FiveChamberStates");
 
         if (assembly == null)
         {
@@ -79,12 +79,12 @@ public class SemaphoreFiveChamberController : SemaphoreController
             return allowedStates;
         }
 
-        var stateTypeList = assembly.GetTypes()
+        List<Type> stateTypeList = assembly.GetTypes()
             .Where(t => typeof(ISemaphoreState).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract)
             .ToList();
 
         int i = 0;
-        foreach (var type in stateTypeList)
+        foreach (Type type in stateTypeList)
         {
             ISemaphoreState state = (ISemaphoreState)Activator.CreateInstance(type);
             allowedStates.Add((i, state));
