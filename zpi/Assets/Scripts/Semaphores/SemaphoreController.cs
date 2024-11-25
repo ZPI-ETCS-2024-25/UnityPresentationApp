@@ -6,8 +6,8 @@ using UnityEngine;
 public struct SemaphoreInfo
 {
     public string Name;
-    public int Signal;
-    public List<(int Index, string Name)> AllowedSignals;
+    public ISemaphoreState State;
+    public List<(int Index, ISemaphoreState Name)> AllowedStates;
     public SemaphoreController SemaphoreController;
 }
 
@@ -16,21 +16,21 @@ public abstract class SemaphoreController : MonoBehaviour
     [SerializeField] private UnityServerComm comm;
     [SerializeField] private GameObject[] lightLens;
     [SerializeField] protected Material blankLight;
-    [SerializeField] protected Material redLight;
-    [SerializeField] protected Material orangeLight;
-    [SerializeField] protected Material greenLight;
-    [SerializeField] protected Material whiteLight;
+    [SerializeField] public Material redLight;
+    [SerializeField] public Material orangeLight;
+    [SerializeField] public Material greenLight;
+    [SerializeField] public Material whiteLight;
 
     [SerializeField] protected float blinkDelay = 1.0f;
     private bool isBlinking = true; //check to keep one coroutine running
     private Coroutine blinkingCoroutine; //reference for coroutine to stop it
     private Material blinkColor;
     private int blinkLensIndex;
-    public int currentSignal;
     public string name = "semaphore";
+    public ISemaphoreState currentState;
 
     public SemaphoreInfo semaphoreInfo;
-    protected List<(int, string)> allowedSignalsList;
+    public List<(int, ISemaphoreState)> allowedStatesList;
 
     protected void ResetLights()
     {
@@ -41,14 +41,22 @@ public abstract class SemaphoreController : MonoBehaviour
         }
     }
 
-    protected void SetLight(int lightIndex, Material color)
+    public void SetLight(int lightIndex, Material color)
     {
         //Debug.Log(lightIndex + color.name);
+        if (lightIndex > lightLens.Length)
+        {
+            return;
+        }
         lightLens[lightIndex].GetComponent<MeshRenderer>().material = color;
     }
 
     private IEnumerator BlinkLight(int lightIndex, Material color)
     {
+        if (lightIndex > lightLens.Length)
+        {
+            yield break;
+        }
         isBlinking = true;
         SetLight(lightIndex, color);
         yield return new WaitForSeconds(blinkDelay);
@@ -58,7 +66,7 @@ public abstract class SemaphoreController : MonoBehaviour
         isBlinking = false;
     }
 
-    protected void StartBlinkLight(int lightIndex, Material color)
+    public void StartBlinkLight(int lightIndex, Material color)
     {
         blinkColor = color;
         blinkLensIndex = lightIndex;
@@ -78,9 +86,18 @@ public abstract class SemaphoreController : MonoBehaviour
         Debug.Log("Not implemented");
     }
 
-    virtual public List<(int, string)> GetAllowedSignals()
+    public void SetState(ISemaphoreState state)
     {
-        return new List<(int, string)>();
+        StopBlinkLight();
+        ResetLights();
+
+        state.SetSignal(this);
+        currentState = state;
+    }
+
+    virtual public List<(int, ISemaphoreState)> GetAllowedStates()
+    {
+        return new List<(int, ISemaphoreState)>();
     }
 
     public SemaphoreInfo GetSemaphoreInfo()
@@ -88,15 +105,15 @@ public abstract class SemaphoreController : MonoBehaviour
         return new SemaphoreInfo()
         {
             Name = name,
-            Signal = currentSignal,
-            AllowedSignals = allowedSignalsList,
+            State = currentState,
+            AllowedStates = allowedStatesList,
             SemaphoreController = this
         };
     }
 
     private void Awake()
     {
-        allowedSignalsList = GetAllowedSignals();
+        allowedStatesList = GetAllowedStates();
         semaphoreInfo = GetSemaphoreInfo();
         //Debug.Log($"{name}");
         //Debug.Log($"pre {allowedSignalsList}");
@@ -135,7 +152,10 @@ public abstract class SemaphoreController : MonoBehaviour
         comm.SendSemaphoreSignal(0, shouldGo());
     }
 
-    public abstract bool shouldGo();
+    public bool shouldGo()
+    {
+        return currentState.ShouldGo();
+    }
 }
 
 //public enum SemaphoreSignals{

@@ -13,8 +13,8 @@ public class SemaphoreManager : MonoBehaviour
         {
             semaphoreInfos.Add(new SemaphoreInfo() { 
                 Name = semaphore.name,
-                Signal = semaphore.currentSignal,
-                AllowedSignals = semaphore.GetAllowedSignals(),
+                State = semaphore.currentState,
+                AllowedStates = semaphore.GetAllowedStates(),
                 SemaphoreController = semaphore
             });
         }
