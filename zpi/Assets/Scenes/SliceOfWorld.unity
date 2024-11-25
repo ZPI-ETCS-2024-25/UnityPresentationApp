@@ -12264,6 +12264,174 @@ MonoBehaviour:
           m_DataPoints:
           - m_Index: 0
             m_Value: {fileID: 11400000, guid: 9487c309ad8ecb24699faaf1bdc28ab7, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: -62.307228
+        y: 0
+        z: -19.634546
+      TangentIn:
+        x: -0
+        y: -0
+        z: -13.240377
+      TangentOut:
+        x: 0
+        y: 0
+        z: 13.240377
+      Rotation:
+        value:
+          x: 0
+          y: 0.5271127
+          z: 0
+          w: 0.84979534
+    - Position:
+        x: 56.310127
+        y: 0
+        z: 39.193024
+      TangentIn:
+        x: 0.000009536743
+        y: 0
+        z: -51.514412
+      TangentOut:
+        x: -0.0000038146973
+        y: 0
+        z: 27.528942
+      Rotation:
+        value:
+          x: -0
+          y: 0.5283003
+          z: -0
+          w: 0.8490576
+    - Position:
+        x: 106.99126
+        y: 0
+        z: 64.85375
+      TangentIn:
+        x: -0
+        y: -0
+        z: -5.6807127
+      TangentOut:
+        x: 0
+        y: 0
+        z: 5.6807127
+      Rotation:
+        value:
+          x: 0
+          y: 0.5235854
+          z: 0
+          w: 0.8519733
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    - Mode: 4
+      Tension: 0.5
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: 9b6cb8e6f23b1e742bc40b3b3415fd90, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: 9b6cb8e6f23b1e742bc40b3b3415fd90, type: 2}
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: -66.51499
+        y: 0
+        z: -7.5583396
+      TangentIn:
+        x: 0
+        y: 0
+        z: 0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0.5253258
+          z: 0
+          w: 0.8509012
+    - Position:
+        x: 13.516764
+        y: 0
+        z: 31.605013
+      TangentIn:
+        x: 0
+        y: 0
+        z: -24.410044
+      TangentOut:
+        x: -0.36296463
+        y: -0.000044501387
+        z: 26.60053
+      Rotation:
+        value:
+          x: -0.000033251654
+          y: 0.54242086
+          z: -0.000051500494
+          w: 0.8401069
+    - Position:
+        x: 56.310127
+        y: 0
+        z: 39.193024
+      TangentIn:
+        x: 0
+        y: 0
+        z: -22.318153
+      TangentOut:
+        x: 0
+        y: 0
+        z: 13.257095
+      Rotation:
+        value:
+          x: 0
+          y: 0.51311266
+          z: 0
+          w: 0.85832125
+    m_MetaData:
+    - Mode: 1
+      Tension: 0.5
+    - Mode: 4
+      Tension: 0.5
+    - Mode: 3
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data:
+      - Key: 
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: 0
+          m_DataPoints: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data:
+      - Key: RailData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: 4460e1e01ff001d4a92c3908938fd0ea, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: 4460e1e01ff001d4a92c3908938fd0ea, type: 2}
   m_Knots:
     m_KnotsLink:
     - Knots:
@@ -12283,6 +12451,8 @@ MonoBehaviour:
         Knot: 0
       - Spline: 3
         Knot: 1
+      - Spline: 36
+        Knot: 2
     - Knots:
       - Spline: 4
         Knot: 1
@@ -12423,6 +12593,11 @@ MonoBehaviour:
         Knot: 0
       - Spline: 35
         Knot: 0
+    - Knots:
+      - Spline: 36
+        Knot: 1
+      - Spline: 37
+        Knot: 2
 --- !u!1001 &1843651245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13764,5 +13939,5 @@ SceneRoots:
   - {fileID: 262576549}
   - {fileID: 925971996}
   - {fileID: 1527432688}
-  - {fileID: 1722874534}
   - {fileID: 424853341}
+  - {fileID: 1722874534}
