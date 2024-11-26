@@ -13,7 +13,7 @@ public struct SemaphoreInfo
 
 public abstract class SemaphoreController : MonoBehaviour
 {
-    [SerializeField] private UnityServerComm comm;
+    [SerializeField] public UnityServerComm comm;
     [SerializeField] private GameObject[] lightLens;
     [SerializeField] protected Material blankLight;
     [SerializeField] public Material redLight;
@@ -147,10 +147,8 @@ public abstract class SemaphoreController : MonoBehaviour
         gameObject.SetActive(active);
     }
 
-    public void SendSemaphoreInfoToSever()
-    {
-        comm.SendSemaphoreSignal(0, shouldGo());
-    }
+    public abstract void SendSemaphoreInfoToSever();
+    
 
     public bool shouldGo()
     {

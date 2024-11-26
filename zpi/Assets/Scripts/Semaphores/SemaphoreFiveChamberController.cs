@@ -92,6 +92,11 @@ public class SemaphoreFiveChamberController : SemaphoreController
 
         return allowedStates;
     }
+
+    public override void SendSemaphoreInfoToSever()
+    {
+        comm.SendSemaphoreSignal(0, shouldGo());
+    }
 }
 public enum SemaphoreFiveChamberSignals
 {

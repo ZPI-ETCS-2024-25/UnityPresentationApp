@@ -61,6 +61,11 @@ public class SemaphoreWarningShieldController : SemaphoreController
         return allowedStates;
     }
 
+    public override void SendSemaphoreInfoToSever()
+    {
+
+    }
+
     private void Start()
     {
         Debug.Log(this.name);

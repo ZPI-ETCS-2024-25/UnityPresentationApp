@@ -58,6 +58,11 @@ public class SemaphoreCrossingShieldController : SemaphoreController
 
         return allowedStates;
     }
+
+    public override void SendSemaphoreInfoToSever()
+    {
+       
+    }
 }
 
 public enum SemaphoreCrossingShieldSignals

@@ -15,8 +15,8 @@ MonoBehaviour:
   trackNumber: start
   lineNumber: 1
   startKilometers: 0
-  endKilometers: 0.125
-  inputedKilometers: 0.125
+  endKilometers: 0
+  inputedKilometers: 10
   realKilometers: 0.125
   startingKnotGroup: 0
   endingKnotGroup: 1

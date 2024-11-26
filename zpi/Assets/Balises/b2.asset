@@ -12,4 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5535c2c8181b3644391952fb47ab0234, type: 3}
   m_Name: b2
   m_EditorClassIdentifier: 
-  baliseGroups: []
+  baliseGroups:
+  - kilometer: 1
+    balises:
+    - messageType: start
+    - messageType: middle
+    - messageType: finish

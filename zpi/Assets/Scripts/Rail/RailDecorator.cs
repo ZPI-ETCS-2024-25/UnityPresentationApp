@@ -25,15 +25,15 @@ public class RailDecorator : MonoBehaviour
         ClearInstantiatedObjects();
         InstantiateAlongSplinesByDistance();
 
-        GameObject[] g = GameObject.FindObjectsOfType<GameObject>(true);
-        foreach(GameObject go in g)
+        //GameObject[] g = GameObject.FindObjectsOfType<GameObject>(true);
+        /*foreach(GameObject go in g)
         {
             if(go.name == "TrainTrack(Clone)")
             {
                 Debug.Log("destroy");
                 DestroyImmediate(go);
             }
-        }
+        }*/
     }
 
 

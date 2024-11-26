@@ -19,6 +19,7 @@ public class CrossingSystem : MonoBehaviour
     [SerializeField] private Animator animator;
     private Coroutine openingCoroutine;
     public string Name;
+    public int Id = 0;
     [SerializeField] private float barrierDelay = 6.0f;
     [SerializeField] private bool damagedCrossing = false;
 
@@ -109,6 +110,6 @@ public class CrossingSystem : MonoBehaviour
 
     public void SendCrossingStateToServer()
     {
-        comm.SendCrossingState(0, damagedCrossing);
+        comm.SendCrossingState(Id, damagedCrossing);
     }
 }

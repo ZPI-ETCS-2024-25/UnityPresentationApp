@@ -6418,7 +6418,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751d16b373c21c548926c93117fdaa41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 1
   target: {fileID: 1192235324}
   smoothTime: 0.001
   rotationSpeed: 8
@@ -8749,7 +8748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751d16b373c21c548926c93117fdaa41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 2
   target: {fileID: 586305022}
   smoothTime: 0.2
   rotationSpeed: 3.5
@@ -9464,7 +9462,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: checkForBalises
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: splineContainer

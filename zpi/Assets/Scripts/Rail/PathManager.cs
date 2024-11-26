@@ -403,7 +403,14 @@ public class PathManager : MonoBehaviour
         junctionsSource[index] = changed;
         RepositionArrows();
         OnJunctionchanged();
-        comm.SendJunctionState(0,true);
+
+        SplineData<UnityEngine.Object> rD;
+        bool gotRailData = splineContainer.Splines[index].TryGetObjectData("RailData", out rD);
+        RailData railData = rD[0].Value as RailData;
+
+        if (railData != null) {
+            comm.SendJunctionState(100 +railData.junctionGroup*10+railData.junctionNumber, changed == railData.straightIndex ? true : false);
+        }
     }
 
     public void DebugPrintPathing()

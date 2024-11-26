@@ -52,4 +52,9 @@ public class SemaphoreCrossingsController : SemaphoreController
             blinkingCoroutine = StartCoroutine(BlinkCrossingLights());
         }
     }
+
+    public override void SendSemaphoreInfoToSever()
+    {
+        
+    }
 }

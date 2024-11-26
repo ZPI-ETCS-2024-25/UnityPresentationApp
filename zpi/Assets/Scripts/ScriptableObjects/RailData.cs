@@ -13,4 +13,7 @@ public class RailData : ScriptableObject
     public float realKilometers;
     public int startingKnotGroup = 1;
     public int endingKnotGroup = 1;
+    public int junctionGroup = 0;
+    public int junctionNumber = 0;
+    public int straightIndex = 0;
 }
