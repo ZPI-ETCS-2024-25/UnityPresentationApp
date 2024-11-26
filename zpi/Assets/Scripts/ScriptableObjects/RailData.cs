@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,7 +14,16 @@ public class RailData : ScriptableObject
     public float realKilometers;
     public int startingKnotGroup = 1;
     public int endingKnotGroup = 1;
-    public int junctionGroup = 0;
-    public int junctionNumber = 0;
-    public int straightIndex = 0;
+    public JunctionData junctionDataForward;
+    public JunctionData junctionDataBackward;
+}
+
+
+
+[Serializable]
+public struct JunctionData
+{
+    public int junctionGroup;
+    public int junctionNumber;
+    public int straightIndex;
 }

@@ -27,6 +27,7 @@ public abstract class SemaphoreController : MonoBehaviour
     private Material blinkColor;
     private int blinkLensIndex;
     public string name = "semaphore";
+    public int id;
     public ISemaphoreState currentState;
 
     public SemaphoreInfo semaphoreInfo;

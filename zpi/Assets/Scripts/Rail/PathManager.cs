@@ -408,8 +408,10 @@ public class PathManager : MonoBehaviour
         bool gotRailData = splineContainer.Splines[index].TryGetObjectData("RailData", out rD);
         RailData railData = rD[0].Value as RailData;
 
+        JunctionData junctionData = backward ? railData.junctionDataBackward : railData.junctionDataForward;
+
         if (railData != null) {
-            comm.SendJunctionState(100 +railData.junctionGroup*10+railData.junctionNumber, changed == railData.straightIndex ? true : false);
+            comm.SendJunctionState(100 +junctionData.junctionGroup*10+junctionData.junctionNumber, changed == junctionData.straightIndex ? true : false);
         }
     }
 

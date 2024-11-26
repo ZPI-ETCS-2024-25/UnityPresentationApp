@@ -95,7 +95,7 @@ public class SemaphoreFiveChamberController : SemaphoreController
 
     public override void SendSemaphoreInfoToSever()
     {
-        comm.SendSemaphoreSignal(0, shouldGo());
+        comm.SendSemaphoreSignal(id, shouldGo());
     }
 }
 public enum SemaphoreFiveChamberSignals
