@@ -1330,6 +1330,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
+      propertyPath: sendSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: arrowPrefab
       value: 
       objectReference: {fileID: 2867955227674987296, guid: 6f1659148c069c74f816e8cf26c360c3, type: 3}
@@ -6917,7 +6921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
-  serverUri: http://127.0.0.1:8000/name/
+  serverUri: http://127.0.0.1:8002/name/
 --- !u!114 &892809137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6959,7 +6963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
-  serverUri: http://127.0.0.1:8002/
+  serverUri: http://127.0.0.1:8000/
 --- !u!4 &892809140
 Transform:
   m_ObjectHideFlags: 0

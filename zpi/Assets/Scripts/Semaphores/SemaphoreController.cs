@@ -94,6 +94,7 @@ public abstract class SemaphoreController : MonoBehaviour
 
         state.SetSignal(this);
         currentState = state;
+        SendSemaphoreInfoToSever();
     }
 
     virtual public List<(int, ISemaphoreState)> GetAllowedStates()
