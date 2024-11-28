@@ -6917,7 +6917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
-  serverUri: http://127.0.0.1:8000/name/
+  serverUri: http://127.0.0.1:8002/name/
 --- !u!114 &892809137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6959,7 +6959,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
-  serverUri: http://127.0.0.1:8002/
+  serverUri: http://127.0.0.1:8000/
 --- !u!4 &892809140
 Transform:
   m_ObjectHideFlags: 0
