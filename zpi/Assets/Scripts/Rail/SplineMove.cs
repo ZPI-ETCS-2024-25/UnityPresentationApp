@@ -16,6 +16,7 @@ public class SplineMove : MonoBehaviour
     public LenghtManager lenghtManager;
 
     public bool checkForBalises = true;
+    public bool sendSpeed = true;
 
 
     public SplineContainer splineContainer;
@@ -82,7 +83,11 @@ public class SplineMove : MonoBehaviour
         previousDistancePercentage = distancePercentage;
         speed = Math.Max(speed + acceleration,0f);
         float speedKPH = speed * lenghtManager.modifier*50f*3600f;
-        comm.SendSpeedInfo(speedKPH);
+
+        if (sendSpeed)
+        {
+            comm.SendSpeedInfo(speedKPH);
+        }
 
 
 
