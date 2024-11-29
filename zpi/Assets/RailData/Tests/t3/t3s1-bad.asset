@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b134a0651b9e9434b8e00f4c2c3d2aa9, type: 3}
+  m_Name: t3s1-bad
+  m_EditorClassIdentifier: 
+  trackNumber: 
+  lineNumber: 0
+  startKilometers: 0
+  endKilometers: 0
+  inputedKilometers: 0
+  realKilometers: 0
+  startingKnotGroup: 1
+  endingKnotGroup: 1
+  junctionDataForward:
+    junctionGroup: 0
+    junctionNumber: 0
+    straightIndex: 0
+  junctionDataBackward:
+    junctionGroup: 0
+    junctionNumber: 0
+    straightIndex: 0

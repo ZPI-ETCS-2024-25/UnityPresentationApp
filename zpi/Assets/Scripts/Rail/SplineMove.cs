@@ -63,7 +63,11 @@ public class SplineMove : MonoBehaviour
         //nextSplinesInfo = new List<(UnityEngine.Vector3 KnotPosition, int PathIndex)>();
         speed = startingSpeed;
 
-        server.BreakCommand += StopTrainApp;
+        if(server != null)
+        {
+            server.BreakCommand += StopTrainApp;
+        }
+
         pathManager.JunctionChanged += UpdateNextSplineIndex;
 
         InitialiseWagons();
@@ -74,8 +78,8 @@ public class SplineMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (endOfline)//jesli to koniec
-        {
+        if (endOfline && comm != null)//jesli to koniec
+        {          
             comm.SendSpeedInfo(0f);
             return;
         }
@@ -84,7 +88,7 @@ public class SplineMove : MonoBehaviour
         speed = Math.Max(speed + acceleration,0f);
         float speedKPH = speed * lenghtManager.modifier*50f*3600f;
 
-        if (sendSpeed)
+        if (sendSpeed && comm != null)
         {
             comm.SendSpeedInfo(speedKPH);
         }
@@ -114,7 +118,7 @@ public class SplineMove : MonoBehaviour
             if (baliseController != null)
             {
                 List<BaliseInfo> baliseInformations = baliseController.checkForBalises(currentSpline, previousDistancePercentage, distancePercentage, backwards);
-                if (baliseInformations != null)
+                if (baliseInformations != null && comm != null)
                 {
                     foreach (BaliseInfo baliseInfo in baliseInformations)
                     {
