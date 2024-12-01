@@ -1,4 +1,3 @@
-using PlasticGui.Configuration.CloudEdition.Welcome;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,33 +7,6 @@ using UnityEngine;
 
 public class SemaphoreWarningShieldController : SemaphoreController
 {
-    //public override void SetSignal(int signalIndex)
-    //{
-    //    SemaphoreWarningShieldSignals signal = (SemaphoreWarningShieldSignals)signalIndex;
-    //    if ((int)signal != currentSignal)
-    //    {
-    //        StopBlinkLight();
-    //        ResetLights();
-
-    //        switch (signal)
-    //        {
-    //            case SemaphoreWarningShieldSignals.Os1:
-    //                SetLight(1, orangeLight);
-    //                break;
-    //            case SemaphoreWarningShieldSignals.Os2:
-    //                SetLight(0, greenLight);
-    //                break;
-    //            case SemaphoreWarningShieldSignals.Os3:
-    //                StartBlinkLight(0, greenLight);
-    //                break;
-    //            case SemaphoreWarningShieldSignals.Os4:
-    //                StartBlinkLight(1, orangeLight);
-    //                break;
-    //        }
-    //        currentSignal = (int)signal;
-    //    }
-    //}
-
     override public List<(int, ISemaphoreState)> GetAllowedStates()
     {
         List<(int, ISemaphoreState)> allowedStates = new List<(int, ISemaphoreState)>();

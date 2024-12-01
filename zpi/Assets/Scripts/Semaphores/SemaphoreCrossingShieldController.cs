@@ -7,32 +7,6 @@ using UnityEngine;
 
 public class SemaphoreCrossingShieldController : SemaphoreController
 {
-    //public override void SetSignal(int signalIndex)
-    //{
-    //    SemaphoreCrossingShieldSignals signal = (SemaphoreCrossingShieldSignals)signalIndex;
-    //    if ((int)signal != currentSignal)
-    //    {
-    //        StopBlinkLight();
-    //        ResetLights();
-
-    //        switch (signal)
-    //        {
-    //            case SemaphoreCrossingShieldSignals.Osp1:
-    //                SetLight(2, orangeLight);
-    //                SetLight(3, orangeLight);
-    //                break;
-    //            case SemaphoreCrossingShieldSignals.Osp2:
-    //                SetLight(0, whiteLight);
-    //                SetLight(1, whiteLight);
-    //                break;
-    //            default:
-    //                Debug.Log("Bad signal " + signal);
-    //                break;
-    //        }
-    //        currentSignal = (int)signal;
-    //    }
-    //}
-
     override public List<(int, ISemaphoreState)> GetAllowedStates()
     {
         List<(int, ISemaphoreState)> allowedStates = new List<(int, ISemaphoreState)>();
