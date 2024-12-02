@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using System;
 using UnityEngine.Splines;
+using System.Threading;
 
 public class BaliseController : MonoBehaviour
 {
@@ -104,8 +105,10 @@ public class BaliseController : MonoBehaviour
 
     public void PlaceBalises()
     {
-        foreach(Spline spline in splineContainer.Splines)
+        for(int i = 0; i < splineContainer.Splines.Count; i++)
         {
+            Spline spline = splineContainer.Splines[i];
+
             SplineData<UnityEngine.Object> bD;
             SplineData<UnityEngine.Object> rD;
             bool gotBaliseData = spline.TryGetObjectData("BaliseData", out bD);
@@ -119,13 +122,17 @@ public class BaliseController : MonoBehaviour
             BalisesData baliseData = bD[0].Value as BalisesData;
             RailData railData = rD[0].Value as RailData;
 
-            
+            int count = 1;
             foreach(BaliseGroup bg in baliseData.baliseGroups)
             {
-                Vector3 position = splineContainer.EvaluatePosition(spline, railData.startKilometers+bg.kilometer/railData.endKilometers) + new Unity.Mathematics.float3(0,heightOffSet , 0);
+                //Debug.Log($"{i} {count} {bg.kilometer / (railData.endKilometers - railData.startKilometers)}");
+                Vector3 position = splineContainer.EvaluatePosition(spline, bg.kilometer/(railData.endKilometers-railData.startKilometers)) + new Unity.Mathematics.float3(0,heightOffSet , 0);
                 GameObject b = Instantiate(balisePrefab);
                 b.transform.position = position;
+                b.name = $"Balise-Spline{i}-Group{count}-Km{bg.kilometer}";
                 balises.Add(b);
+
+                count++;
             }
             
         }        

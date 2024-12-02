@@ -24,8 +24,6 @@ public class SplineMove : MonoBehaviour
     private int currentSpline;
     private List<(int Spline,bool Backward)> previousSplineInfo;
     private int nextSplineIndex;
-    //private List<(UnityEngine.Vector3 KnotPosition, int PathIndex)> nextSplinesInfo;
-    //private int nextSplineIndex;
 
     [SerializeField]
     private GameObject[] wagons;
