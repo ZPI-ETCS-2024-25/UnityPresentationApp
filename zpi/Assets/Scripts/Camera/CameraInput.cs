@@ -15,7 +15,7 @@ public class CameraInput : MonoBehaviour
         actions = playerInput.Camera;
         manager = GetComponent<CamerasManager>();
 
-        actions.Changecamera.performed += ctx => manager.SwitchToNextCam();
+        actions.Changecamera.performed += ctx => manager.SwitchView();
     }
 
     private void FixedUpdate()

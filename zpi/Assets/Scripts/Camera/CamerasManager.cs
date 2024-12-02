@@ -1,58 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class CamerasManager : MonoBehaviour
 {
-    [SerializeField] private Camera[] cameras;
-    [SerializeField] private Camera UICamera;
-    [SerializeField] private Canvas ui;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private CinemachineCamera topViewCamera;
+    [SerializeField] private CinemachineCamera cabinViewCamera;
+    [SerializeField] private LayerMask topLayerMask;
+    [SerializeField] private LayerMask cabinLayerMask;
 
-    private int activeCameraIdx;
-
-    private void Start()
+    public void SwitchView()
     {
-        if (cameras.Length > 0) 
+        if (topViewCamera.Priority > cabinViewCamera.Priority)
         {
-            cameras[0].enabled = true;
-        }
+            cabinViewCamera.Priority = 10;
+            topViewCamera.Priority = 0;
 
-        for (int i = 1; i < cameras.Length; i++)
+            mainCamera.cullingMask = cabinLayerMask;
+        }
+        else
         {
-            cameras[i].enabled = false;
+            topViewCamera.Priority = 10;
+            cabinViewCamera.Priority = 0;
+
+            mainCamera.cullingMask = topLayerMask;
         }
-    }
-
-    private void SwitchToCam(int cameraIdx)
-    {
-        if (cameraIdx < cameras.Length && cameraIdx != activeCameraIdx)
-        {
-            cameras[cameraIdx].enabled = true;
-            cameras[activeCameraIdx].enabled = false;
-
-            activeCameraIdx = cameraIdx;
-        }
-    }
-
-    public void SwitchToNextCam()
-    {
-        Debug.Log("ye");
-        int nextCamIdx = (activeCameraIdx + 1) % cameras.Length;
-        SwitchToCam(nextCamIdx);
-    }
-
-    public Camera GetActiveCam() 
-    { 
-        return cameras[activeCameraIdx]; 
-    }
-
-    public void DisableUi()
-    {
-        UICamera.enabled = false;
-    }
-
-    public void EnableUi()
-    {
-        UICamera.enabled = true;
     }
 }
