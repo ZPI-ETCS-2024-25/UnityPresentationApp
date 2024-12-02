@@ -21,7 +21,7 @@ MonoBehaviour:
   startingKnotGroup: 1
   endingKnotGroup: 0
   junctionDataForward:
-    junctionGroup: 0
+    junctionGroup: 1
     junctionNumber: 0
     straightIndex: 0
   junctionDataBackward:
