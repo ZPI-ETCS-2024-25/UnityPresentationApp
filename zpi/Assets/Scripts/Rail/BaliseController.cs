@@ -8,6 +8,10 @@ using UnityEngine.Splines;
 public class BaliseController : MonoBehaviour
 {
     public SplineContainer splineContainer;
+    public GameObject balisePrefab;
+    [SerializeField]
+    public List<GameObject> balises;
+    public float heightOffSet;
 
     public List<BaliseInfo> checkForBalises(int splineIndex,float previousDistanceProc,float currentDistanceProc,bool backward)
     {
@@ -97,4 +101,42 @@ public class BaliseController : MonoBehaviour
         return passedBalisesInfo;
     }
 
+
+    public void PlaceBalises()
+    {
+        foreach(Spline spline in splineContainer.Splines)
+        {
+            SplineData<UnityEngine.Object> bD;
+            SplineData<UnityEngine.Object> rD;
+            bool gotBaliseData = spline.TryGetObjectData("BaliseData", out bD);
+            bool gotRailData = spline.TryGetObjectData("RailData", out rD);
+
+            if(!gotBaliseData || !gotRailData)
+            {
+                continue;
+            }
+
+            BalisesData baliseData = bD[0].Value as BalisesData;
+            RailData railData = rD[0].Value as RailData;
+
+            
+            foreach(BaliseGroup bg in baliseData.baliseGroups)
+            {
+                Vector3 postion = splineContainer.EvaluatePosition(spline, railData.startKilometers+bg.kilometer/railData.endKilometers) + new Unity.Mathematics.float3(0,heightOffSet , 0);
+                GameObject b = Instantiate(balisePrefab);
+                b.transform.position = postion;
+                balises.Add(b);
+            }
+            
+        }        
+    }
+
+    public void RemoveBalises()
+    {
+        foreach (GameObject balise in balises)
+        {
+            DestroyImmediate(balise);
+        }
+        balises.Clear();
+    }
 }

@@ -10936,6 +10936,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splineContainer: {fileID: 1833071513}
+  balisePrefab: {fileID: 8724688980773059455, guid: e3eb2d65e07d1874193ca8e00b8e905c, type: 3}
+  balises: []
+  heightOffSet: 1
 --- !u!114 &1833071511
 MonoBehaviour:
   m_ObjectHideFlags: 0
