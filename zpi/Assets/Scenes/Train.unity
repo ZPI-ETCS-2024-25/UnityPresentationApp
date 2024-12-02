@@ -2811,6 +2811,7 @@ MonoBehaviour:
   baliseController: {fileID: 0}
   lenghtManager: {fileID: 0}
   checkForBalises: 0
+  sendSpeed: 1
   splineContainer: {fileID: 0}
   startingSpline: 0
   wagons: []
@@ -7733,6 +7734,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splineContainer: {fileID: 1820251762}
+  balisePrefab: {fileID: 0}
+  balises: []
+  heightOffSet: 0
 --- !u!1 &1835927843
 GameObject:
   m_ObjectHideFlags: 0
@@ -8427,6 +8431,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splineContainer: {fileID: 1835927846}
+  balisePrefab: {fileID: 8724688980773059455, guid: e3eb2d65e07d1874193ca8e00b8e905c, type: 3}
+  balises: []
+  heightOffSet: 0
 --- !u!114 &1835927849
 MonoBehaviour:
   m_ObjectHideFlags: 0
