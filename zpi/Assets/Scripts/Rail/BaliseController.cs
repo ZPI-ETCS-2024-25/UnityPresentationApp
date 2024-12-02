@@ -122,9 +122,10 @@ public class BaliseController : MonoBehaviour
             
             foreach(BaliseGroup bg in baliseData.baliseGroups)
             {
-                Vector3 postion = splineContainer.EvaluatePosition(spline, railData.startKilometers+bg.kilometer/railData.endKilometers) + new Unity.Mathematics.float3(0,heightOffSet , 0);
+                Vector3 position = splineContainer.EvaluatePosition(spline, railData.startKilometers+bg.kilometer/railData.endKilometers) + new Unity.Mathematics.float3(0,heightOffSet , 0);
+                position = splineContainer.transform.TransformPoint(position);
                 GameObject b = Instantiate(balisePrefab);
-                b.transform.position = postion;
+                b.transform.position = position;
                 balises.Add(b);
             }
             
