@@ -1368,7 +1368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: sendSpeed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: arrowPrefab
@@ -10362,7 +10362,6 @@ MonoBehaviour:
   - {fileID: 899781885}
   - {fileID: 1753633762}
   - {fileID: 1575877450}
-  - {fileID: 0}
   - {fileID: 1734301604}
   - {fileID: 2010471082}
   - {fileID: 1939979024}

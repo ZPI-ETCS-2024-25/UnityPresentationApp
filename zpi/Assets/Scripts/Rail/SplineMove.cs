@@ -95,10 +95,10 @@ public class SplineMove : MonoBehaviour
         }
 
         speed = Math.Max(speed + acceleration,0f);
-        float speedKPH = speed * lenghtManager.modifier*50f*3600f;
 
         if (sendSpeed && comm != null)
         {
+            float speedKPH = speed * lenghtManager.modifier * (1f/Time.fixedDeltaTime) * 3.6f;
             comm.SendSpeedInfo(speedKPH);
         }
 

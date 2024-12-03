@@ -20,7 +20,9 @@ public class CrossingScroller : MultiMenuWrapper, IRecyclableScrollRectDataSourc
 
     private void Awake()
     {
-        GetCrossings();
+        if (crossingManager != null) {
+            GetCrossings();
+        }
         _recyclableScrollRect.DataSource = this;
     }
 
@@ -48,8 +50,10 @@ public class CrossingScroller : MultiMenuWrapper, IRecyclableScrollRectDataSourc
     public void SetCell(ICell cell, int index)
     {
         //Casting to the implemented Cell
-        var item = cell as CrossingCell;
-        item.ConfigureCell(_contactList[index], index);
+        if (crossingManager != null) {
+            var item = cell as CrossingCell;
+            item.ConfigureCell(_contactList[index], index);
+        }
     }
 
     #endregion
