@@ -1503,6 +1503,10 @@ PrefabInstance:
       value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
+      propertyPath: movementControl
+      value: 
+      objectReference: {fileID: 64599336}
+    - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: splineContainer
       value: 
       objectReference: {fileID: 1833071513}
@@ -7327,7 +7331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb71d37c03c0cd4799a49652fb237ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comm: {fileID: 0}
+  comm: {fileID: 892809136}
   turnOff: 1
   unityServerUri: http://127.0.0.1:8001/
 --- !u!114 &892809139

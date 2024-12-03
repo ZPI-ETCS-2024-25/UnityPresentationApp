@@ -6,7 +6,7 @@ using UnityEditor;
 //using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class UnityETCSComm : MonoBehaviour
+public class UnityETCSComm:MonoBehaviour
 {
     public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8000/name";
@@ -57,8 +57,13 @@ public class UnityETCSComm : MonoBehaviour
 
     public void SendIsAliveInfo()
     {
+        Debug.Log("entered");
         StartCoroutine(communication
             .POSTRequest(serverUri, new AliveInfo()
+            {
+                messageType = "isAlive",
+                isAlive = true
+            }
             , response => { Debug.Log(response); })
         );
     }
@@ -84,8 +89,8 @@ public class SpeedInfo:UnityMessage
 
 public class AliveInfo : UnityMessage
 {
-    public string messageType = "isAlive";
-    public bool isAlive = true;
+    public string messageType;
+    public bool isAlive;
 }
 
 public class UnityMessage

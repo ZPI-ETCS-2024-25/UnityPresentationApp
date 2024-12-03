@@ -14,6 +14,7 @@ public class SplineMove : MonoBehaviour
     public PathManager pathManager;
     public BaliseController baliseController;
     public LenghtManager lenghtManager;
+    public Slider movementControl;
 
     public bool checkForBalises = true;
     public bool sendSpeed = true;
@@ -144,6 +145,7 @@ public class SplineMove : MonoBehaviour
         }
         else
         {
+            changeAccelerationChangeRate(movementControl.value);
             forceBreak=false;
         }
     }
@@ -481,8 +483,6 @@ public class SplineMove : MonoBehaviour
 
     public void UpdateNextSplineIndex()
     {
-        //Debug.Log(nextSplineIndex);
         nextSplineIndex = pathManager.GetNextSplineIndex(currentSpline, backwards);
-        //Debug.Log(nextSplineIndex);
     }
 }
