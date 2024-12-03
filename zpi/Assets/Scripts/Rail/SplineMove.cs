@@ -98,7 +98,8 @@ public class SplineMove : MonoBehaviour
 
         if (sendSpeed && comm != null)
         {
-            float speedKPH = speed * lenghtManager.modifier * (1f/Time.fixedDeltaTime) * 3.6f;
+            //z wyliczen w terenie speed x6
+            float speedKPH = speed * lenghtManager.modifier * 3600f;
             comm.SendSpeedInfo(speedKPH);
         }
 
