@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: balises4-1
   m_EditorClassIdentifier: 
   baliseGroups:
-  - kilometer: 0.21
+  - kilometer: 0.14
     balises:
     - messageType: CBF
   - kilometer: 0.02
