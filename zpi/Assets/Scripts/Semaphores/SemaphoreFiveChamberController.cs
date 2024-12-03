@@ -39,6 +39,6 @@ public class SemaphoreFiveChamberController : SemaphoreController
 
     public override void SendSemaphoreInfoToSever()
     {
-        comm.SendSemaphoreSignal(id, shouldGo());
+        comm.SendSemaphoreSignal(int.Parse(name), shouldGo());
     }
 }
