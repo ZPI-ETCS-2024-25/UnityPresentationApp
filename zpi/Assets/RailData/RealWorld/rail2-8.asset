@@ -15,8 +15,16 @@ MonoBehaviour:
   trackNumber: 2
   lineNumber: 1
   startKilometers: 7.5
-  endKilometers: 10.1
-  inputedKilometers: 2.7
-  realKilometers: 0.4258503
+  endKilometers: 10.05
+  inputedKilometers: 2.6000004
+  realKilometers: 2.9317122
   startingKnotGroup: 1
   endingKnotGroup: 0
+  junctionDataForward:
+    junctionGroup: 0
+    junctionNumber: 0
+    straightIndex: 0
+  junctionDataBackward:
+    junctionGroup: 0
+    junctionNumber: 0
+    straightIndex: 0
