@@ -1788,7 +1788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: sendSpeed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2149752206565573290, guid: 48f6791245c9b4d3ca886e55bd0bc63d, type: 3}
       propertyPath: arrowPrefab

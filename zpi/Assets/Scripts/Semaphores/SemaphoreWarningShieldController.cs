@@ -40,11 +40,11 @@ public class SemaphoreWarningShieldController : SemaphoreController
 
     private void Start()
     {
-        Debug.Log(this.name);
-        foreach (var x in GetAllowedStates())
+        //Debug.Log(this.name);
+        /*foreach (var x in GetAllowedStates())
         {
             Debug.Log(x);
-        }
+        }*/
         
     }
 }

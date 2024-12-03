@@ -20,7 +20,10 @@ public class SemaphoreScroller : MultiMenuWrapper, IRecyclableScrollRectDataSour
 
     private void Awake()
     {
-        GetSemaphores();
+        if(semaphoreManager != null)
+        {
+            GetSemaphores();
+        }
         _recyclableScrollRect.DataSource = this;
     }
 
@@ -46,9 +49,11 @@ public class SemaphoreScroller : MultiMenuWrapper, IRecyclableScrollRectDataSour
     /// </summary>
     public void SetCell(ICell cell, int index)
     {
-        //Casting to the implemented Cell
-        var item = cell as SemaphoreCell;
-        item.ConfigureCell(_contactList[index], index);
+        if(semaphoreManager != null)
+        {
+            var item = cell as SemaphoreCell;
+            item.ConfigureCell(_contactList[index], index);
+        }
     }
 
     #endregion

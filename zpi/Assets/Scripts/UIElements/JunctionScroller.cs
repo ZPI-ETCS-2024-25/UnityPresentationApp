@@ -21,7 +21,10 @@ public class JunctionScroller : MultiMenuWrapper, IRecyclableScrollRectDataSourc
     //Recyclable scroll rect's data source must be assigned in Awake.
     private void Awake()
     {
-        GetJunctions();
+        if(pathManager != null)
+        {
+            GetJunctions();
+        }
         _recyclableScrollRect.DataSource = this;
     }
 
@@ -47,9 +50,11 @@ public class JunctionScroller : MultiMenuWrapper, IRecyclableScrollRectDataSourc
     /// </summary>
     public void SetCell(ICell cell, int index)
     {
-        //Casting to the implemented Cell
-        var item = cell as JunctionCell;
-        item.ConfigureCell(_contactList[index], index);
+        if(pathManager != null)
+        {
+            var item = cell as JunctionCell;
+            item.ConfigureCell(_contactList[index], index);
+        }
     }
 
     #endregion

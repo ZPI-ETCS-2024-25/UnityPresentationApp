@@ -37,6 +37,7 @@ public class SplineMove : MonoBehaviour
     public float maxAcceleration = 1f;
     public float minAcceleration = -1f;
     private bool endOfline = false;
+    private bool forceBreak = false;
 
 
     public bool backwards = false;
@@ -83,19 +84,22 @@ public class SplineMove : MonoBehaviour
         }
 
         previousDistancePercentage = distancePercentage;
-        speed = Math.Max(speed + acceleration,0f);
-        float speedKPH = speed * lenghtManager.modifier*50f*3600f;
-
-        if (sendSpeed && comm != null)
-        {
-            comm.SendSpeedInfo(speedKPH);
-        }
-
-
 
         if (acceleration < minAcceleration)
         {
             acceleration = minAcceleration;
+        }
+        if (forceBreak)
+        {
+            acceleration = minAcceleration;
+        }
+
+        speed = Math.Max(speed + acceleration,0f);
+
+        if (sendSpeed && comm != null)
+        {
+            float speedKPH = speed * lenghtManager.modifier * (1f/Time.fixedDeltaTime) * 3.6f;
+            comm.SendSpeedInfo(speedKPH);
         }
 
         
@@ -135,11 +139,11 @@ public class SplineMove : MonoBehaviour
     {
         if (stop)
         {
-            acceleration = -2f;
+            forceBreak = true;
         }
         else
         {
-            acceleration = 0f;
+            forceBreak=false;
         }
     }
 
