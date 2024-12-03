@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.043112
       objectReference: {fileID: 0}
@@ -47,6 +59,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -5405672685799397847, guid: b665ac8382d42274698ad8ef797231f5, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -94,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2515358247a4be64ca46870c4deb17f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   lightLens:
   - {fileID: 2432442056529415671}
   - {fileID: 3877619870779863408}
@@ -103,7 +120,8 @@ MonoBehaviour:
   greenLight: {fileID: 2100000, guid: c18eaa0a7fc5fee47b734b043ca0b515, type: 2}
   whiteLight: {fileID: 2100000, guid: 889f70f8c0b92f346b10246716e2e733, type: 2}
   blinkDelay: 0.7
-  currentSignal: 14
+  name: semaphore
+  id: 0
 --- !u!1 &3877619870779863408 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 997789980204644299, guid: b665ac8382d42274698ad8ef797231f5, type: 3}

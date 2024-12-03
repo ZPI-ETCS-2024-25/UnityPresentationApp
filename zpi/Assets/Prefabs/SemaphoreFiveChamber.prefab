@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.684655
       objectReference: {fileID: 0}
@@ -48,6 +60,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
       propertyPath: m_Name
       value: SemaphoreFiveChamber
@@ -82,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd811e37e71f12f4197288955bd5f248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  comm: {fileID: 0}
   lightLens:
   - {fileID: 2083637633253043562}
   - {fileID: 647188971240198637}
@@ -95,7 +112,8 @@ MonoBehaviour:
   greenLight: {fileID: 2100000, guid: c18eaa0a7fc5fee47b734b043ca0b515, type: 2}
   whiteLight: {fileID: 2100000, guid: 889f70f8c0b92f346b10246716e2e733, type: 2}
   blinkDelay: 0.7
-  currentSignal: 1
+  name: semaphore
+  id: 0
 --- !u!1 &1747493394783963146 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2117762440164322860, guid: da58840ab5afc444b9fcd461314acaa2, type: 3}
