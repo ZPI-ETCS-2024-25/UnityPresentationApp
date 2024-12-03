@@ -452,7 +452,7 @@ public class SplineMove : MonoBehaviour
         PointArrow();*/
     }
 
-    public void changeAcceleration(InputAction.CallbackContext context)
+    /*public void changeAcceleration(InputAction.CallbackContext context)
     {
         float value = context.ReadValue<float>();
         if(value == 1)
@@ -461,12 +461,9 @@ public class SplineMove : MonoBehaviour
         }
         else
         {
-            if(speed != 0)
-            {
-                acceleration = minAcceleration;
-            }
+            acceleration = minAcceleration;
         }
-    }
+    }*/
 
 
     public void changeAccelerationChangeRate(float value)
