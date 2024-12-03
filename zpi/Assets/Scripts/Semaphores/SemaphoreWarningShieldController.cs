@@ -38,20 +38,9 @@ public class SemaphoreWarningShieldController : SemaphoreController
 
     }
 
-    private void Start()
+
+    void Start()
     {
-        //Debug.Log(this.name);
-        /*foreach (var x in GetAllowedStates())
-        {
-            Debug.Log(x);
-        }*/
-        
+        SetState(allowedStatesList[0].Item2);
     }
-}
-public enum SemaphoreWarningShieldSignals
-{
-    Os1,
-    Os2,
-    Os3,
-    Os4
 }

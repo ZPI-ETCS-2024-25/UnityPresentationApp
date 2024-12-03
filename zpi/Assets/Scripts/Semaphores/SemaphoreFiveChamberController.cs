@@ -32,21 +32,13 @@ public class SemaphoreFiveChamberController : SemaphoreController
         return allowedStates;
     }
 
+    void Start()
+    {
+        SetState(allowedStatesList[0].Item2);
+    }
+
     public override void SendSemaphoreInfoToSever()
     {
         comm.SendSemaphoreSignal(id, shouldGo());
     }
-}
-public enum SemaphoreFiveChamberSignals
-{
-    S1,
-    S2,
-    S4,
-    S5,
-    S10,
-    S10a,
-    S12,
-    S12a,
-    S13,
-    S13a
 }

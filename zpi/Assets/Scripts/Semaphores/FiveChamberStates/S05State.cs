@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S1State : ISemaphoreState
+public class S05State : ISemaphoreState
 {
-    //string name = "S01 Stop";
-    string name = "S01";
+    //string name = "S05 Next Stop";
+    string name = "S05";
     public string GetName()
     {
         return name;
@@ -13,11 +13,11 @@ public class S1State : ISemaphoreState
 
     public void SetSignal(SemaphoreController controller)
     {
-        controller.SetLight(2, controller.redLight);
+        controller.SetLight(1, controller.orangeLight);
     }
 
     public bool ShouldGo()
     {
-        return false;
+        return true;
     }
 }
