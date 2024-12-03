@@ -16,7 +16,15 @@ MonoBehaviour:
   lineNumber: 1
   startKilometers: 12.45
   endKilometers: 12.55
-  inputedKilometers: 2.7
-  realKilometers: 0.30570185
+  inputedKilometers: 0.10000038
+  realKilometers: 0.09697149
   startingKnotGroup: 1
   endingKnotGroup: 0
+  junctionDataForward:
+    junctionGroup: 5
+    junctionNumber: 5
+    straightIndex: 0
+  junctionDataBackward:
+    junctionGroup: 5
+    junctionNumber: 4
+    straightIndex: 0
