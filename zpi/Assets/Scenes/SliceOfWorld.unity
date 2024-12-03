@@ -13497,6 +13497,13 @@ MonoBehaviour:
           m_DataPoints:
           - m_Index: 0
             m_Value: {fileID: 11400000, guid: b1a507ee5842e9a4c90895e2e2c9846b, type: 2}
+      - Key: BaliseData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: d3466e580970e34459c6069166290f74, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: d3466e580970e34459c6069166290f74, type: 2}
   - m_EditModeType: 1
     m_Knots:
     - Position:
@@ -13625,6 +13632,13 @@ MonoBehaviour:
           m_DataPoints:
           - m_Index: 0
             m_Value: {fileID: 11400000, guid: aca2426980da1754eb6dd1e001a3f39b, type: 2}
+      - Key: BaliseData
+        Value:
+          m_IndexUnit: 0
+          m_DefaultValue: {fileID: 11400000, guid: e442a4818cd32234e92b47695ff463ca, type: 2}
+          m_DataPoints:
+          - m_Index: 0
+            m_Value: {fileID: 11400000, guid: e442a4818cd32234e92b47695ff463ca, type: 2}
   - m_EditModeType: 1
     m_Knots:
     - Position:
