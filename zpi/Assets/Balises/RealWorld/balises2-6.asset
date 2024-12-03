@@ -33,3 +33,11 @@ MonoBehaviour:
   - kilometer: 5.25
     balises:
     - messageType: CBF
+  - kilometer: 1.25
+    balises:
+    - messageType: CBF
+    - messageType: CBF
+  - kilometer: 4.25
+    balises:
+    - messageType: CBF
+    - messageType: CBF
