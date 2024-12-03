@@ -20,3 +20,6 @@ MonoBehaviour:
     balises:
     - messageType: CLT
     - messageType: CLT
+  - kilometer: 0.25
+    balises:
+    - messageType: CLT
