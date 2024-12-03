@@ -16,3 +16,7 @@ MonoBehaviour:
   - kilometer: 0.14
     balises:
     - messageType: CBF
+  - kilometer: 0.07
+    balises:
+    - messageType: CLT
+    - messageType: CLT
