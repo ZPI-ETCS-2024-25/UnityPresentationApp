@@ -129,7 +129,15 @@ public class BaliseController : MonoBehaviour
                 Vector3 position = splineContainer.EvaluatePosition(spline, bg.kilometer/(railData.endKilometers-railData.startKilometers)) + new Unity.Mathematics.float3(0,heightOffSet , 0);
                 GameObject b = Instantiate(balisePrefab);
                 b.transform.position = position;
-                b.name = $"Balise-Spline{i}-Group{count}-Km{bg.kilometer}";
+                string baliseType = bg.balises[0].messageType;
+
+                if(baliseType == "CBF")
+                    b.GetComponent<MeshRenderer>().material.color = Color.green;
+                if(baliseType == "CLT")
+                    b.GetComponent<MeshRenderer>().material.color = Color.red;
+
+                b.name = $"Balise-Spline{i}-Group{count}-Km{bg.kilometer}-{bg.balises[0].messageType}";
+                
                 balises.Add(b);
 
                 count++;
