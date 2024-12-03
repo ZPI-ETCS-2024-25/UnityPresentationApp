@@ -38,9 +38,3 @@ public class SemaphoreCrossingShieldController : SemaphoreController
        
     }
 }
-
-public enum SemaphoreCrossingShieldSignals
-{
-    Osp1,
-    Osp2,
-}

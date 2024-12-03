@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S4State : ISemaphoreState
+public class S04State : ISemaphoreState
 {
     //string name = "S04 Next 40 or 60km/h";
     string name = "S04";

@@ -127,12 +127,6 @@ public abstract class SemaphoreController : MonoBehaviour
     {
         blinkLensIndex = 0;
         blinkColor = blankLight;
-        /*SemaphoreInfo test = GetSemaphoreInfo();
-        Debug.Log(test.Name);
-        foreach ((int idx, string nam) in test.AllowedSignals)
-        {
-            Debug.Log(idx + " " + nam);
-        }*/
     }
 
     private void FixedUpdate()

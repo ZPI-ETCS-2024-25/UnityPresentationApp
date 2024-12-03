@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class S2State : ISemaphoreState
+public class S02State : ISemaphoreState
 {
     //string name = "S02 Max";
     string name = "S02";
