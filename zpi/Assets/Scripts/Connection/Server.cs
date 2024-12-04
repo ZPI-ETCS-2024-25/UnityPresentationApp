@@ -105,7 +105,7 @@ public class Server : MonoBehaviour
                             }
                             if(messageType == "alive")
                             {
-                                string source = json["SOURCE"]?.Value<string>() ?? "";
+                                string source = json["source"]?.Value<string>() ?? "";
                                 if(source == "DRIVER")
                                 {
                                     Debug.Log("succces");
