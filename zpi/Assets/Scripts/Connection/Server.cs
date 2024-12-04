@@ -88,6 +88,7 @@ public class Server : MonoBehaviour
 
                 if (request.HttpMethod == "POST")
                 {
+                    string responseType = "";
                     using (var reader = new System.IO.StreamReader(request.InputStream, request.ContentEncoding))
                     {
                         string receivedMessage = reader.ReadToEnd();
@@ -108,7 +109,8 @@ public class Server : MonoBehaviour
                                 if(source == "DRIVER")
                                 {
                                     Debug.Log("succces");
-                                    comm.SendIsAliveInfo();
+                                    //comm.SendIsAliveInfo();
+                                    responseType = "isAlive";
                                 }
                             }
                         }
@@ -120,11 +122,30 @@ public class Server : MonoBehaviour
                         Debug.Log("Message received from client: " + receivedMessage);
                     }
 
-                    string responseMessage = "Unity received your POST message!";
-                    byte[] buffer = Encoding.UTF8.GetBytes(responseMessage);
-                    response.ContentLength64 = buffer.Length;
-                    response.OutputStream.Write(buffer, 0, buffer.Length);
-                    response.OutputStream.Close();
+
+                    if(responseType == "isAlive")
+                    {
+                        var responseObject = new
+                        {
+                            messageType = "isAlive",
+                            isAlive = true,
+                            source = "UNITY"
+                        };
+
+                        string responseMessage = JsonConvert.SerializeObject(responseObject, Formatting.Indented);
+                        byte[] buffer = Encoding.UTF8.GetBytes(responseMessage);
+                        response.ContentLength64 = buffer.Length;
+                        response.OutputStream.Write(buffer, 0, buffer.Length);
+                        response.OutputStream.Close();
+                    }
+                    else
+                    {
+                        string responseMessage = "Unity received your POST message!";
+                        byte[] buffer = Encoding.UTF8.GetBytes(responseMessage);
+                        response.ContentLength64 = buffer.Length;
+                        response.OutputStream.Write(buffer, 0, buffer.Length);
+                        response.OutputStream.Close();
+                    }
                 }
 
 
