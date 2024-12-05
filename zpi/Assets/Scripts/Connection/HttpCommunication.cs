@@ -86,6 +86,11 @@ public class HttpCommunication : MonoBehaviour
             //var deserializedPostData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
             response?.Invoke(postRequest.downloadHandler.text);
         }
+        else 
+        {
+            //var deserializedPostData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
+            response?.Invoke("Failure");
+        }
         yield break;
         //var getRequest = CreateReqest(uri);
         //yield return getRequest.SendWebRequest();

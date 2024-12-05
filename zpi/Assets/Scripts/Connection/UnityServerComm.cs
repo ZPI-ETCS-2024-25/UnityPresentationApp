@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UnityServerComm : MonoBehaviour
+public class UnityServerComm : CoroutineComm
 {
-    public HttpCommunication communication;
+    //public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8002/";
     private string unityEndPoint = "unity/";
     //unity/crossingState
@@ -15,46 +15,70 @@ public class UnityServerComm : MonoBehaviour
 
     private void SendPOSTRequest(string endPoint, object postData)
     {
-        StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
+        EnqueueRequest(serverUri + unityEndPoint + endPoint, postData);
+        //StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
     }
 
     public void SendCrossingState(int crossingId, bool damaged)
     {
-        SendPOSTRequest("crossingState/", new CrossingState()
+        EnqueueRequest("crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
             IsFunctional = damaged
-        }) ;
+        });
+        /*SendPOSTRequest("crossingState/", new CrossingState()
+        {
+            CrossingId = crossingId,
+            IsFunctional = damaged
+        }) ;*/
     }
 
     public void SendSemaphoreSignal(int semaphoreId, bool shouldGo)
     {
-        SendPOSTRequest("semaphoreState/", new SemaphoreState()
+        EnqueueRequest("semaphoreState/", new SemaphoreState()
         {
             SemaphoreId = semaphoreId,
             Go = shouldGo
         });
+        /*SendPOSTRequest("semaphoreState/", new SemaphoreState()
+        {
+            SemaphoreId = semaphoreId,
+            Go = shouldGo
+        });*/
     }
 
     public void SendJunctionState(int junctionId, bool straight)
     {
-        SendPOSTRequest("JunctionState/", new JunctionState()
+        EnqueueRequest("JunctionState/", new JunctionState()
         {
             JunctionId = junctionId,
             Straight = straight
         });
+        /*SendPOSTRequest("JunctionState/", new JunctionState()
+        {
+            JunctionId = junctionId,
+            Straight = straight
+        });*/
     }
 
 
     private void RegisterTrain(int trainId, int lenghtMeters, int weightKilos, int maxSpeedMps, int breakWeight)
     {
-        communication
+        EnqueueRequest(serverUri, new TrainRegister()
+        {
+            trainId = trainId,
+            lenghtMeters = lenghtMeters,
+            weightKilos = weightKilos,
+            maxSpeedMps = maxSpeedMps,
+            breakWeight = breakWeight
+        });
+        /*communication
             .POSTRequest(serverUri,new TrainRegister() { trainId = trainId,
                                                         lenghtMeters = lenghtMeters,
                                                         weightKilos = weightKilos,
                                                         maxSpeedMps = maxSpeedMps,
                                                         breakWeight = breakWeight}
-            ,response => { Debug.Log(response); });
+            ,response => { Debug.Log(response); });*/
     } 
 }
 

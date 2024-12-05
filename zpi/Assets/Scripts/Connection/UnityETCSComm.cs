@@ -6,9 +6,9 @@ using UnityEditor;
 //using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class UnityETCSComm:MonoBehaviour
+public class UnityETCSComm:CoroutineComm
 {
-    public HttpCommunication communication;
+    //public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8000/name";
 
     void Start()
@@ -19,7 +19,16 @@ public class UnityETCSComm:MonoBehaviour
 
     public void SendBaliseInfo(float kilometer,int number,int numberOfBalises,string trackNumber, int lineNumber,string messageType)
     {
-        StartCoroutine(communication
+        EnqueueRequest(serverUri, new BaliseInfo()
+        {
+            kilometer = Convert.ToString(kilometer),
+            number = number,
+            numberOfBalises = numberOfBalises,
+            trackNumber = trackNumber,
+            lineNumber = lineNumber,
+            messageType = messageType
+        });
+        /*StartCoroutine(communication
             .POSTRequest(serverUri, new BaliseInfo()
             {
                 kilometer = Convert.ToString(kilometer),
@@ -30,42 +39,53 @@ public class UnityETCSComm:MonoBehaviour
                 messageType = messageType
             }
             , response => { Debug.Log(response); })
-        );
+        );*/
     }
 
     public void SendBaliseInfo(BaliseInfo info)
     {
         Debug.Log($"Track:{info.trackNumber}  Line:{info.lineNumber}  Kilometer:{info.kilometer}  Number:{info.number}   Message:{info.messageType}");
-        StartCoroutine(communication
+        EnqueueRequest(serverUri, info);
+        /*StartCoroutine(communication
             .POSTRequest(serverUri, info
             , response => { Debug.Log(response); })
-        );
+        );*/
     }
 
     public void SendSpeedInfo(float speed)
     {
-        StartCoroutine(communication
+        EnqueueRequest(serverUri, new SpeedInfo()
+        {
+            messageType = "NS",
+            NewSpeed = speed
+        });
+        /*StartCoroutine(communication
             .POSTRequest(serverUri, new SpeedInfo()
             {
                 messageType = "NS",
                 NewSpeed = speed
             }
             , response => { Debug.Log(response); })
-        );
+        );*/
         Debug.Log(speed);
     }
 
     public void SendIsAliveInfo()
     {
+        EnqueueRequest(serverUri, new AliveInfo()
+        {
+            messageType = "isAlive",
+            isAlive = true
+        });
         Debug.Log("entered");
-        StartCoroutine(communication
+        /*StartCoroutine(communication
             .POSTRequest(serverUri, new AliveInfo()
             {
                 messageType = "isAlive",
                 isAlive = true
             }
             , response => { Debug.Log(response); })
-        );
+        );*/
     }
 }
 
