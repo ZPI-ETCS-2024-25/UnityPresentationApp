@@ -21,7 +21,7 @@ public class UnityServerComm : CoroutineComm
 
     public void SendCrossingState(int crossingId, bool damaged)
     {
-        EnqueueRequest("crossingState/", new CrossingState()
+        EnqueueRequest(serverUri + "crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
             IsFunctional = damaged
@@ -35,7 +35,7 @@ public class UnityServerComm : CoroutineComm
 
     public void SendSemaphoreSignal(int semaphoreId, bool shouldGo)
     {
-        EnqueueRequest("semaphoreState/", new SemaphoreState()
+        EnqueueRequest(serverUri + "semaphoreState/", new SemaphoreState()
         {
             SemaphoreId = semaphoreId,
             Go = shouldGo
@@ -49,7 +49,7 @@ public class UnityServerComm : CoroutineComm
 
     public void SendJunctionState(int junctionId, bool straight)
     {
-        EnqueueRequest("JunctionState/", new JunctionState()
+        EnqueueRequest( serverUri + "JunctionState/", new JunctionState()
         {
             JunctionId = junctionId,
             Straight = straight
