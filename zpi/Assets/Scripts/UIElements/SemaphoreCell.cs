@@ -4,7 +4,6 @@ using UnityEngine;
 using PolyAndCode.UI;
 using UnityEngine.UI;
 using TMPro;
-using System.Linq;
 
 public class SemaphoreCell : MonoBehaviour, ICell
 {
@@ -15,13 +14,19 @@ public class SemaphoreCell : MonoBehaviour, ICell
     private SemaphoreInfo _contactInfo;
     private int _cellIndex;
 
+    private void Start()
+    {
+        var dropdownRectTransform = position.GetComponent<RectTransform>();
+        dropdownRectTransform.localScale = new Vector3(2f, 2f, 1f);
+
+        nameLabel.fontSize = 120f;
+        nameLabel.color = Color.black;
+    }
     //This is called from the SetCell method in DataSource
     public void ConfigureCell(SemaphoreInfo contactInfo, int cellIndex)
     {
         _cellIndex = cellIndex;
         _contactInfo = contactInfo;
-
-
 
         nameLabel.text = contactInfo.Name;
 
@@ -33,6 +38,7 @@ public class SemaphoreCell : MonoBehaviour, ICell
 
         position.value = currentStateIdx;
         position.onValueChanged.AddListener(OnDropdownValueChange);
+
     }
 
 

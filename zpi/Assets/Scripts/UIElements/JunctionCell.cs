@@ -14,7 +14,14 @@ public class JunctionCell : MonoBehaviour,ICell
     //Model
     private JunctionInfo _contactInfo;
     private int _cellIndex;
+    private void Start()
+    {
+        var dropdownRectTransform = position.GetComponent<RectTransform>();
+        dropdownRectTransform.localScale = new Vector3(2f, 2f, 1f);
 
+        nameLabel.fontSize = 120f;
+        nameLabel.color = Color.black;
+    }
     //This is called from the SetCell method in DataSource
     public void ConfigureCell(JunctionInfo contactInfo, int cellIndex)
     {
