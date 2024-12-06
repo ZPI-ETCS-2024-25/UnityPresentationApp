@@ -21,44 +21,44 @@ public class UnityServerComm : CoroutineComm
 
     public void SendCrossingState(int crossingId, bool damaged)
     {
-        EnqueueRequest(serverUri + unityEndPoint + "crossingState/", new CrossingState()
+        /*EnqueueRequest(serverUri + unityEndPoint + "crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
             IsFunctional = damaged
-        });
-        /*SendPOSTRequest("crossingState/", new CrossingState()
+        });*/
+        SendPOSTRequest("crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
             IsFunctional = damaged
-        }) ;*/
+        }) ;
     }
 
     public void SendSemaphoreSignal(int semaphoreId, bool shouldGo)
     {
-        EnqueueRequest(serverUri + unityEndPoint + "semaphoreState/", new SemaphoreState()
-        {
-            SemaphoreId = semaphoreId,
-            Go = shouldGo
-        });
-        /*SendPOSTRequest("semaphoreState/", new SemaphoreState()
+        /*EnqueueRequest(serverUri + unityEndPoint + "semaphoreState/", new SemaphoreState()
         {
             SemaphoreId = semaphoreId,
             Go = shouldGo
         });*/
+        SendPOSTRequest("semaphoreState/", new SemaphoreState()
+        {
+            SemaphoreId = semaphoreId,
+            Go = shouldGo
+        });
     }
 
     public void SendJunctionState(int junctionId, bool straight)
     {
-        EnqueueRequest( serverUri +unityEndPoint + "JunctionState/", new JunctionState()
-        {
-            JunctionId = junctionId,
-            Straight = straight
-        });
-        /*SendPOSTRequest("JunctionState/", new JunctionState()
+        /*EnqueueRequest( serverUri +unityEndPoint + "JunctionState/", new JunctionState()
         {
             JunctionId = junctionId,
             Straight = straight
         });*/
+        SendPOSTRequest("JunctionState/", new JunctionState()
+        {
+            JunctionId = junctionId,
+            Straight = straight
+        });
     }
 
 

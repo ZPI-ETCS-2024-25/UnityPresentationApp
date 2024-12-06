@@ -72,20 +72,20 @@ public class UnityETCSComm:CoroutineComm
 
     public void SendIsAliveInfo()
     {
-        EnqueueRequest(serverUri, new AliveInfo()
+        /*EnqueueRequest(serverUri, new AliveInfo()
         {
             messageType = "isAlive",
             isAlive = true
-        });
+        });*/
         Debug.Log("entered");
-        /*StartCoroutine(communication
+        StartCoroutine(communication
             .POSTRequest(serverUri, new AliveInfo()
             {
                 messageType = "isAlive",
                 isAlive = true
             }
             , response => { Debug.Log(response); })
-        );*/
+        );
     }
 }
 
