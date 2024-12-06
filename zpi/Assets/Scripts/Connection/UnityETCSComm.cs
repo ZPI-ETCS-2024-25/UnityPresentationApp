@@ -54,19 +54,19 @@ public class UnityETCSComm:CoroutineComm
 
     public void SendSpeedInfo(float speed)
     {
-        EnqueueRequest(serverUri, new SpeedInfo()
+        /*EnqueueRequest(serverUri, new SpeedInfo()
         {
             messageType = "NS",
             NewSpeed = speed
-        });
-        /*StartCoroutine(communication
+        });*/
+        StartCoroutine(communication
             .POSTRequest(serverUri, new SpeedInfo()
             {
                 messageType = "NS",
                 NewSpeed = speed
             }
             , response => { Debug.Log(response); })
-        );*/
+        );
         Debug.Log(speed);
     }
 

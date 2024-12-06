@@ -18,6 +18,8 @@ public class SplineMove : MonoBehaviour
 
     public bool checkForBalises = true;
     public bool sendSpeed = true;
+    public float speedSendFrequency = 0.02f;
+    private float speedSendCounter = 0f;
 
 
     public SplineContainer splineContainer;
@@ -80,7 +82,7 @@ public class SplineMove : MonoBehaviour
     {
         if (endOfline && comm != null)//jesli to koniec
         {          
-            comm.SendSpeedInfo(0f);
+            //comm.SendSpeedInfo(0f);
             return;
         }
 
@@ -99,9 +101,14 @@ public class SplineMove : MonoBehaviour
 
         if (sendSpeed && comm != null)
         {
+            speedSendCounter += Time.fixedDeltaTime;
             //z wyliczen w terenie speed x6
-            float speedKPH = speed * lenghtManager.modifier * 3600f;
-            comm.SendSpeedInfo(speedKPH);
+            if(speedSendCounter > speedSendFrequency)
+            {
+                float speedKPH = speed * lenghtManager.modifier * 3600f;
+                comm.SendSpeedInfo(speedKPH);
+                speedSendCounter -= speedSendFrequency;
+            }   
         }
 
         
