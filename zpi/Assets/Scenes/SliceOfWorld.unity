@@ -953,6 +953,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 0+L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (3)
@@ -2106,6 +2110,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 3-L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (12)
@@ -3096,6 +3104,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 3+L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (15)
@@ -3198,6 +3210,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 0-R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (1)
@@ -4151,6 +4167,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 1+R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (6)
@@ -4452,6 +4472,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 0+R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (2)
@@ -5460,6 +5484,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 2+R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (10)
@@ -6483,6 +6511,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 1-L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (5)
@@ -8642,6 +8674,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 2-L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (8)
@@ -8888,6 +8924,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 3-R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (13)
@@ -9192,6 +9232,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 2+L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (11)
@@ -11343,6 +11387,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 3+R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (14)
@@ -11537,6 +11585,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 2-R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (9)
@@ -15060,6 +15112,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 1-R
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (4)
@@ -16249,6 +16305,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 0-L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield
@@ -16644,6 +16704,10 @@ PrefabInstance:
       propertyPath: comm
       value: 
       objectReference: {fileID: 892809139}
+    - target: {fileID: 2224021837883613909, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
+      propertyPath: name
+      value: To 1+L
+      objectReference: {fileID: 0}
     - target: {fileID: 3803755910427573226, guid: 9cfe635f39a908047a7fe8783308dec0, type: 3}
       propertyPath: m_Name
       value: SemaphoreWarningShield (7)
