@@ -15,13 +15,13 @@ public class UnityServerComm : CoroutineComm
 
     private void SendPOSTRequest(string endPoint, object postData)
     {
-        EnqueueRequest(serverUri + unityEndPoint + endPoint, postData);
+        //EnqueueRequest(serverUri + unityEndPoint + endPoint, postData);
         //StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
     }
 
     public void SendCrossingState(int crossingId, bool damaged)
     {
-        EnqueueRequest(serverUri + "crossingState/", new CrossingState()
+        EnqueueRequest(serverUri + unityEndPoint + "crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
             IsFunctional = damaged
@@ -35,7 +35,7 @@ public class UnityServerComm : CoroutineComm
 
     public void SendSemaphoreSignal(int semaphoreId, bool shouldGo)
     {
-        EnqueueRequest(serverUri + "semaphoreState/", new SemaphoreState()
+        EnqueueRequest(serverUri + unityEndPoint + "semaphoreState/", new SemaphoreState()
         {
             SemaphoreId = semaphoreId,
             Go = shouldGo
@@ -49,7 +49,7 @@ public class UnityServerComm : CoroutineComm
 
     public void SendJunctionState(int junctionId, bool straight)
     {
-        EnqueueRequest( serverUri + "JunctionState/", new JunctionState()
+        EnqueueRequest( serverUri +unityEndPoint + "JunctionState/", new JunctionState()
         {
             JunctionId = junctionId,
             Straight = straight
