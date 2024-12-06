@@ -16,11 +16,14 @@ public class JunctionCell : MonoBehaviour,ICell
     private int _cellIndex;
     private void Start()
     {
-        var dropdownRectTransform = position.GetComponent<RectTransform>();
+        RectTransform dropdownRectTransform = position.GetComponent<RectTransform>();
         dropdownRectTransform.localScale = new Vector3(2f, 2f, 1f);
+        dropdownRectTransform.localPosition = dropdownRectTransform.localPosition - new Vector3(100f, 0f, 0f);
+        dropdownRectTransform.sizeDelta = dropdownRectTransform.sizeDelta + new Vector2(100f, 0f);
 
         nameLabel.fontSize = 120f;
         nameLabel.color = Color.black;
+        nameLabel.alignment = TextAlignmentOptions.Left;
     }
     //This is called from the SetCell method in DataSource
     public void ConfigureCell(JunctionInfo contactInfo, int cellIndex)
@@ -33,7 +36,7 @@ public class JunctionCell : MonoBehaviour,ICell
         nameLabel.text = contactInfo.Name;
 
         position.ClearOptions();
-        List<string> newOptions = contactInfo.AllowedPositions.ConvertAll(x => x.Name) ;
+        List<string> newOptions = contactInfo.AllowedPositions.ConvertAll(x => x.Name);
         position.AddOptions(newOptions);
 
         position.onValueChanged.AddListener(OnDropdownValueChange);

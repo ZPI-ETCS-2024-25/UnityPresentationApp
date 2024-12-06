@@ -89,12 +89,12 @@ public class CrossingSystem : MonoBehaviour
         if (state == 0)
         {
             damagedCrossing = false;
-            SetCrossingShieldSemaphoresState(1);
+            SetCrossingShieldSemaphoresState(0);
         }
         else
         {
             damagedCrossing = true;
-            SetCrossingShieldSemaphoresState(2);
+            SetCrossingShieldSemaphoresState(1);
         }
     }
 

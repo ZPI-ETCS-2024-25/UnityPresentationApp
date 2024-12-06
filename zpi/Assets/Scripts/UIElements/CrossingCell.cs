@@ -19,9 +19,12 @@ public class CrossingCell : MonoBehaviour, ICell
     {
         var dropdownRectTransform = position.GetComponent<RectTransform>();
         dropdownRectTransform.localScale = new Vector3(2f, 2f, 1f);
+        dropdownRectTransform.localPosition = dropdownRectTransform.localPosition - new Vector3(100f, 0f, 0f);
+        dropdownRectTransform.sizeDelta = dropdownRectTransform.sizeDelta + new Vector2(100f, 0f);
 
         nameLabel.fontSize = 120f;
         nameLabel.color = Color.black;
+        nameLabel.alignment = TextAlignmentOptions.Left;
     }
     //This is called from the SetCell method in DataSource
     public void ConfigureCell(CrossingInfo contactInfo, int cellIndex)
