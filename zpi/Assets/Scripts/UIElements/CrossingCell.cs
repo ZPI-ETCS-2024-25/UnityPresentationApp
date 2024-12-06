@@ -40,6 +40,10 @@ public class CrossingCell : MonoBehaviour, ICell
         List<string> newOptions = contactInfo.AllowedStates.ConvertAll(x => x.Name);
         position.AddOptions(newOptions);
 
+        int currentStateIdx = _contactInfo.CrossingSystem.GetStateIndex();
+
+        position.value = currentStateIdx;
+
         position.onValueChanged.AddListener(OnDropdownValueChange);
     }
 

@@ -34,6 +34,12 @@ public class CrossingSystem : MonoBehaviour
         };
     }
 
+    public int GetStateIndex()
+    {
+        if (damagedCrossing) return 1;
+        else return 0;
+    }
+
     private IEnumerator OpenCrossingEnumerator()
     {
         animator.SetBool("Close", false);
