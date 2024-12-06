@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackNumber: 2
   lineNumber: 1
-  startKilometers: 7.5
-  endKilometers: 10.05
+  startKilometers: 9.2
+  endKilometers: 11.75
   inputedKilometers: 2.5500002
   realKilometers: 2.6128092
   startingKnotGroup: 1
