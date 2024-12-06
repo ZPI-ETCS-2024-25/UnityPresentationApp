@@ -36,6 +36,12 @@ public class SemaphoreCell : MonoBehaviour, ICell
 
         int currentStateIdx = _contactInfo.SemaphoreController.GetStateIndex();
 
+        if(currentStateIdx == -1)
+        {
+            Debug.Log("junction not found error");
+            return;
+        }
+
         position.value = currentStateIdx;
         position.onValueChanged.AddListener(OnDropdownValueChange);
 
