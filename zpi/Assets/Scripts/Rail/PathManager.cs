@@ -309,6 +309,19 @@ public class PathManager : MonoBehaviour
     }
 
 
+    public int GetJunctionCurrentPosition(int junction)
+    {
+        if(junctions.Keys.Contains(junction)){
+            return junctions[junction];
+        }
+        if (reverseJunctions.Keys.Contains(junction))
+        {
+            return reverseJunctions[junction];
+        }
+        return -1;
+    }
+
+
     public int GetNextSplineIndex(int currentSpline,bool currentBackward)
     {
         Dictionary<int, int> junctionsSource = currentBackward ? reverseJunctions : junctions;

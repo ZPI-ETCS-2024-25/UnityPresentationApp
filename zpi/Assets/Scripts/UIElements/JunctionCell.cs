@@ -32,12 +32,15 @@ public class JunctionCell : MonoBehaviour,ICell
         _contactInfo = contactInfo;
 
 
-
         nameLabel.text = contactInfo.Name;
 
         position.ClearOptions();
         List<string> newOptions = contactInfo.AllowedPositions.ConvertAll(x => x.Name);
         position.AddOptions(newOptions);
+
+
+        int currentStateIdx = _contactInfo.PathManager.GetJunctionCurrentPosition(contactInfo.Position);
+        position.value = currentStateIdx;
 
         position.onValueChanged.AddListener(OnDropdownValueChange);
     }
