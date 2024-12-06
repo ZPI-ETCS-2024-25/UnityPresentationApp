@@ -29,6 +29,9 @@ public class SemaphoreCell : MonoBehaviour, ICell
         List<string> newOptions = contactInfo.AllowedStates.ConvertAll(x => x.Name.GetName());
         position.AddOptions(newOptions);
 
+        int currentStateIdx = _contactInfo.SemaphoreController.GetStateIndex();
+
+        position.value = currentStateIdx;
         position.onValueChanged.AddListener(OnDropdownValueChange);
     }
 

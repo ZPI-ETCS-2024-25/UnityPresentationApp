@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
@@ -95,6 +96,13 @@ public abstract class SemaphoreController : MonoBehaviour
         state.SetSignal(this);
         currentState = state;
         SendSemaphoreInfoToSever();
+    }
+
+    public int GetStateIndex()
+    {
+        if (currentState == null || allowedStatesList.Count == 0) return -1;
+
+        return allowedStatesList.FindIndex(a => a.Item2.GetName() == currentState.GetName());
     }
 
     virtual public List<(int, ISemaphoreState)> GetAllowedStates()
