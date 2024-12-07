@@ -102,6 +102,7 @@ public class CrossingSystem : MonoBehaviour
             damagedCrossing = true;
             SetCrossingShieldSemaphoresState(1);
         }
+        SendCrossingStateToServer();
     }
 
     void FixedUpdate()
