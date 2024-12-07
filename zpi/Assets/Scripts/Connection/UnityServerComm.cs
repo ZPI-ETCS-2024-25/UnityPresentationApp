@@ -16,7 +16,7 @@ public class UnityServerComm : CoroutineComm
     private void SendPOSTRequest(string endPoint, object postData)
     {
         //EnqueueRequest(serverUri + unityEndPoint + endPoint, postData);
-        //StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
+        StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
     }
 
     public void SendCrossingState(int crossingId, bool damaged)
@@ -64,21 +64,21 @@ public class UnityServerComm : CoroutineComm
 
     private void RegisterTrain(int trainId, int lenghtMeters, int weightKilos, int maxSpeedMps, int breakWeight)
     {
-        EnqueueRequest(serverUri, new TrainRegister()
+        /*EnqueueRequest(serverUri, new TrainRegister()
         {
             trainId = trainId,
             lenghtMeters = lenghtMeters,
             weightKilos = weightKilos,
             maxSpeedMps = maxSpeedMps,
             breakWeight = breakWeight
-        });
-        /*communication
+        });*/
+        communication
             .POSTRequest(serverUri,new TrainRegister() { trainId = trainId,
                                                         lenghtMeters = lenghtMeters,
                                                         weightKilos = weightKilos,
                                                         maxSpeedMps = maxSpeedMps,
                                                         breakWeight = breakWeight}
-            ,response => { Debug.Log(response); });*/
+            ,response => { Debug.Log(response); });
     } 
 }
 
