@@ -408,7 +408,7 @@ public class PathManager : MonoBehaviour
 
     public void ChangeJunction(int index,bool backward,int changed)
     {
-        //Debug.Log("changing");
+        //Debug.Log($"changing {index} into {changed}");
         Dictionary<int, int> junctionsSource = backward ? reverseJunctions : junctions;
         junctionsSource[index] = changed;
         RepositionArrows();

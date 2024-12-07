@@ -44,6 +44,7 @@ public class CrossingCell : MonoBehaviour, ICell
 
         position.value = currentStateIdx;
 
+        position.onValueChanged.RemoveAllListeners();
         position.onValueChanged.AddListener(OnDropdownValueChange);
     }
 

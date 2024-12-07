@@ -42,6 +42,7 @@ public class JunctionCell : MonoBehaviour,ICell
         int currentStateIdx = _contactInfo.PathManager.GetJunctionCurrentPosition(contactInfo.Position);
         position.value = currentStateIdx;
 
+        position.onValueChanged.RemoveAllListeners();
         position.onValueChanged.AddListener(OnDropdownValueChange);
     }
 
