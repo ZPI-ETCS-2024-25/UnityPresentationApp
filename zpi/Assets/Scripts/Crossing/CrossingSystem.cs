@@ -117,6 +117,6 @@ public class CrossingSystem : MonoBehaviour
 
     public void SendCrossingStateToServer()
     {
-        comm.SendCrossingState(Id, damagedCrossing);
+        comm.SendCrossingState(Id, !damagedCrossing);
     }
 }

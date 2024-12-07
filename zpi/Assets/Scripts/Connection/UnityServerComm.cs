@@ -27,7 +27,7 @@ public class UnityServerComm : CoroutineComm
         }
     }
 
-    public void SendCrossingState(int crossingId, bool damaged)
+    public void SendCrossingState(int crossingId, bool functional)
     {
         /*EnqueueRequest(serverUri + unityEndPoint + "crossingState/", new CrossingState()
         {
@@ -37,7 +37,7 @@ public class UnityServerComm : CoroutineComm
         SendPOSTRequest("crossingState/", new CrossingState()
         {
             CrossingId = crossingId,
-            IsFunctional = damaged
+            IsFunctional = functional
         }) ;
     }
 
