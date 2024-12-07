@@ -7,6 +7,7 @@ public class UnityServerComm : CoroutineComm
     //public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8002/";
     private string unityEndPoint = "unity/";
+    public bool debugResponse = true;
     //unity/crossingState
     void Start()
     {
@@ -16,7 +17,14 @@ public class UnityServerComm : CoroutineComm
     private void SendPOSTRequest(string endPoint, object postData)
     {
         //EnqueueRequest(serverUri + unityEndPoint + endPoint, postData);
-        StartCoroutine(communication.POSTRequest(serverUri+unityEndPoint+endPoint, postData, response => { Debug.Log(response); }));
+        if (debugResponse)
+        {
+            StartCoroutine(communication.POSTRequest(serverUri + unityEndPoint + endPoint, postData, response => { Debug.Log(response); }));
+        }
+        else
+        {
+            StartCoroutine(communication.POSTRequest(serverUri + unityEndPoint + endPoint, postData, response => {}));
+        }
     }
 
     public void SendCrossingState(int crossingId, bool damaged)

@@ -7,16 +7,29 @@ public class CoroutineComm : MonoBehaviour
     public HttpCommunication communication;
     private Queue<System.Action> requestQueue = new Queue<System.Action>();
     private bool isProcessing = false;
+    public bool debugResponseQueu = true;
 
     public void EnqueueRequest(string serverUri, object info)
     {
-        requestQueue.Enqueue(() =>
+        if (debugResponseQueu)
+        {
+            requestQueue.Enqueue(() =>
             StartCoroutine(communication.POSTRequest(serverUri, info, response =>
             {
                 Debug.Log(response);
                 ProcessNextRequest();
             }))
         );
+        }
+        else{
+            requestQueue.Enqueue(() =>
+            StartCoroutine(communication.POSTRequest(serverUri, info, response =>
+            {
+                ProcessNextRequest();
+            }))
+        );
+        }
+        
 
         if (!isProcessing)
         {

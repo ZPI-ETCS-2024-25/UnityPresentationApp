@@ -6,11 +6,11 @@ using UnityEngine.Networking;
 
 public class HttpCommunication : MonoBehaviour
 {
-    public bool shutUp;
+    public bool debugFailure = true;
 
     void Start()
     {
-        if (!shutUp)
+        /*if (!shutUp)
         {
             StartCoroutine(GETRequest("http://127.0.0.1:8000/name/", result =>
             {
@@ -23,7 +23,7 @@ public class HttpCommunication : MonoBehaviour
             }
             ));
             //StartCoroutine(MakeRequest());"http://127.0.0.1:8000/name/"
-        }
+        }*/
     }
 
     
@@ -89,7 +89,10 @@ public class HttpCommunication : MonoBehaviour
         else 
         {
             //var deserializedPostData = JsonUtility.FromJson<JsonResponse>(getRequest.downloadHandler.text);
-            response?.Invoke($"Failure to send to {uri}");
+            if (debugFailure)
+            {
+                response?.Invoke($"Failure to send to {uri}");
+            }
         }
         yield break;
         //var getRequest = CreateReqest(uri);

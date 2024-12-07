@@ -7470,7 +7470,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
+  debugResponseQueu: 1
   serverUri: http://127.0.0.1:8002/name/
+  debugResponse: 1
 --- !u!114 &892809137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7483,7 +7485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c87463308dff0c24fa2101aa28ee878b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shutUp: 1
+  debugFailure: 1
 --- !u!114 &892809138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7512,7 +7514,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   communication: {fileID: 892809137}
+  debugResponseQueu: 1
   serverUri: http://127.0.0.1:8000/
+  debugResponse: 1
 --- !u!4 &892809140
 Transform:
   m_ObjectHideFlags: 0

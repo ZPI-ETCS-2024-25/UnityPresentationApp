@@ -10,6 +10,7 @@ public class UnityETCSComm:CoroutineComm
 {
     //public HttpCommunication communication;
     public string serverUri = "http://127.0.0.1:8000/name";
+    public bool debugResponse = true;
 
     void Start()
     {
@@ -59,15 +60,29 @@ public class UnityETCSComm:CoroutineComm
             messageType = "NS",
             NewSpeed = speed
         });*/
-        StartCoroutine(communication
-            .POSTRequest(serverUri, new SpeedInfo()
-            {
-                messageType = "NS",
-                NewSpeed = speed
-            }
-            , response => { Debug.Log(response); })
-        );
-        Debug.Log(speed);
+        if (debugResponse)
+        {
+                StartCoroutine(communication
+                    .POSTRequest(serverUri, new SpeedInfo()
+                    {
+                        messageType = "NS",
+                        NewSpeed = speed
+                    }
+                    , response => { Debug.Log(response); })
+                );
+        }
+        else
+        {
+                StartCoroutine(communication
+                    .POSTRequest(serverUri, new SpeedInfo()
+                    {
+                        messageType = "NS",
+                        NewSpeed = speed
+                    }
+                    , response => { })
+                );
+        }
+        //Debug.Log(speed);
     }
 
     public void SendIsAliveInfo()
@@ -77,15 +92,29 @@ public class UnityETCSComm:CoroutineComm
             messageType = "isAlive",
             isAlive = true
         });*/
-        Debug.Log("entered");
-        StartCoroutine(communication
-            .POSTRequest(serverUri, new AliveInfo()
-            {
-                messageType = "isAlive",
-                isAlive = true
-            }
-            , response => { Debug.Log(response); })
-        );
+        //Debug.Log("entered");
+        if (debugResponse)
+        {
+            StartCoroutine(communication
+                .POSTRequest(serverUri, new AliveInfo()
+                {
+                    messageType = "isAlive",
+                    isAlive = true
+                }
+                , response => { Debug.Log(response); })
+            );
+        }
+        else
+        {
+            StartCoroutine(communication
+                .POSTRequest(serverUri, new AliveInfo()
+                {
+                    messageType = "isAlive",
+                    isAlive = true
+                }
+                , response => { })
+            );
+        }
     }
 }
 
