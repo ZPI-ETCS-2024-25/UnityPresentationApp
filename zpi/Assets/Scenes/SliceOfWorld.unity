@@ -8376,16 +8376,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 812337014261386512, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
+      propertyPath: m_TreeDistance
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 812337014261386512, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_SplatMapDistance
       value: 686
       objectReference: {fileID: 0}
     - target: {fileID: 812337014261386512, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_DetailObjectDistance
-      value: 1000
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 812337014261386512, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_TreeBillboardDistance
-      value: 1389
+      value: 750
       objectReference: {fileID: 0}
     - target: {fileID: 812337014261386512, guid: 843d89c404c6f5d4c86925b7308bff66, type: 3}
       propertyPath: m_TreeMaximumFullLODCount
@@ -10165,7 +10169,7 @@ Terrain:
   m_TreeBillboardDistance: 1000
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 154
-  m_DetailObjectDistance: 1000
+  m_DetailObjectDistance: 100
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 20000
@@ -10635,7 +10639,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 3bf7b071e554d274ca7948f603c9d623, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 1000
+  m_TreeBillboardDistance: 1272
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
