@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b134a0651b9e9434b8e00f4c2c3d2aa9, type: 3}
-  m_Name: railconnection1-11;2-11
+  m_Name: rail1-3;2-3
   m_EditorClassIdentifier: 
   trackNumber: 1
   lineNumber: 1
   startKilometers: 0
   endKilometers: 0.07
   inputedKilometers: 0.07
-  realKilometers: 0.058972765
+  realKilometers: 0.07742241
   startingKnotGroup: 1
   endingKnotGroup: 0
   junctionDataForward:
-    junctionGroup: 5
-    junctionNumber: 4
+    junctionGroup: 1
+    junctionNumber: 5
     straightIndex: 0
   junctionDataBackward:
-    junctionGroup: 5
-    junctionNumber: 3
+    junctionGroup: 1
+    junctionNumber: 4
     straightIndex: 0
