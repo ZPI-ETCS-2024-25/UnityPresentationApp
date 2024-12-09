@@ -31,7 +31,7 @@ MonoBehaviour:
     balises:
     - messageType: CBF
     - messageType: CBF
-  - kilometer: 2.5
+  - kilometer: 2.45
     balises:
     - messageType: LTO
     - messageType: LTO
