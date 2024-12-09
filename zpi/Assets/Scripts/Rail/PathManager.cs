@@ -372,7 +372,7 @@ public class PathManager : MonoBehaviour
         foreach (int i in junctions.Keys)
         {
             GameObject arrow = Instantiate(arrowPrefab);
-            arrow.name = $"junction{i}";
+            arrow.name = $"Arrow-junction{i}";
             PositionArrow(arrow,i,false);
             arrows.Add(arrow);
         }
@@ -380,7 +380,7 @@ public class PathManager : MonoBehaviour
         foreach (int i in reverseJunctions.Keys)
         {
             GameObject arrow = Instantiate(arrowPrefab);
-            arrow.name = $"reverseJunction{i}";
+            arrow.name = $"Arrow-reverseJunction{i}";
             PositionArrow(arrow, i, true);
             arrows.Add(arrow);
         }
