@@ -225,7 +225,18 @@ public class PathManager : MonoBehaviour
         {
             if (path[i].Count > 1)
             {
-                junctions[i] = 0;
+                SplineData<UnityEngine.Object> rD;
+                bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+                RailData railData = rD[0].Value as RailData;
+
+                if (gotRailData)
+                {
+                    junctions[i] = railData.junctionDataForward.straightIndex;
+                }
+                else
+                {
+                    junctions[i] = 0;
+                }
             }
         }
     }
@@ -237,7 +248,18 @@ public class PathManager : MonoBehaviour
         {
             if (reversePath[i].Count > 1)
             {
-                reverseJunctions[i] = 0;
+                SplineData<UnityEngine.Object> rD;
+                bool gotRailData = splineContainer.Splines[i].TryGetObjectData("RailData", out rD);
+                RailData railData = rD[0].Value as RailData;
+
+                if (gotRailData)
+                {
+                    reverseJunctions[i] = railData.junctionDataBackward.straightIndex;
+                }
+                else
+                {
+                    reverseJunctions[i] = 0;
+                }
             }
         }
     }
@@ -350,6 +372,7 @@ public class PathManager : MonoBehaviour
         foreach (int i in junctions.Keys)
         {
             GameObject arrow = Instantiate(arrowPrefab);
+            arrow.name = $"junction{i}";
             PositionArrow(arrow,i,false);
             arrows.Add(arrow);
         }
@@ -357,6 +380,7 @@ public class PathManager : MonoBehaviour
         foreach (int i in reverseJunctions.Keys)
         {
             GameObject arrow = Instantiate(arrowPrefab);
+            arrow.name = $"reverseJunction{i}";
             PositionArrow(arrow, i, true);
             arrows.Add(arrow);
         }
