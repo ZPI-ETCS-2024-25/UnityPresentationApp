@@ -39,3 +39,6 @@ MonoBehaviour:
     balises:
     - messageType: LTA
     - messageType: LTA
+  - kilometer: 2.45
+    balises:
+    - messageType: CBF
