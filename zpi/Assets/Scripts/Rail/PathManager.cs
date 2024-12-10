@@ -223,6 +223,7 @@ public class PathManager : MonoBehaviour
         junctions = new Dictionary<int, int>();
         foreach(int i in path.Keys)
         {
+            //Debug.Log(i);
             if (path[i].Count > 1)
             {
                 SplineData<UnityEngine.Object> rD;
@@ -232,6 +233,7 @@ public class PathManager : MonoBehaviour
                 if (gotRailData)
                 {
                     junctions[i] = railData.junctionDataForward.straightIndex;
+                    //Debug.Log(junctions[i]);
                 }
                 else
                 {
@@ -246,6 +248,7 @@ public class PathManager : MonoBehaviour
         reverseJunctions = new Dictionary<int, int>();
         foreach (int i in reversePath.Keys)
         {
+            //Debug.Log(i);
             if (reversePath[i].Count > 1)
             {
                 SplineData<UnityEngine.Object> rD;
@@ -255,6 +258,7 @@ public class PathManager : MonoBehaviour
                 if (gotRailData)
                 {
                     reverseJunctions[i] = railData.junctionDataBackward.straightIndex;
+                    //Debug.Log($"spline {i} junction is set at index {reverseJunctions[i]} that is spline {reversePath[i][reverseJunctions[i]]}");
                 }
                 else
                 {
@@ -331,14 +335,11 @@ public class PathManager : MonoBehaviour
     }
 
 
-    public int GetJunctionCurrentPosition(int junction)
+    public int GetJunctionCurrentPosition(int junction,bool backward)
     {
-        if(junctions.Keys.Contains(junction)){
-            return junctions[junction];
-        }
-        if (reverseJunctions.Keys.Contains(junction))
-        {
-            return reverseJunctions[junction];
+        Dictionary<int, int> junctionsSource = backward ? reverseJunctions : junctions;
+        if (junctionsSource.Keys.Contains(junction)){
+            return junctionsSource[junction];
         }
         return -1;
     }
@@ -414,7 +415,7 @@ public class PathManager : MonoBehaviour
         bool nextSplineBackward = backward ? reversePath[spline][nextSplinePathIndex].Backward
                                                 : path[spline][nextSplinePathIndex].Backward;
         UnityEngine.Vector3 localPositionNext = nextSplineBackward ? splineContainer[nextSplineContainerIndex][splineContainer[nextSplineContainerIndex].Count - 2].Position
-                                                         : splineContainer[nextSplineContainerIndex][1].Position;
+                                                                   : splineContainer[nextSplineContainerIndex][1].Position;
         UnityEngine.Vector3 worldPositionNext = splineContainer.transform.TransformPoint(localPositionNext);
 
 
@@ -432,8 +433,9 @@ public class PathManager : MonoBehaviour
 
     public void ChangeJunction(int index,bool backward,int changed)
     {
-        //Debug.Log($"changing {index} into {changed}");
         Dictionary<int, int> junctionsSource = backward ? reverseJunctions : junctions;
+        string dir = backward ? "back" : "forward";
+        Debug.Log($"changing {dir} {index} into {changed}");
         junctionsSource[index] = changed;
         RepositionArrows();
         OnJunctionchanged();
