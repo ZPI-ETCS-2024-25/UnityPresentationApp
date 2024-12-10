@@ -27,4 +27,4 @@ MonoBehaviour:
   junctionDataBackward:
     junctionGroup: 2
     junctionNumber: 2
-    straightIndex: 1
+    straightIndex: 0
