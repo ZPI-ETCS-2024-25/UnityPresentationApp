@@ -36,6 +36,7 @@ public class SplineMove : MonoBehaviour
 
 
     public float startingSpeed = 1f;
+    public float maxSpeed = 20f;
     public float acceleration = 0.2f;
     public float maxAcceleration = 1f;
     public float minAcceleration = -1f;
@@ -98,6 +99,7 @@ public class SplineMove : MonoBehaviour
         }
 
         speed = Math.Max(speed + acceleration,0f);
+        speed = Math.Min(speed, maxSpeed);
 
         if (sendSpeed && comm != null)
         {
@@ -106,6 +108,7 @@ public class SplineMove : MonoBehaviour
             if(speedSendCounter > speedSendFrequency)
             {
                 float speedKPH = speed * lenghtManager.modifier * 3600f;
+                Debug.Log(speedKPH);
                 comm.SendSpeedInfo(speedKPH);
                 speedSendCounter -= speedSendFrequency;
             }   
